@@ -1,0 +1,76 @@
+<div class="rightPanel alt">
+    <breadcrumb>
+        <li class="active">
+            <span>Testimonials</span>
+        </li>
+    </breadcrumb>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="headTitle">All Testimonial</h2>
+        </div>
+        <div class="col-md-6">	 
+                <div class="search_sec" >
+                    <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+                        <div class="topSearchCont acTive">
+                            <input autocomplete="off" formControlName="string" name="string"
+                                    placeholder="Search" type="search" >
+                        </div>
+                        <div class="topSearch">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        <div class="col-md-2">
+            <a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['create']">
+                <i class="fa fa-plus"></i> Create Testimonial
+            </a>
+        </div>
+    </div>
+    <div class="alert alert-success" *ngIf="success_messages !=''">
+        {{success_messages}}
+    </div>
+    <notification-message [messages]="error_messages"></notification-message>
+
+    <div class="">
+
+        <table class="table table-hover" *ngIf="testimonial.length > 0">
+            <tbody>
+                <tr> 
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Education</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                <tr *ngFor="let testim of testimonial; let i = index">
+                    <td *ngVar="((pagination.page - 1) * pagination.pageSize + i + 1)  as page">
+                        {{page}}
+                    </td>
+                    <td>{{testim.name}}</td>
+                    <td>{{testim.education}}</td>
+                    <td class="text-center">
+                        <a [routerLink]="['/admin/testimonial/',testim.id,'edit']" class="btn btn-sm btn-success linkBg">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </a>
+                        <button [swal]="{text:'Do you really want to remove this testimonial',type:'question'}" (confirm)="removeTestimonial(testim.id,i)"
+                            type="button" class="btn btn-sm btn-danger linkBg">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+      
+        <div class="row mt30" *ngIf="testimonial.length === 0">
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <strong>Oops!</strong>
+                    No record found.
+                </div>
+            </div>
+        </div>
+        <post-pagination [pagination]="pagination" class="tabPagination" *ngIf="testimonial.length > 0"></post-pagination>
+    </div>
+</div>

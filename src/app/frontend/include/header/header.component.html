@@ -1,0 +1,111 @@
+<header>
+  <div class="headerTop clearfix">
+    <div class="container">
+      <div class="logo">
+        <a href="/">
+          <img src="assets/images/logo.png" alt="">
+        </a>
+      </div>
+      <div class="headerTopRight">
+        <!--<div class="topSearchCont" [ngClass]="status2 ? 'acTive' : ''" >-->
+        <div class="topSearchCont acTive">
+          <input type="search" placeholder="Search">
+        </div>
+        <div class="topSearch" (click)="clickEventTopSearch()">
+          <img src="assets/images/search-icon.png" alt="">
+        </div>
+
+        <div class="signUp" *ngIf="!http.isLoggednIn()">
+          <a (click)="loginFormModal()" class="logIn">LOG IN</a> 
+          <a (click)="registerFormModal()" class="siUp">SIGN UP</a>
+        </div>
+
+
+
+        <div class="signUp" *ngIf="http.isLoggednIn()" [className]="http.isLoggednIn() ? 'signUp active_user' : ''">
+          <!-- <a routerLink="/" >DASHBOARD</a> /
+            <a routerLink="" (click)="logOut()">LOG OUT</a> -->
+          <div class="user_avatar">DB</div>
+          <div class="userAvDrop">
+            <div class="avatarDetails">
+              <div class="avatarDetailsImg">
+                <img src="{{userProfileImage}}" onError="this.src='assets/images/no-image.png';" alt="..." />
+              </div>
+              <h2>{{userName}}</h2>
+              <h3>{{userRole}}</h3>
+            </div>
+            <ul>
+              <li>
+                <a *ngIf='checkAdmin' routerLink="/admin/dashboard">Dashboard</a>
+              </li>
+              <li> 
+                <a *ngIf='!checkAdmin' routerLink="/dashboard">Dashboard</a>
+              </li>
+             <!-- <li>
+                <a href="#">Help</a>
+              </li> -->
+              <li>
+                <a routerLink="" (click)="logOut()">Sign Out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- <a routerLink="/cart">
+        <div class="cartIcon">
+            <img src="assets/images/cart-icon.png" alt="">
+            <span>Cart</span>
+            <div class="cartnum">2</div>
+        </div>
+      </a>-->
+      </div>
+    </div>
+  </div>
+  <div class="headerBottom clearfix">
+    <div class="container">
+      <div class="mobNavOpen" (click)="clickEvent()">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </div>
+      <div class="siteNav" [ngClass]="status ? 'acTive' : ''">
+        <div class="siteNavClose" (click)="clickEvent()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+        <ul>
+          <li>
+            <a routerLink="/" routerLinkActive="active-link">Home</a>
+          </li>
+          <li>
+            <a routerLink="/courses" routerLinkActive="active-link">Courses</a>
+          </li>
+          <li>
+            <a routerLink="/events" routerLinkActive="active-link">Events</a>
+          </li>
+          <li>
+            <a routerLink="/shop" routerLinkActive="active-link">Shop</a>
+          </li>
+          <li>
+            <a routerLink="/about" routerLinkActive="active-link">About</a>
+          </li>
+          <!-- <li><a routerLink="/blog" routerLinkActive="active-link">Blog</a></li> -->
+          <li>
+            <a routerLink="/howitworks" routerLinkActive="active-link">How it works</a>
+          </li>
+          <!-- <li><a routerLink="/membership" routerLinkActive="active-link">Membership</a></li> -->
+          <li>
+            <a routerLink="/contact" routerLinkActive="active-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="topSocial">
+        <!-- <ul>
+          <li><a target="_blank" href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+          <li><a target="_blank" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+          <li><a target="_blank" href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+          <li><a target="_blank" href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+        </ul> -->
+        <a class="linkTop" routerLink="/vendor">Become a Vendor</a>
+        <!-- <a class="linkTop alt" routerLink="/reseller">Become a Reseller</a>-->
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,73 @@
+<section class="mainContainer">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-xl-2 col-lg-3 leftPanel">
+            <app-dashboard-left-panel></app-dashboard-left-panel>
+          </div>
+          
+        
+          <div class="col-xl-10 col-lg-9">
+            <div class="rightPanel">
+                <div class="centerHeading"><h2 >Notifications</h2></div>
+                <!-- <div class="col-lg-12" *ngIf="!data.length">
+                  
+                  <p style="color: green;font-size: 18px;margin-top: 47px;width: 100%;text-align: center;">
+                   No notifications.
+                  </p>
+      
+                </div> -->
+                <div class="table-responsive table_cont" *ngIf="data.length > 0">
+                  <table class="table table-striped" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+  
+                      <thead>
+                        <tr>
+                          <th>Message</th>
+                          <!-- <th>Type</th> -->
+                          <th>Date</th>
+                         
+                        </tr>
+                      </thead>
+                    
+                      <tbody>
+                        <tr *ngFor="let item of mf.data; let i = index">
+                          <td>
+                              <ng-container *ngIf="data?.sender_id == user.id">
+                                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                              </ng-container>
+                              <ng-container *ngIf="data?.sender_id != user.id">
+                                  <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                              </ng-container>
+                              {{item?.data |titlecase }}
+                          </td>
+                          <!-- <td>{{item?.role}}</td> -->
+                          <!-- <td *ngIf="item?.sender_id == user.id"> <i class="fa fa-arrow-up" aria-hidden="true"></i> </td>
+                          <td *ngIf="item?.sender_id != user.id"><i class="fa fa-arrow-down" aria-hidden="true"></i> </td> -->
+                          <td>{{item?.created_at |date:'dd-MM-yyyy' }}</td>
+                         
+                        </tr>
+                      </tbody>
+                      <tfoot class="tabPagination">
+                        <tr>
+                          <td colspan="6">
+                            <mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                   
+                </div>
+              
+                <div class="row mt30" *ngIf="data.length === 0">
+                    <div class="col-12">
+                      <div class="alert alert-warning text-center">
+                        <strong>Oops!</strong>
+                        No record found.
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+  
+      </div>
+    </div>
+  </section>

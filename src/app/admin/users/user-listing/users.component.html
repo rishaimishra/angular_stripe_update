@@ -1,0 +1,162 @@
+<div class="rightPanel alt">
+
+	<breadcrumb>
+		<li class="active"><span>{{userRole | CapitalizePipe}}</span></li>
+	</breadcrumb>
+
+	<div class="alert alert-success" *ngIf="success_messages !=''">
+			{{success_messages}}
+		 </div>
+	<div class="">
+
+
+		<notification-message [messages]="error_messages"></notification-message>
+		<div class="row">
+			<div class="col-lg-6">
+				<h2 class="headTitle">All {{userRole | CapitalizePipe}}</h2>
+			</div>
+			<div class="col-lg-6">	 
+				<div class="search_sec"  >
+					<form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+						<div class="topSearchCont acTive">
+							<input autocomplete="off" formControlName="string" name="string"
+										placeholder="Search" type="search" >
+						</div>
+						<div class="topSearch">
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</div>
+						<div class="clearfix"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+<div class="table-responsive ">
+
+		<table class="table table-striped tableNowrap" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10"  >
+			<thead>
+			<tr>
+				<th *ngIf="userType === 'vendor'">UserID</th>
+				<th> 
+					<mfDefaultSorter by="user_name">Username</mfDefaultSorter>
+				</th>
+				<th>
+					<mfDefaultSorter by="email"> Email </mfDefaultSorter>
+				</th>
+				<th>
+					 Ethereum Address 
+				</th>
+				<!--<th class="text-center">
+					<mfDefaultSorter by="slug">Image</mfDefaultSorter>
+				</th>-->
+				<th class="text-center">
+					<mfDefaultSorter by="mobile_no">Mobile Number</mfDefaultSorter>
+				</th>
+				<th class="text-center">Status</th>
+				<th class="text-center" *ngIf="userIndicator=='vendor' || userIndicator=='reseller'">KYC Status</th>
+				<th class="text-center">Created On</th>
+				<th class="text-center">Action</th>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of mf.data; let i = index">
+					<td *ngIf="userType === 'vendor'" >{{getUserID(item.id, userType)}}</td>
+					<!-- <td *ngIf="(item?.profile | json) == '{}'">{{item.user_name}}</td>
+					<td *ngIf="(item?.profile | json) != '{}'">{{item?.profile?.full_name}}</td> -->
+					<td>
+						{{item.user_name}}
+						
+					</td>
+					<td>{{item.email}}</td>
+					<td>{{item?.profile?.ethereum_address}}</td>
+					<!--<td class="text-center"><img src="{{item.avatar}}"/></td>-->
+					<td class="text-center">{{item.mobile_no}}</td>
+					<td class="text-center" *ngIf="item?.is_active == 1">
+
+						<button						
+						[swal]="{text:'Do you really want to Inactive this user',type:'question'}"
+						(confirm)="changeStatus(item?.is_active,item.id)"
+						type="button"
+						title="Active"
+						class="btn btn-sm btn-primary linkBg">
+							<i class="fa fa-unlock-alt" aria-hidden="true"></i>
+						</button>	
+
+
+						<!--<a href="javascript:void(0)" (click)="changeStatus(item.is_active,item.id)"  title="Active"><i class="fa fa-unlock-alt" aria-hidden="true"></i></a>-->
+					</td>
+					<td class="text-center" *ngIf="item?.is_active == 0">
+						<button						
+						[swal]="{text:'Do you really want to Active this user',type:'question'}"
+						(confirm)="changeStatus(item?.is_active,item.id)"
+						type="button"
+						title="Inactive"
+						class="btn btn-sm btn-primary linkBg">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</button>
+
+
+						<!--<a href="javascript:void(0)" (click)="changeStatus(item.is_active,item.id)" title="Inactive"><i class="fa fa-lock" aria-hidden="true"></i></a>-->
+					</td>
+
+					<td *ngIf="userIndicator=='vendor' || userIndicator=='reseller'">
+						<ng-container *ngIf="item.is_kyc==0">
+								<button [swal]="{text:'Do you want to change the status of KYC to active?',type:'question'}"
+								(confirm)="changeKYCStatus(item.is_kyc,item.id,i)"
+								[innerHtml]="item.is_kyc==1? kycStatusYes : kycStatusNo" 
+								class="btn btn-sm btn-primary linkBg" >
+							</button>
+						</ng-container>
+						<ng-container *ngIf="item.is_kyc==1">
+								<button [innerHtml]="kycStatusYes" 
+								class="btn btn-sm btn-primary linkBg" >
+							</button>
+						</ng-container>
+
+						
+					</td>
+
+					<td class="text-center">{{item.created_at | date: 'dd-MM-yyyy'}}</td>
+					<td class="text-center">					
+
+						<a routerLink="/admin/users/{{item.id}}/{{pageTitle}}/details" class="btn btn-sm btn-info linkBg" title="View details">
+							<i class="fa fa-eye"></i>
+						</a>
+						<a [routerLink]="['/admin/users/',item.id,'edit']" class="btn btn-sm btn-success linkBg" title="Edit">
+							<i class="fa fa-pencil"></i>
+						</a>
+						
+						<button						
+						[swal]="{text:'Are you sure you want to change the user password',type:'question'}"
+						(confirm)="changePassword(item.id)"
+						type="button"
+						title="Update Password"
+						class="btn btn-sm btn-warning linkBg">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</button>
+
+						<!--<a [routerLink]="['/admin/users/',item.id,'change-password']" class="btn btn-sm btn-success linkBg" title="Change password">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</a>-->
+					</td> 
+				</tr>
+			</tbody>
+			<tfoot> 
+				<tr>
+					<td colspan="7">
+						<mfBootstrapPaginator [rowsOnPageSet]="10" (click)="goToTop()"></mfBootstrapPaginator>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		
+</div>
+<div class="row mt30" *ngIf="data.length === 0">
+	<div class="col-12">
+		<div class="alert alert-warning text-center">
+			<strong>Oops!</strong>
+			No record found.
+		</div>
+	</div>
+</div>
+	</div>
+</div>

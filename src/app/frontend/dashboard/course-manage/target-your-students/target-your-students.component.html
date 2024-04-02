@@ -1,0 +1,73 @@
+<section class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h2>Target Your Consumers</h2>
+  </div>
+</section>
+
+<section class="cmsWrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-course-manage-left-panel></app-course-manage-left-panel>
+      </div>
+      <div class="col-lg-9">
+        <div class="formSEc">
+            <!-- <div Class= "alert-success"   *ngIf="successMsg">
+                    {{successMsg}}
+            </div> -->
+            <!-- <div *ngIf="errorMsg">
+                    <notification-message [messages]="messages"></notification-message>
+            </div> -->
+          <h2>The descriptions you write here will help students decide if your course is the one for them.</h2>
+          <form [formGroup]="myForm" (ngSubmit)="submit()">
+               
+                <div formArrayName="question">
+                    <div *ngFor="let questionans of getQuestion(myForm); let i=index"  >
+                        <div class="groupForm" style="margin: 5px;" [formGroupName]="i" *ngIf="i<noOfQuestions">
+                        <div class="groupFormSingle">
+                            
+                            <input class="inpClass questionText" type="text" placeholder="Question" formControlName="question"  > 
+                            <input type="hidden" formControlName="course_target_id">
+                        </div>
+                         
+
+                            <div formArrayName="answers">
+              
+                                <div class="groupFormSingle" *ngFor="let address of getAnswer(questionans); let j=index">
+                                    <div [formGroupName]="j">
+                                        
+                                        <div class="inpWrap">
+                                                <input type="hidden" formControlName="answer_id">
+                                                <input type="text" class="inpClass" placeholder="Answer" formControlName="answer"   maxlength="75">
+                                                <div class="delete-inpWrap"><i class="fa fa-trash" aria-hidden="true" (click)="removeAnswer(i,j)" ></i></div>
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="addClass" (click)="addAnswer(i)"><i aria-hidden="true" class="fa fa-plus"></i> Add an answer</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right">
+                        <input class="ansSave" type="submit" name="" value="Save & Next ">
+                </div>
+              </form>
+
+              <!-- <div class="pre_nxt_btn_area">
+                  <a routerLink="/dashboard/course-edit/curriculum" class="nxt_btn" > Next </a>
+                  <div class="clearfix"></div>
+              </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</section> 
+
+
+<!-- <div style="margin-top: 20px;">
+    {{myForm.value | json}}
+  </div> -->

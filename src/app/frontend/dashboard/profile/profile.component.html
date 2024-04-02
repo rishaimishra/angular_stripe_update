@@ -1,0 +1,186 @@
+<section class="mainContainer">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-2 col-lg-3 leftPanel">
+          <app-dashboard-left-panel></app-dashboard-left-panel>
+        </div>
+        <div class="col-xl-10 col-lg-9">
+          <div class="rightPanel">
+            <div class="centerHeading">
+              <h2>Profile</h2>
+              <h3>Add information about yourself</h3>
+            </div>
+            <!-- <div Class= "alert-success"   *ngIf="successMsg">
+                {{successMsg}}
+            </div>         -->
+            <div class="formWrap">
+                <!-- <notification-message [messages]="messages" *ngIf="errorMsg"></notification-message> -->
+              <form [formGroup]="userProfileForm" (ngSubmit)="profileSubmit()" class="multi">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label for="">Basics: <span class="required">*</span></label>
+                    <div class="inputWrap" *ngVar="userProfileForm.get('first_name') as first_name">
+                      <input type="text"   class="inpField" placeholder="First name"  name="first_name" formControlName="first_name" maxlength="50">
+                    
+                      <form-validation-message [fromInstance]="first_name"></form-validation-message>
+                   
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="">&nbsp;</label>
+                    <div class="inputWrap" *ngVar="userProfileForm.get('last_name') as last_name">
+                      <input type="text" class="inpField" placeholder="Last Name" name="last_name" formControlName="last_name" maxlength="50">
+                   
+                      <form-validation-message [fromInstance]="last_name"></form-validation-message>
+                    
+                    </div>
+                  </div> 
+                </div>
+
+                <label for="">Occupation: <span class="required">*</span></label>
+                <div class="inputWrap" *ngVar="userProfileForm.get('head_line') as head_line">
+                  <input type="text" class="inpField" placeholder="Engineer" name="head_line" formControlName="head_line"  maxlength="250">
+                  <span class="fieldInst">eg-Engineer..</span>
+              
+                  <form-validation-message [fromInstance]="head_line"></form-validation-message>
+                </div>
+
+                  <label for="">About you: <span class="required">*</span> </label>
+                  <div class="inputWrap" *ngVar="userProfileForm.get('biography') as biography" >
+                    <textarea  class="inpField" name="biography" formControlName="biography" placeholder="Biography"></textarea>
+                    <span class="fieldInst">Links are not allowed here but are allowed in the links section below. Coupon codes are not permitted.</span>
+                   
+                    <form-validation-message [fromInstance]="biography"></form-validation-message>
+                  </div>
+                  
+                  <label for="">Language:</label>
+                  <div class="inputWrap">
+                    <input type="text" class="inpField" value="English" disabled>    
+                    <!-- <select class="inpField" name="">
+                      <option value="">English</option>
+                    </select> -->
+                  </div>
+
+                <label for="">Ethereum Address: <span class="required">*</span></label>
+                <div class="inputWrap" *ngVar="userProfileForm.get('ethereum_address') as ethereum_address">
+                  <input type="text" class="inpField" placeholder="Ethereum Address" name="ethereum_address" formControlName="ethereum_address"  maxlength="250">
+              
+                  <form-validation-message [fromInstance]="ethereum_address"></form-validation-message>
+                </div>
+
+                  
+
+                  <div class="siteDivide"></div>
+
+                  <div class="row">
+
+                    <div class="col-sm-6"><label for="">Address: <span class="required">*</span></label>
+                      <div class="inputWrap" *ngVar="userProfileForm.get('address') as address" >
+                        <input class="inpField" formControlName="address" name="address"
+                          placeholder="Address" type="text">
+            
+                        <form-validation-message [fromInstance]="address"></form-validation-message>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="">Country: <span class="required">*</span></label>
+                      <div class="inputWrap" *ngVar="userProfileForm.get('country_id') as country_id" >
+                        <ng-select *ngIf="countries.length > 0"
+                          [items]="countries"
+                          bindLabel="name"
+                          bindValue="id"
+                          placeholder="Select Country"
+                          (change)="onCountryChange($event)"
+                          formControlName="country_id"
+                          class="inpClass multiselect" 
+                          >
+                        </ng-select>
+                        <form-validation-message [fromInstance]="country_id"></form-validation-message>
+
+                      </div>
+                    </div>
+                  </div>
+            
+                  <div class="row">
+            
+                    <div class="col-sm-6">
+                      <label for="">State: <span class="required">*</span></label>
+                      <div class="inputWrap" *ngVar="userProfileForm.get('state_id') as state_id">
+                        <ng-select
+                          [items]="states"
+                          bindLabel="name"
+                          bindValue="id"
+                          placeholder="Select State"
+                          (change)="onStateChange($event)"
+                          formControlName="state_id"
+                          class="inpClass multiselect" 
+                          >
+                        </ng-select>
+                        <form-validation-message [fromInstance]="state_id"></form-validation-message>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="">City: <span class="required">*</span></label>
+                      <div class="inputWrap" *ngVar="userProfileForm.get('city_id') as city_id">
+                        <ng-select
+                          [items]="cities"
+                          bindLabel="name"
+                          bindValue="id"
+                          placeholder="Select City"
+                          formControlName="city_id"
+                          class="inpClass multiselect" 
+                          >
+                        </ng-select>
+                        <form-validation-message [fromInstance]="city_id"></form-validation-message>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="siteDivide"></div>
+                  <div formGroupName="social_links">
+                    <label for="">Links</label>
+                    <div class="inputWrap">
+                      <input type="text" class="inpField" placeholder="Website (http(s)://..)" name="links" formControlName="links">
+                    
+                    </div>
+
+                    <div class="inputWrap alt">
+                      <input type="text" class="inpField" placeholder="Twitter Profile" name="twitter" formControlName="twitter">
+                      <span class="fieldInst">Please enter your Twitter username 
+                      </span>
+                      <div class="iconLeft"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+                    
+                    </div>
+
+                    <div class="inputWrap alt">
+                      <input type="text" class="inpField" placeholder="Facebook Profile" name="facebook" formControlName="facebook">
+                      <span class="fieldInst">Please enter your Facebook username</span>
+                      <div class="iconLeft"><i class="fa fa-facebook" aria-hidden="true"></i></div>
+                    
+                    </div>
+
+                    <div class="inputWrap alt">
+                      <input type="text" class="inpField" placeholder="Linkedin Profile" name="linkedin" formControlName="linkedin" >
+                      <span class="fieldInst">Please enter your LinkedIn username</span>
+                      <div class="iconLeft"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
+                    
+                    </div>
+
+                    <div class="inputWrap alt">
+                      <input type="text" class="inpField" placeholder="Youtube Profile" name="youtube" formControlName="youtube" >
+                      <span class="fieldInst">Please enter your YouTube username </span>
+                      <div class="iconLeft"><i class="fa fa-youtube" aria-hidden="true"></i></div>
+                   
+                    </div>
+                </div>
+                  <input  [className]="userProfileForm.valid ? 'submitBtn  ' : 'submitBtn disableSubmit'" type="submit"  value="Save">
+                </form>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</section>

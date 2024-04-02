@@ -1,0 +1,365 @@
+<div class="profileDesc">
+	<div class="profileDescImg">
+		<img src="{{userProfileImage}}" onError="this.src='assets/images/no-image.png';" alt="..." />
+
+		<a (click)="profileImageModal()" class="profile-upload-btn">
+			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+		</a>
+	</div>
+	<h2 class="leftPanelFullName">{{userFullName}}</h2>
+	<h3>{{userHeadLine}} </h3>
+</div>
+<div class="sideNav" *ngIf="showHideDashboard=='1'">
+	<ul>
+		<li>
+			<a *ngIf='checkVendor' href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard"
+				routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-tachometer"
+					aria-hidden="true"></i>Dashboard</a>
+
+			<a *ngIf=' checkReseller' href="javascript:void(0)" (click)="changeRoute()"
+				routerLink="/dashboard/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i
+					class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
+		</li>
+		<li>
+			<!-- <a href="javascript:void(0)"> <i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+            <ul>
+                <li>
+                    <a routerLink="/dashboard/profile">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i> Profile</a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/change-password">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i> Change Password</a>
+                </li>
+            </ul> -->
+			<!-- <ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle > -->
+						<a class="hasSublink " href="javascript:void(0)"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
+						<!-- <i class="fa fa-angle-down down_arrow" aria-hidden="true"></i> -->
+					<!-- </ng-template>
+					<ng-template ngbPanelContent> -->
+						<ul>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/profile"
+									routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right " aria-hidden="true"></i>Edit Profile
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()"
+									routerLink="/dashboard/change-password" routerLinkActive="active"
+									[routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Change Password</a>
+							</li>
+						</ul>
+					<!-- </ng-template>
+				</ngb-panel>
+			</ngb-accordion> -->
+		</li>
+		<!-- <li>
+      <a *ngIf='checkVendor' routerLink="/dashboard/course-create">
+        <i class="fa fa-thumb-tack" aria-hidden="true"></i> Course Create</a>
+    </li>
+    <li>
+      <a *ngIf='checkVendor' routerLink="/dashboard/my-course">
+        <i class="fa fa-file" aria-hidden="true"></i> My Course</a>
+    </li> -->
+
+		<li *ngIf='checkReseller || checkCustomer'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/transactions"
+				routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-credit-card"
+					aria-hidden="true"></i>My Orders</a>
+		</li>
+		<li *ngIf='checkVendor'>
+
+			<!-- <ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle> -->
+						<a class="hasSublink " href="javascript:void(0)">
+						<i class="fa fa-bars" aria-hidden="true"></i>Manage Categories
+						<!-- <i class="fa fa-angle-down down_arrow" aria-hidden="true"></i> -->
+						</a>
+					<!-- </ng-template>
+					<ng-template ngbPanelContent> -->
+						<ul>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()"
+									routerLink="/dashboard/courses/category" routerLinkActive="active"
+									[routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Course Categories</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()"
+									routerLink="/dashboard/events/category" routerLinkActive="active"
+									[routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Event Categories </a>
+							</li>
+
+						</ul>
+					<!-- </ng-template>
+				</ngb-panel>
+			</ngb-accordion> -->
+		</li>
+
+		<li *ngIf='checkCustomer'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/my-courses"
+				routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+				<i class="fa fa-graduation-cap" aria-hidden="true"></i>My Courses</a>
+		</li>
+
+		<li *ngIf='checkCustomer'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/my-events"
+				routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+				<i class="fa fa-calendar" aria-hidden="true"></i>My Events</a>
+		</li>
+
+		<li *ngIf='checkCustomer'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/wishlist"
+				routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-heart"
+					aria-hidden="true"></i>Wishlist</a>
+		</li>
+		<li *ngIf='checkReseller'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/reseller/courses"
+				[ngClass]="{'active': currentRoute == 'reseller'}"><i class="fa fa-user" aria-hidden="true"></i>Reseller Courses</a>
+		</li>
+
+		<li *ngIf='checkVendor'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/sales" routerLinkActive="active"
+				[routerLinkActiveOptions]="{exact: true}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Sales</a>
+		</li>
+		<li *ngIf='checkVendor'>
+
+			<!-- <ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle> -->
+						<a class="hasSublink " href="javascript:void(0)">
+						<i class="fa fa-graduation-cap" aria-hidden="true"></i>Manage Courses
+						<!-- <i class="fa fa-angle-down down_arrow" aria-hidden="true"></i> -->
+						</a>
+					<!-- </ng-template>
+					<ng-template ngbPanelContent> -->
+						<ul>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/my-course"
+									routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Course List</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()"
+									routerLink="/dashboard/course-create" routerLinkActive="active"
+									[routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Create Course </a>
+							</li>
+
+						</ul>
+					<!-- </ng-template>
+				</ngb-panel>
+			</ngb-accordion> -->
+
+		</li>
+
+		<li *ngIf='checkWalletShowStatus'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/my-wallet"
+				routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-google-wallet"
+					aria-hidden="true"></i>My Wallet</a>
+		</li>
+		<li *ngIf='checkVendor'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/my-payouts" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-money"
+					aria-hidden="true"></i>My Payouts</a>
+		</li>
+
+		<li *ngIf='checkVendor'>
+			<!-- <ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle> -->
+						<a class="hasSublink " href="javascript:void(0)">
+						<i class="fa fa-bullhorn" aria-hidden="true"></i>Manage Announcement
+						<!-- <i class="fa fa-angle-down down_arrow" aria-hidden="true"></i> -->
+						</a>
+					<!-- </ng-template>
+					<ng-template ngbPanelContent> -->
+						<ul>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/annoucement"
+									routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Announcement List</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()"
+									routerLink="/dashboard/annoucement/create" routerLinkActive="active"
+									[routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Create Announcement</a>
+							</li>
+
+						</ul>
+					<!-- </ng-template>
+				</ngb-panel>
+			</ngb-accordion> -->
+		</li>
+
+		<li *ngIf='checkVendor'>
+			<!-- <ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle> -->
+						<a class="hasSublink " href="javascript:void(0)">
+						<i class="fa fa-university" aria-hidden="true"></i>Manage Bank Details
+						<!-- <i class="fa fa-angle-down down_arrow" aria-hidden="true"></i> -->
+						</a>
+					<!-- </ng-template>
+					<ng-template ngbPanelContent> -->
+						<ul>
+							<li>
+								<a href="javascript:void(0)" (click)="changeRoute()"
+									routerLink="/dashboard/bank-details" routerLinkActive="active"
+									[routerLinkActiveOptions]="{exact: true}">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Bank Details List</a>
+							</li>
+							<!-- <li>
+									<a routerLink="/dashboard/bank-details/create">
+										<i class="fa fa-angle-right" aria-hidden="true"></i> Create Bank Details</a>
+								</li> -->
+						</ul>
+					<!-- </ng-template>
+				</ngb-panel>
+			</ngb-accordion> -->
+		</li>
+
+		<li>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/notifications"
+				routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+				<i class="fa fa-bell" aria-hidden="true"></i>Notifications</a>
+		</li>
+		<li *ngIf='checkVendor'>
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/tutor-agreement"
+				routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-file-text-o"
+					aria-hidden="true"></i>Tutor agreement</a>
+		</li>
+
+		<!-- <li *ngIf='checkVendor'>
+			<ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle><i class="fa fa-user" aria-hidden="true"></i> Manage Product <i class="fa fa-angle-down down_arrow"
+						 aria-hidden="true"></i></ng-template>
+					<ng-template ngbPanelContent>
+						<ul>
+							<li>
+								<a routerLink="/dashboard/product">
+									<i class="fa fa-angle-right" aria-hidden="true"></i> Product List</a>
+							</li>
+							<li>
+								<a routerLink="/dashboard/product/create">
+									<i class="fa fa-angle-right" aria-hidden="true"></i> Create Product</a>
+							</li>
+						</ul>
+					</ng-template>
+				</ngb-panel>
+			</ngb-accordion>
+		</li> -->
+		<li *ngIf='checkVendor'>
+			<!-- <ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle> -->
+						<a class="hasSublink " href="javascript:void(0)">
+						<i class="fa fa-user" aria-hidden="true"></i>
+						Manage Events 
+						</a>
+						<!-- <iclass="fa fa-angle-down down_arrow" aria-hidden="true"></i> -->
+					<!-- </ng-template>
+					<ng-template ngbPanelContent> -->
+						<ul>
+							<li>
+								<a routerLink="/dashboard/ticket">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Event List</a>
+							</li>
+							<li>
+								<a routerLink="/dashboard/ticket/create">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Create Event</a>
+							</li>
+						</ul>
+					<!-- </ng-template>
+				</ngb-panel>
+			</ngb-accordion> -->
+		</li>
+
+		<li *ngIf='checkVendor'>
+			<!-- <ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle> -->
+						<a class="hasSublink " href="javascript:void(0)">
+						<i class="fa fa-user-o" aria-hidden="true"></i>
+						Manage Speakers 
+						</a>
+						<!-- <i class="fa fa-angle-down down_arrow" aria-hidden="true"></i> -->
+					<!-- </ng-template>
+					<ng-template ngbPanelContent> -->
+						<ul >
+							<li>
+								<a routerLink="/dashboard/my-speaker-list">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Speaker List</a>
+							</li>
+							<li>
+								<a routerLink="/dashboard/my-speaker/create">
+									<i class="fa fa-angle-right" aria-hidden="true"></i>Create Speaker</a>
+							</li>
+						</ul>
+					<!-- </ng-template>
+				</ngb-panel>
+			</ngb-accordion> -->
+		</li>
+
+
+		<li *ngIf='checkVendor'>
+			<!-- <ngb-accordion #acc="ngbAccordion">
+				<ngb-panel id="toggle-1">
+					<ng-template ngbPanelTitle> -->
+						<a class="hasSublink " href="javascript:void(0)">
+						<i class="fa fa-question-circle" aria-hidden="true"></i>Faq
+						</a>
+						<!-- <i class="fa fa-angle-down down_arrow" aria-hidden="true"></i> -->
+					<!-- </ng-template>
+					<ng-template ngbPanelContent> -->
+						<ul>
+							<li>
+								<a title="Technology FAQ"
+									href="https://successlife.freshdesk.com/support/solutions/folders/36000172221"
+									target="_blank">
+									Technology FAQ
+								</a>
+							</li>
+							<li>
+								<a title="Marketplace FAQ"
+									href="https://successlife.freshdesk.com/support/solutions/folders/36000172218"
+									target="_blank">
+									Marketplace FAQ
+								</a>
+
+							</li>
+							<li>
+								<a title="Wallet FAQ"
+									href="https://successlife.freshdesk.com/support/solutions/folders/36000172220"
+									target="_blank">
+									Wallet FAQ
+								</a>
+							</li>
+
+						</ul>
+					<!-- </ng-template>
+				</ngb-panel>
+			</ngb-accordion> -->
+		</li>
+		<li >
+			<a href="javascript:void(0)" (click)="changeRoute()" routerLink="/dashboard/support-ticket" routerLinkActive="active"
+				[routerLinkActiveOptions]="{exact: true}"><i class="fa fa-ticket" aria-hidden="true"></i>Service Request</a>
+		</li>
+		<!-- <li><a href="#"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Account</a></li>
+    <li><a href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i> Privacy</a></li>
+    <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</a></li>
+    <li><a href="#"><i class="fa fa-file" aria-hidden="true"></i> My Courses</a></li>
+    <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Wishlist</a></li>
+    <li><a href="#"><i class="fa fa-list" aria-hidden="true"></i> Order History</a></li>
+    <li><a href="#"><i class="fa fa-superpowers" aria-hidden="true"></i> Reward Points</a></li>
+    <li><a href="#"><i class="fa fa-trophy" aria-hidden="true"></i> Achievements</a></li>
+    <li><a href="#"><i class="fa fa-user-times" aria-hidden="true"></i> Close Account</a></li> -->
+	</ul>
+</div>

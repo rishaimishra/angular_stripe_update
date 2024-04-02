@@ -1,0 +1,194 @@
+<div *ngFor="let panel of leftPanels" [class]="panel?.cssClass">
+	<ng-container *ngTemplateOutlet="getTemplateRef(panel.template)"></ng-container>
+</div>
+
+<ng-template #vendorFilter>
+	<div class="browseBy alt" *ngIf="vendors.length > 0">
+		<h2>Browse by Vendor</h2>
+		<div class="contentThumbWrap" *ngIf="vendors.length > 0">
+			<div class="contentThumbRow" *ngFor="let rs of vendors">
+				<div class="contentThumbRowImg">
+					<!-- <img src="assets/images/featured.jpg" alt=""> -->
+					<img *ngIf="!rs?.avatar" src="assets/images/noimg-75x60.jpg" alt="No Image">
+					<img *ngIf="rs?.avatar" [src]="rs?.avatar" alt="">
+				</div>
+				<h3><a [routerLink]="['/', getSlug(rs)]">{{getUserName(rs)}}</a></h3>
+				<ngb-rating [rate]="0"></ngb-rating>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #categoriesFilter>
+	<div class="browseBy" *ngIf="categories.length > 0">
+
+		<h2>Browse by Categories</h2>
+		<div class="input-search-text">
+			<input [(ngModel)]="searchcategory" class="form-control" placeholder="search category">
+		</div>
+		<ul>
+			<li> 
+				<a [routerLink]="['/'+listingModule]" >All</a>
+			</li>
+			<li *ngFor="let rs of categories | searchString : searchcategory">
+			<!-- <li *ngFor="let rs of categories "> -->
+				<a [routerLink]="['/'+listingModule, rs?.slug]">{{rs?.name}} {{ '(' + rs?.product_count + ')'}}</a>
+			</li>
+		</ul>
+	</div>
+</ng-template>
+
+<ng-template #instructorFilter>
+	<div class="browseBy alt" *ngIf="vendors.length > 0">
+		<h2>Browse by Tutor</h2>
+		<div class="contentThumbWrap">
+			<div class="contentThumbRow" *ngFor="let rs of vendors">				
+				<div class="contentThumbRowImg">
+					<img *ngIf="!rs?.avatar" src="assets/images/noimg-75x60.jpg" alt="No Image">
+					<img *ngIf="rs?.avatar" [src]="rs?.avatar" alt="">
+				</div>				
+				<h3><a [routerLink]="['/', getSlug(rs)]">{{getUserName(rs).length > 20 ? (getUserName(rs) | slice:0:15) + '...' : getUserName(rs) }} {{(rs?.count) ? '(' + rs?.count + ')' : ''}}</a></h3>
+				<div class="userID">{{getUserID(rs.id)}}</div>				
+				<ngb-rating [rate]="rs.avg_rating"></ngb-rating>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<!-- <ng-template #featuredEvents>
+	<div class="browseBy alt">
+		<div class="overflow_div">Coming soon</div>
+		<h2>Featured Events</h2>
+		<div class="featuredSide">
+			<owl-carousel [options]="featureSide" [carouselClasses]="['owl-theme', 'sliding']">
+				<div class="item">
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+				</div>
+				<div class="item">
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+	</div>
+</ng-template> -->
+
+<ng-template #countryFilter>
+		<div class="browseBy" *ngIf="eventCountries.length > 0">
+			<h2>Browse by Country</h2>
+			<div class="input-search-text">
+				<input [(ngModel)]="searchCountry" class="form-control" placeholder="search country">
+			</div>
+			<ul>
+				<li> 
+					<a [routerLink]="['/'+listingModule]" (click)="setCurrentCountry(all)">All</a>
+				</li>
+				<li *ngFor="let rs of eventCountries | searchString : searchCountry">
+				<!-- <li *ngFor="let rs of eventCountries "> -->
+					<a [routerLink]="['/'+listingModule]" [queryParams]="{country_id: rs.id}" (click)="setCurrentCountry(rs?.name)">{{rs?.name}} {{ '(' + rs?.product_count + ')'}}</a>
+				</li>
+			</ul>
+		</div>
+</ng-template>
+
+<ng-template #speakerFilter>
+		<div class="browseBy" *ngIf="eventSpeakers.length > 0">
+			<h2>Browse by Speakers</h2>
+			<div class="input-search-text">
+				<input [(ngModel)]="searchSpeaker" class="form-control" placeholder="search speaker">
+			</div>
+			<ul>
+				<li> 
+					<a [routerLink]="['/'+listingModule]" (click)="setCurrentSpeaker(all)">All</a>
+				</li>
+				<li *ngFor="let rs of eventSpeakers | searchString : searchSpeaker">
+				<!-- <li *ngFor="let rs of eventCountries "> -->
+					<a [routerLink]="['/'+listingModule]" [queryParams]="{speaker_id: rs.id}" (click)="setCurrentSpeaker(rs?.name)">{{rs?.name}} {{ '(' + rs?.product_count + ')'}}</a>
+				</li>
+			</ul>
+		</div>
+</ng-template>
+
+<ng-template #featuredCourses>
+	<div class="browseBy alt">
+		<div class="overflow_div">Coming soon</div>
+		<h2>Featured Courses</h2>
+		<div class="featuredSide">
+			<owl-carousel [options]="featureSide" [carouselClasses]="['owl-theme', 'sliding']">
+				<div class="item">
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+				</div>
+				<div class="item">
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+					<div class="featuredSideSingle">
+						<div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+						<h3>Masterclass courses for skills development</h3>
+						<img src="assets/images/ratings.png" alt="">
+						<h4>01.08.2018</h4>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+	</div>
+</ng-template>

@@ -1,0 +1,143 @@
+<div class="rightPanel alt">
+    <breadcrumb>
+      <li class="active"><span>Service Requests</span></li>
+    </breadcrumb>
+  <div class="centerHeading">
+    <!-- <h1>Service Requests</h1> -->
+    <div class="col-lg-12 custom_form">	 
+            <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+              <div class="row">
+                    <!-- <div class="col-sm-2">
+                        <label style="width:100%;">ticket Id</label>
+                        <div class="">
+                            <input autocomplete="off" name="string"
+                                placeholder="Ticket Id" type="search" class="form-control" >
+                        </div>
+                    </div> -->
+                    <div class="col-sm-12 col-md-5"> 
+                        <div class="">
+                            <label class="labelClass">Status</label>
+                            <select  class="form-control search" formControlName="status">
+                              <option value="" >All </option>
+                              <option value="{{item.value}}" *ngFor="let item of statusList" >{{item.label}} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-5">
+                        <div class="">
+                            <label class="labelClass">Priority</label>
+                            <select  class="form-control search" formControlName="priority">
+                              <option value="" >All </option>
+                              <option value="{{item.value}}" *ngFor="let item of priorities">{{item.label}} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2">
+                      <div class="text-left">
+                        <button type="submit" class="btn btn-primary btn-sm searchBtn">Search</button>
+                      </div> 
+                    </div>
+                    <div class="clearfix"></div>
+                
+              </div>
+            </form>
+    </div>
+    
+  </div>
+
+  <div class="table_bg">
+  <div class="table-responsive table_cont"  *ngIf="records.length >0" >
+    <table class="table table-striped"  >
+        <thead>
+            <th>Ticket No.</th>			
+            <th>Issue</th>	
+            <th>Ticket status</th>
+            <th>Priority</th>
+        </thead>
+      <tbody  *ngIf="records.length > 0" infiniteScroll
+        [infiniteScrollDistance]="3"
+        [infiniteScrollThrottle]="50"
+        [infiniteScrollContainer]="selector"
+        [fromRoot]="true"
+        (scrolled)="onScroll()" >
+        <ng-container *ngFor="let rs of records">	
+        <tr>
+         <!--  <td>
+            <div class="title"><a href="#" [routerLink]="['/admin', 'support-ticket', 'reply', rs.id]">
+              <span >{{rs?.subject}}</span> #{{rs.id}}</a>
+            </div>
+            <div>{{rs?.created_at |  amTimeAgo : true}} ago</div>
+          </td> -->
+          <!-- <td>{{rs?.created_at | date : 'dd-MM-yyyy'}}</td> -->
+          <!-- <td>{{rs?.subject}}</td> -->
+          <!-- <td> -->
+            <!-- {{rs?.status}} -->
+            <!-- <div>
+                <select placeholder="status"  name="status"  [value]='rs?.status' (change)="statusChange($event.target.value, rs)" class="status" placement="left" ngbTooltip="Status">
+                    <option value="{{item.value}}" *ngFor="let item of statusList">{{item.label}} </option>
+                </select>
+            </div>
+            <div>
+                <select   placeholder="priority"  name="priority" [value]='rs?.priority' (change)="priorityChange($event.target.value, rs)" class="priority"  placement="left" ngbTooltip="Priority">
+                    <option value="{{item.value}}" *ngFor="let item of priorities">{{item.label}} </option>
+                </select>
+            </div>
+          </td> -->
+          <!-- <td>
+            {{rs?.priority}}
+            <select   placeholder="priority"  name="priority" [value]='rs?.priority' (change)="priorityChange($event.target.value, rs)">
+                <option value="{{item.value}}" *ngFor="let item of priorities">{{item.label}}</option>
+            </select>
+          </td>	 -->
+          <!-- <td>
+              <button class="btn btn-sm btn-primary linkBg" [routerLink]="['/admin', 'support-ticket', 'reply', rs.id]">Replies</button>
+          </td>	 -->
+
+
+          <td>
+              #{{rs?.id}}
+              <div>{{rs?.created_at |  amTimeAgo : true}} ago</div> 
+          </td>
+          <td>
+              <a href="#" [routerLink]="['/admin', 'support-ticket', 'reply', rs?.id]"> <span>{{rs?.subject}}</span> </a>
+          </td>
+          <td>
+              <div>
+                  <select placeholder="status"  name="status"  [value]='rs?.status' (change)="statusChange($event.target.value, rs)" class="status" placement="left" ngbTooltip="Status" [ngStyle]="{'color':rs.selectedStatus.color }">
+                      <option value="{{item.value}}" *ngFor="let item of statusList" [ngStyle]="{'color': item.color}">{{item.label}} </option>
+                  </select>
+              </div>
+          </td>
+          <td>
+              <div>
+                  <select   placeholder="priority"  name="priority" [value]='rs?.priority' (change)="priorityChange($event.target.value, rs)" class="priority"  placement="left" ngbTooltip="Priority" [ngStyle]="{'color':rs.selectedPriority.color }">
+                      <option value="{{item.value}}" *ngFor="let item of priorities" [ngStyle]="{'color': item.color}">{{item.label}} </option>
+                  </select>
+              </div>
+          </td>
+        </tr>
+        <!--<tr style="background: none;">
+          <td colspan="2" style="height:8px; padding:0;"></td>
+        </tr> -->
+
+
+      </ng-container>	
+        
+      </tbody>
+     
+    </table>
+  </div>
+</div>
+
+  <div class="row mt30" *ngIf="records.length === 0">
+    <div class="col-12">
+      <div class="alert alert-warning text-center">
+        <strong>Oops!</strong>
+        No record found.
+      </div>
+    </div>
+  </div>
+  
+
+  
+</div>

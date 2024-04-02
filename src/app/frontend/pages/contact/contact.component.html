@@ -1,0 +1,87 @@
+<section class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h3>
+      <i class="fa fa-home" aria-hidden="true"></i> / {{title}}</h3>
+    <h2>{{title}}</h2>
+  </div>
+</section>
+<section class="cmsWrap">
+  <div class="container"> 
+    <div class="row">
+      <div class="col-sm-5">
+          <div class="alert alert-success" *ngIf="success_messages !=''">
+              {{success_messages}}
+          </div>          
+        <notification-message [messages]="error_messages"></notification-message>
+        <form class="border border-light" [formGroup]="contactForm" (ngSubmit)="saveContactUs() " >
+          <div class="modalInp" *ngVar="contactForm.get('name') as name">
+            <input type="text" formControlName="name" name="name" id="defaultContactFormName" class="" placeholder="Name *"  
+              required>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <form-validation-message [fromInstance]="name"></form-validation-message>
+          </div>
+          <div class="modalInp" *ngVar="contactForm.get('email') as email">
+            <input type="email" formControlName="email" name="email" id="defaultContactFormEmail" class="" placeholder="E-mail *"
+              required>
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <form-validation-message [fromInstance]="email"></form-validation-message>
+          </div>
+          <!-- <div class="modalInp">
+            <input type="text" id="defaultContactFormEmail" [(ngModel)]="contactUsForm.mobile_no" #mobile_no="ngModel" name="mobile_no" class=""
+              placeholder="Mobile No * " required>
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            <form-validation-message [fromInstance]="mobile_no"></form-validation-message>
+          </div> -->
+          <div class="modalInp">
+            <div class="row">
+              <div class="col-md-4 col-4" *ngVar="contactForm.get('phone_code') as phone_code">
+                  <ng-select [items]="countryList"  bindLabel="label" bindValue="phone_code" formControlName="phone_code" [(ngModel)]="IN"  placeholder="+91(IN)">
+                      <ng-template ng-label-tmp let-item="item">
+                          <img height="15" width="15" [src]="item.image ? item.image: ''"/>
+                          {{item.label}}
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                          <img height="15" width="15" [src]="item.image ? item.image: ''"/>  <b>{{item.label}}</b>
+                      </ng-template>
+                  </ng-select>
+                  <form-validation-message [fromInstance]="phone_code"></form-validation-message>
+              </div>
+    
+              <div class="col-md-8 col-8">
+                <div class="modalInp-inner" *ngVar="contactForm.get('mobile_no') as mobile_no">
+                  <input type="text" id="defaultContactFormEmail"  formControlName="mobile_no" name="mobile_no" class=""
+                  placeholder="Mobile No * " minlength=10 maxlength=10>
+                  <form-validation-message [fromInstance]="mobile_no"></form-validation-message>
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                </div>
+              </div>  
+            </div>
+          </div>
+          <div class="modalInp" *ngVar="contactForm.get('message') as message">
+            <textarea class="" id="exampleFormControlTextarea2" rows="3" formControlName="message" name="message"
+              placeholder="Message *" required></textarea>
+            <i class="fa fa-comment" aria-hidden="true"></i>
+            <form-validation-message [fromInstance]="message"></form-validation-message>
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="contactForm.invalid">
+            Submit
+          </button>
+ 
+
+        </form>
+      </div>
+      <!-- <div class="col-sm-7" innerHTML="{{content}}">           -->
+      <div class="col-sm-7">
+        <h2>Contact Information</h2>
+        <p [innerHTML]="address">
+        </p>
+          <a href="javascript:void(0);">
+            <i aria-hidden="true" class="fa fa-phone"></i>{{phone_number}}
+          </a><br>
+          <a href="javascript:void(0);">
+            <i aria-hidden="true" class="fa fa-envelope"></i> {{mail_address}}
+          </a>
+      </div>
+    </div>
+  </div>
+</section>

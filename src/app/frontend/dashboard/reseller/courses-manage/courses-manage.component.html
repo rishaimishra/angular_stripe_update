@@ -1,0 +1,55 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>Manage Courses</h2>
+	</div>
+	<div class="formWrap">
+		<div class="row">
+			<div class="col-12 toolBox">
+				<button class="btn btn-success saveBtn" [disabled]="dataLoader" (click)="saveData()">Add Item(s) <i *ngIf="dataLoader" class="fa fa-spinner fa-spin"></i></button>
+			</div>
+		</div>
+		<div class="row" *ngIf="records?.length > 0">
+			<div class="col-3" *ngFor="let item of records">
+				<div class="itemMainDiv">
+					<label for="{{'item-' + item?.id}}">
+						<div class="imageDiv">
+							<img *ngIf="!item?.images?.thumbnail" class="img-fluid" [src]="noImage?.size290x195" alt="{{item?.title}}">
+							<img *ngIf="item?.images?.thumbnail" class="img-fluid" [src]="item?.images?.thumbnail" alt="{{item?.title}}">
+						</div>
+						<div class="detailsDiv">
+							<div class="itemChkbox">
+								<input type="checkbox" (change)="onChangeItem($event)" name="item_course" [value]="item?.id" id="{{'item-' + item?.id}}">
+								<span class="checkBoxMark"></span>
+							</div>
+							<a target="_blank" [routerLink]="['/course-details', item?.slug]" class="itemTitle">
+								{{item?.title}}
+							</a>
+
+							<div class="itemUtility">
+								<div class="revwRat">
+									<span class="itemReview">{{item?.avg_reviews}} reviews</span>
+									<span class="itemRating star_area">
+										<ngb-rating [rate]="item?.rating"></ngb-rating>
+									</span>
+								</div>
+								<div class="userPrice"> 
+									<span class="vendorNm">By <b>{{item?.user?.profile?.full_name}}</b></span>
+									<span class="priceVl">
+										<span class="originalPrc" *ngIf="hasOffer(item)">{{((item?.price) ? (item?.price) : '0') | currency : item?.currency :'symbol':'1.2-2'}}</span>
+										<span class="actualPrc">{{getPrice(item) | currency : item?.currency :'symbol':'1.2-2'}}</span>
+
+									</span>
+								</div>
+							</div>
+						</div>
+					</label>
+				</div>
+			</div>
+			<!-- <div class="col-3"></div>
+			<div class="col-3"></div>
+			<div class="col-3"></div> -->
+		</div>
+	</div>
+
+</div>

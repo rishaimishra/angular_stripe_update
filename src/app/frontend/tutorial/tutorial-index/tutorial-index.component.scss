@@ -1,0 +1,417 @@
+@import "../../../../assets/scss/custom-mixin";
+
+.courseOverview_banner{
+  	background: url(../../../../assets/images/page-heading.jpg) top center no-repeat;
+  	background-size: cover;
+  	min-height: 300px;
+}
+
+.courseOver_cont{
+  	margin: 0;
+  	padding: 0;
+  
+  	h1{
+    	color: #FFF;
+    	font-size: 24px;
+    	font-weight: 300;
+    	display: block;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
+    	white-space: nowrap;
+    	padding-right: 60px;
+    	margin-bottom:20px;
+
+    	a{ 
+			color:#fff;
+		}
+  	}
+
+  	.action_btn_area{
+    	margin: 0;
+		padding: 0;
+
+    	.continue_btn{
+      		color: #FFF;
+      		background: #3eb7aa;
+      		border: 1px solid transparent;
+      		padding: 16px 12px;
+      		font-size: 15px;
+      		line-height: 1.35135;
+      		border-radius: 2px;
+    	}
+  	}
+
+  	.star_area{
+    	margin: 20px 0 0 0;
+    	padding: 0;
+
+    	span{ 
+			margin-left: 15px;
+      		a{
+				color:#fff;
+			}
+    	}
+  	}
+
+  	.progress_bar_area{
+    	margin-top: 20px;
+    
+    	span{
+			color:#fff; 
+			padding: 0 10px;
+      
+      	a{
+        	color:#fff;
+      	}
+      
+      	&:first-child{
+        	padding-left: 0;
+      	}
+    }
+    .onlybararea{
+      	margin-top: 10px;
+      	padding: 0;
+
+      	.progress_bar{
+        	float: left;
+        	width: 80%;
+      	}
+      	.cirtificate_bar{
+        	float: left;
+        	width: 19%;
+        	margin-left: 1%;
+        	position: relative;
+        
+        .trophy{
+          	position: absolute;
+          	color:#fff;
+          	top:-36px;
+          	font-size: 24px;
+          	right:50%;
+        }
+    }
+
+}
+    
+  }
+
+}
+
+.relative_position{
+  	position: relative;
+}
+
+.option_menu{
+	margin: 0;
+	padding:0;
+	position: absolute;
+	color:#000;
+	top:0;
+	right: 15px;
+	z-index: 1;
+
+	a{
+		padding: 10px 24px;
+	}
+	.dropdown-menu{
+		font-size: 14px;
+	}
+}
+
+.cmsWrap input[type="text"], .cmsWrap input[type="email"] {
+  	padding: 15px 15px 15px 40px !important;
+}
+
+.course-share{
+	.modal-dialog {
+			max-width: 600px;
+			.modal-content{
+					position: relative;
+					background-color: #FFF;
+					border: none;
+					border-radius: 6px;
+					box-shadow: 0 0 1px 1px rgba(20,23,28,0.1), 0 3px 1px 0 rgba(20,23,28,0.1);
+					background-clip: padding-box;
+					outline: 0;
+					.modal-header {
+							padding: 24px;
+							border-bottom: 1px solid #E8E9EB;
+							.close {
+									color: #686F7A;
+									font-size: 36px;
+									font-weight: 400;
+									opacity: 1;
+									position: relative;
+									z-index: 3;
+									padding: 0 8px;                   
+									overflow: hidden;
+									margin-bottom: 0;
+									margin-top: -8px;
+							}
+							.modal-title {
+									margin: 0;
+									line-height: 1.43;
+									font-size: 18px;
+									padding-right: 48px;
+									font-weight: 600;
+							}
+					}
+					.modal-body {
+							position: relative;
+							padding: 24px;
+							.marketplace-social-share-items-container--social-share-icons--3ME5y {
+									align-items: center;
+									margin-bottom: 10px;
+									margin-top: 10px;
+							}
+							.social-share-items--social-share-items--3T4Ug {
+									display: flex;
+									flex-wrap: wrap;
+							}
+							.social-share-button--share-item-wrapper--3ux_T {
+									margin-bottom: 16px;
+									margin-right: 16px;
+									position: relative;                    
+							}
+							.social-share-button--share-item-wrapper--3ux_T.facebook {
+									margin-left: 29px;
+									.fa {
+											min-width: 38px;
+											vertical-align: -8%;
+									}
+							}
+							.social-share-button--share-clipboard-input--sIPPK {
+									width: 260px;
+							}
+							.input-group-btn {
+									position: relative;
+									font-size: 0;
+									white-space: nowrap;
+							}
+							.input-group-addon, .input-group-btn {
+									width: 1%;
+									white-space: nowrap;
+									vertical-align: middle;
+							}
+							.input-group-addon, .input-group-btn, .input-group .form-control {
+									display: table-cell;
+							}
+							.input-sm, .form-group-sm .form-control, .input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn {
+									height: 34px;
+									padding: 0 10px;
+									font-size: 13px;
+									line-height: 1.287;
+									border-radius: 2px;
+							}
+							.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+									z-index: 2;
+									margin-left: -1px;
+							}
+							.input-group-btn>.btn {
+									position: relative;
+							}
+							.btn-default {
+									color: #007791;
+									background-color: #FFF;
+									border: 1px solid #007791;
+							}
+							.input-sm, .form-group-sm .form-control, .input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn .form-control{ font-size: 12px;}
+							.tooltip.bottom {
+									margin-top: 3px;
+									padding: 5px 0;
+							}
+							.tooltip.in {
+									opacity: .9;
+							}
+							.tooltip-blue {
+									color: #FFF;
+							}
+							.tooltip-blue.bottom .tooltip-arrow {
+									border-bottom-color: #007791;
+							}
+							.tooltip.bottom .tooltip-arrow {
+									top: 0;
+									left: 50%;
+									margin-left: -5px;
+									border-width: 0 5px 5px;
+									border-bottom-color: #29303B;
+							}
+							.tooltip-arrow {
+									position: absolute;
+									width: 0;
+									height: 0;
+									border-color: transparent;
+									border-style: solid;
+							}
+							.tooltip-blue .tooltip-inner {
+									background-color: #007791;
+									color: inherit;
+							}
+							.tooltip-inner {
+									max-width: 500px;
+									padding: 16px;
+									color: #FFF;
+									text-align: left;
+									background-color: #29303B;
+									border-radius: 0;                    
+									box-shadow: 0 4px 16px rgba(20,23,28,0.25);
+							}
+					}
+			}
+	} 
+}
+
+.share{
+	margin: 0;
+	padding: 0;
+	background: #38a5b9;
+	border:none;
+	font-size: 14px;
+	padding: 6px 14px;
+	font-weight: normal;
+	color:#fff;
+	border-radius: 50px;
+}
+
+.share_link{
+	margin-top: 15px;
+
+	h2{
+			font-size: 18px;
+			font-weight: 600;
+			margin-top: 16px;
+			margin-bottom: 10px;
+	}
+	.social_area{
+			margin:0;
+			padding: 0;
+			.social_area_link_ara{
+					display: inline;
+					width: calc(100% - 260px);
+					float: left;
+
+					.fld_group{
+							margin: 0;
+							padding: 0;
+
+							input[type="text"]{
+									width: calc(100% - 59px);
+									padding: 15px 15px 15px 15px !important;
+									border-top-right-radius:0; 
+									border-bottom-right-radius:0; 
+							}
+
+							button, .btn-default{
+									background: #38a5b9;
+									border: none;
+									padding: 16px 10px;
+									color: #fff;
+									border-top-left-radius:0; 
+									border-bottom-left-radius:0; 
+							}
+					}
+
+					
+			}
+
+			.social_area_link_icon{
+					margin: 5px 0 0 0 ;
+					padding: 0;
+					float: left;
+					width:auto;
+					margin-left:19px;
+
+					.social_link{
+							padding: 16px 20px;
+							margin: 0;
+							border:1px solid #38a5b9;
+							cursor: pointer;
+							font-size: 16px;
+							color:#38a5b9;
+					}
+			}
+	}
+}
+
+/*****************course overview *****************/
+
+
+@media (max-width: 575px) {
+	.courseOverview_banner{
+		padding: 30px 0;
+	}
+
+	.courseOver_cont{
+		.progress_bar_area{
+			.onlybararea{
+				margin-top: 50px;
+			}
+		}
+	}
+  
+	.option_menu{
+		top:-65px;
+		right:0;
+	}
+	.instructor-profile--title{
+		margin-left: 0 !important;
+	}
+	.current_link{
+		.buttonLink{
+			font-size: 12px;
+		}
+	}
+	.accordian_cont{
+		h3{
+			font-size: 15px !important;
+		}
+	}
+
+	.search_question{
+		display: block;
+		text-align: center;
+		.or{
+			display: block;
+		}
+	} 
+	
+}
+
+
+@media (min-width: 768px){
+    .social-share-items--social-share-items--3T4Ug {
+        justify-content: space-between;
+    }
+    .social-share-button--share-item-wrapper--3ux_T {
+        margin: 0;
+    }
+    .marketplace-social-share-items-container--social-share-icons--3ME5y .btn {
+        margin-left: 10px;
+        margin-right: 10px;
+	}
+	.cmsWrap .tabFeatured ul li a{
+		padding: 10px 12px;
+	}
+}
+@media (min-width: 576px){
+    .social-share-button--share-clipboard-input--sIPPK {
+        width: 350px;
+    }
+}
+
+.tutrIndex {
+	padding: 10px;
+	.tabBorder {
+		border-bottom: 1px solid #ccc;	
+		width: 100%;
+		padding: 25px;
+		position: absolute;
+		left:0;
+	}
+}
+
+.video_player-dimensions {
+    width: 100%;
+    height: 100%;
+}
+

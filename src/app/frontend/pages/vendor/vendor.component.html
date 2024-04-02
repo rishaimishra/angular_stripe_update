@@ -1,0 +1,91 @@
+
+<section class="d-flex siteBanner" *ngIf="banner.length !=0">
+  <div class="item">
+    <img alt="" src="{{banner[0].thumbnail}}">
+    <div class="bannerCont d-flex">
+      <div class="container align-self-center">
+        <div class="row">
+          <div class="col-xl-5 col-lg-8 col-md-8">
+            <h2>{{banner[0].title}}</h2>
+            <h3 >{{banner[0].content}}</h3> 
+            <button *ngIf="!http.isLoggednIn()" class="linkSlide dark" (click)="registerFormModal()">{{banner[0].button_1_title}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <div class="vendorSignup" *ngIf="!http.isLoggednIn()">
+    <button class="" (click)="registerFormModal()">Register Now!</button>
+</div> -->
+
+<section class="cmsWrap">
+  <div class="container">
+      <h2 class="text-center">Explore Your Future</h2>
+
+      <div class="row">
+        <div class="col-sm-4 text-content text-center">
+          <i class="fa fa-money" aria-hidden="true"></i>
+          <h3>Make Money</h3>
+          <p>Make money each time a consumer buys your course.</p>
+        </div>
+        
+        <div class="col-sm-4 text-content text-center">
+          <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+          <h3>Encourage Learners</h3>
+          <p>Encourage people to learn new skills, advance their careers by sharing your knowledge and experience the pure joy of giving!</p>
+        </div>
+        
+        <div class="col-sm-4 text-content text-center">
+          <i class="fa fa-binoculars" aria-hidden="true"></i>
+          <h3>Expand Your Followers</h3>
+          <p>There are over a million consumers learning on the internet daily. We will show you how to build your presence on the platform, reach more consumers and grow your online network.</p>
+        </div>
+      
+      </div>
+  </div>
+</section>
+
+<section class="cmsWrap">
+  <div class="container">
+      <h2 class="text-center">How Teaching Acts</h2>
+
+      <div class="row">
+        <div class="col-sm-4 text-content text-center">          
+          <i class="fa fa-book" aria-hidden="true"></i>
+          <h3>Create Your First Course</h3>
+          <p>Choose the topic and record your First class from your place and publish with us. We provide help with every step of the way.</p>
+        </div>
+        
+        <div class="col-sm-4 text-content text-center">          
+          <i class="fa fa-binoculars" aria-hidden="true"></i>
+          <h3>Build Your Followers</h3>
+          <p>Make quizzes, tests to interact with your consumer from wherever you are and whenever you need.</p>
+        </div>
+        
+        <div class="col-sm-4 text-content text-center">
+          <i class="fa fa-money" aria-hidden="true"></i>
+          <h3>Get Rewarded</h3>
+          <p>You will be paid for every consumer who purchases your courses in SuccessLife.</p>
+        </div>
+      
+      </div>
+  </div>
+</section>
+
+<section class="cmsWrap">
+  <div class="container" style="text-align:center;">
+    <h3>What are you waiting for?</h3>
+    <p>Your passion is teaching and you are master in whatever you do.</p>
+  </div>
+</section>
+
+<!-- <section class="cmsWrap">
+  <div class="container" innerHTML="{{content}}"></div>
+</section>  -->
+
+<section class="cmsWrap">
+  <div class="vendorSignup text-center" *ngIf="!http.isLoggednIn()">
+    <button class="" (click)="registerFormModal()">Register Now!</button>
+  </div>
+</section>

@@ -1,0 +1,46 @@
+.m-t-10 {
+    margin-top: 10px;
+}
+.m-t-20 {
+    margin-top: 20px;
+}
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border: 1px solid #dc3545;
+}
+
+.productImgDiv {
+    margin-top: 20px; margin-bottom: 20px;
+    .progress-div {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .img-div {
+      height: 150px;
+      line-height: 145px;
+      text-align: center;
+      border: 1px solid rgb(180, 176, 176);
+      img.img-fluid {
+        vertical-align: middle;
+        max-height: 150px;
+      }
+    }
+  
+    .action-div {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+    }
+}  

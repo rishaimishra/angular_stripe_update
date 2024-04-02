@@ -1,0 +1,64 @@
+<section class="topHeader">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-2 col-lg-3">
+        <div class="logo" >
+          <a href="/"><img src="assets/images/logo.png" alt=""></a>
+          <div class="navSpan" (click)="showHideDashboardadmin()"><i class="fa fa-bars" aria-hidden="true" ></i></div>
+        </div>
+      </div>
+      <div class="col-xl-10 col-lg-9 headerRight">
+        <div class="headerRightMain">
+          <div class="row"> 
+            <div class="col-xl-12 col-lg-5 col-md-5"></div>           
+            <div class="col-xl-12 col-lg-7 col-md-7">
+               <div class="topRight">
+                  
+                 <div class="topNotific pull-right">
+                   
+                    <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
+                    <a class="dashboard_notification"  (click)="notificationClickEvent()">
+                      <i class="fa fa-bell" aria-hidden="true" ></i>
+                      <div class="notoficCount" *ngIf="notificationCount>0 ">{{ notificationCount}}</div>
+                    </a>
+                   
+                   <!-- <div class="notoficCount" *ngIf="notificationRecords.length == 0">0</div> -->
+                   <div class="topNotificDrop" *ngIf="notificationCount > 0 && notificationShowstatus">
+                     <div class="topNotificDropInner" *ngIf="notificationRecordInHeader">
+                       <div class="NotificDropSingle" *ngFor="let notifications of notificationRecords;">
+                          <div class="">
+                           <!-- SA -->
+                           <img class="NotificDropSingleNameAlt" src="{{notifications?.user?.avatar ? notifications?.user?.avatar : 'assets/images/no-image.png'}}"     alt="..." /> 
+                          </div>
+                          <p>{{ notifications.data.length > 50 ?  (notifications.data| slice: 0 :50)+ '...' : (notifications.data)}}</p>
+                          <p><span>{{notifications.created_at | amTimeAgo : true}}</span></p>
+                       </div>
+                     
+                       <div class="notificSeeAll"><a [routerLink]="['/admin', 'notifications']"  (click)="notificationClickEvent()">See All <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <div class="topProfile dashboard_header">
+                   <span class="topProfileImg">
+                      <img src="{{userDetails.avatar}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    
+                   </span>
+                   <span (click)="dashboardClickEvent()">{{name}}<i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                   <div class="topProfileDrop"  *ngIf="dashboardShowstatus">
+                     <div class="topProfileDropInner">
+                       <ul>
+                          <li><a routerLink="/admin/my-profile" (click)="dashboardClickEvent()"><i class="fa fa-user" aria-hidden="true"></i> My Profile</a></li>
+                          <li><a routerLink="/admin/update-password" (click)="dashboardClickEvent()"><i class="fa fa-key" aria-hidden="true"></i> Change Password</a></li>                          
+                          <li><a href="/home/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+                       </ul>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

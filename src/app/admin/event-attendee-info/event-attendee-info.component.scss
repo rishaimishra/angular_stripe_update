@@ -1,0 +1,100 @@
+.mainContainer{
+    position: relative;
+    background: #f2f3f5;
+    padding: 30px;
+    .logo{
+        padding: 18px 20px 0 0;
+        float: left;
+        margin-top: -25px;
+
+    }
+    .title{
+        float: right;
+        font-size: 15px;
+        font-weight: 700;
+    }
+    .titleVal{
+        float: right;
+    }
+    .attendeeHeading{
+        margin: 16px;
+        background: white;
+        text-align: center;
+        padding: 6px;
+        border-radius: 5px;
+        font-family:  sans-serif;
+        font-size: 16px;
+        border: 1px solid #d1d1d1;
+    
+    }
+    .attendeeText{
+        // margin: 16px;
+        font-size: 18px;
+        font-family:  sans-serif;
+    }
+
+    .warrningMsg{
+        // margin: 16px;
+        font-size: 15px;
+        font-family:  sans-serif;
+        color: crimson;
+    }
+}
+
+.attendeeInfoContainer{
+    // width: 42%;
+    // float: left;
+    // margin-right: 43px;
+    min-height: 602px;
+    background: #FFF;
+    padding: 28px;
+    margin-bottom: 42px;
+    border-radius: 8px;
+
+    .attendeeTitle{
+        font-family:  sans-serif;
+        font-size: 24px;
+    }
+    .ticketCat{
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0px 10px 0;
+        font-family:  sans-serif;
+        font-size: 15px
+    }
+    label{
+        font-size: 13px;
+        font-weight: bold;
+    }
+}
+
+.blankInfo {
+    margin-top: 180px;
+}
+.col{
+    margin-top: -3px;
+    margin-bottom: -5px;
+    padding-right: 0px;
+    padding-left: 5px;
+}
+.requiredFiled {
+    color: #ec2303;
+    font-weight: 900;
+}
+
+.ticketCategory{
+    margin: 8px 0 5px 0;
+}
+
+.eventName{
+    margin: 10px 0 10px 0;
+}
+
+.submitBtn{
+    margin-top: -9px
+}
+
+.backBtn{
+    float: right;
+    margin-top: -29px;
+}

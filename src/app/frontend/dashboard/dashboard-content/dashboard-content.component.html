@@ -1,0 +1,187 @@
+<section class="mainContainer">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-2 col-lg-3 leftPanel">
+				<app-dashboard-left-panel></app-dashboard-left-panel>
+			</div>
+			<div class="col-xl-10 col-lg-9">
+				<div class="rightPanel alt">
+					<div class="dashboard_cont">
+
+						<div class="row">
+							<!--*ngIf="!kycStatus" -->
+							<div class="col-md-12">
+								<!-- <a title="Technology FAQ" class="btn btn-primary pull-right titleLink02 kycBtn" href="https://successlife.freshdesk.com/support/solutions/folders/36000172221" target="blank" style="margin: 10px;">
+                      Technology FAQ
+                  </a>
+                  <a title="Marketplace FAQ" class="btn btn-primary pull-right titleLink02 kycBtn" href="https://successlife.freshdesk.com/support/solutions/folders/36000172218" target="blank" style="margin: 10px; background: #008efa !important;">
+                      Marketplace FAQ
+                  </a>                  
+                  <a title="Wallet FAQ" class="btn btn-primary pull-right titleLink02 kycBtn" href="https://successlife.freshdesk.com/support/solutions/folders/36000172220" target="blank" style="margin: 10px; ">
+                      Wallet FAQ
+                  </a> -->
+								<!-- <a title="KYC" class="btn btn-primary pull-right titleLink02 kycBtn" href="{{kycUrl}}" target="blank" style="margin: 10px; background: #f75b36 !important;">
+                      KYC
+				  </a> -->
+				  	<a title="KYC" class="btn btn-primary pull-right titleLink02 kycBtn" href="{{kycUrl}}" target="_blank" style="margin: 10px; background: #5fa2ea !important;" *ngIf="!kycStatus">
+					Upload KYC
+					</a>
+					<a title="Demo" class="btn btn-primary pull-right titleLink02 kycBtn" href="{{kycReferenceVideoUrl}}" target="_blank" style="margin: 10px; background: #5bd6b4 !important;" *ngIf="!kycStatus">
+					Demo KYC
+					</a>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-md-6 col-lg-6 chart_area">
+								<div class="order_grph">
+									<h1>Order overview</h1>
+									<div style="display: block">
+										<canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="lineChartLegend"
+										 [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+									</div>
+								</div>
+								<div class="sale_amount">
+									Total Sale Amount :
+									<ng-container *ngIf="dashboardData?.total_sale_amount !=null">{{dashboardData?.total_sale_amount?.amount | number:'1.2-2'}} USD </ng-container>
+									<ng-container *ngIf="dashboardData?.total_sale_amount == null">0.00 USD </ng-container>
+								</div>
+							</div>							
+							<!-- <div class="col-xs-12 col-md-12 col-lg-12 box_area">
+								<div class="row clumn">
+									<div class="col-lg-12">
+									Total Sale Amount :
+									<ng-container *ngIf="dashboardData?.total_sale_amount !=''">{{dashboardData?.total_sale_amount?.amount }} USD </ng-container>
+									<ng-container *ngIf="dashboardData?.total_sale_amount == null">0.00 USD </ng-container>
+									</div>
+								</div>
+							</div> -->
+							<div class="col-xs-12 col-md-6 col-lg-6 box_area">
+								<div class="row clumn">
+									<div class="col-lg-6">
+										<div class="blue_box box">
+											<h2>Total Course</h2>
+											<p class="number">{{dashboardData?.course_count}}</p>
+											<div class="icon">
+												<img src="assets/images/coursedash_icon.png" alt="" >
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="orenge box">
+											<h2>Total Events</h2>
+											<p class="number">{{dashboardData?.event_ticket_count}}</p>
+											<div class="icon">
+												<img src="assets/images/ticketdash_iocn.png" alt="" >
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="yellow_box box">
+											<h2>Total Course Sold</h2>
+											<p class="number">{{dashboardData?.total_course_sold}}</p>
+											<div class="icon">
+												<img src="assets/images/eventsolddash_icon.png" alt="" >
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="green_box box">
+											<h2>Total Event Sold</h2>
+											<p class="number">{{dashboardData?.total_event_sold}}</p>
+											<div class="icon">
+												<img src="assets/images/eventsolddash_icon.png" alt="" >
+											</div>
+										</div>
+									</div>
+									
+									
+									<div class="col-lg-6">
+										<div class="purple box">
+											<h2>Total Course Sales</h2>
+											<ng-container *ngIf="dashboardData?.total_course_sale_amt.length > 0 ">
+												<p class="number"> {{dashboardData?.total_course_sale_amt[0]?.balance | number:'1.2-2'}} USD </p> 
+											</ng-container>
+											<ng-container *ngIf="dashboardData?.total_course_sale_amt.length == 0 ">
+												<p class="number"> 0.00 USD </p> 
+											</ng-container>
+											<div class="icon">
+												<img src="assets/images/coursesalesdash_icon.png" alt="" >
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="green_box01 box">
+											<h2>Total Event Ticket Sales</h2>
+											<ng-container *ngIf="dashboardData?.total_event_ticket_sale_amt.length > 0 ">
+												<p class="number"> {{dashboardData?.total_event_ticket_sale_amt[0]?.balance | number:'1.2-2'}} USD </p> 
+											</ng-container>
+											<ng-container *ngIf="dashboardData?.total_event_ticket_sale_amt.length == 0 ">
+												<p class="number"> 0.00 USD </p> 
+											</ng-container>
+											<div class="icon">
+												<img src="assets/images/eventsales_icon.png" alt="" >
+											</div>
+										</div>
+									</div>									
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<!-- Top selling course -->
+					<div class="dashboard_listing" *ngIf="topSellingCourses.length > 0">
+							
+						<h1>Top selling courses</h1>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+								<thead>
+									<tr>
+									<th>Name</th>					 
+									<!-- <th>Price</th> -->
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor=" let topSellingCourse of topSellingCourses; let i = index">
+										<td><a [routerLink]="['/course-details', topSellingCourse?.product_details?.slug]">{{ topSellingCourse?.product_details?.title}}</a></td>						
+										<!-- <td >
+										100 USD
+										</td> -->
+									</tr>
+									
+								</tbody>
+								</table>
+							</div>
+					</div>
+
+					<!-- Top selling events -->
+					<div class="dashboard_listing" *ngIf="topSellingEvents.length > 0">
+							
+						<h1>Top selling events</h1>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+								<thead>
+									<tr>
+									<th>Name</th>					 
+									<!-- <th>Price</th> -->
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor=" let topSellingEvent of topSellingEvents; let i = index">
+										<td><a [routerLink]="['/event-details', topSellingEvent?.product_details?.slug]">{{ topSellingEvent?.product_details?.title}}</a></td>						
+										<!-- <td >
+										100 USD
+										</td> -->
+									</tr>
+									
+								</tbody>
+								</table>
+							</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>

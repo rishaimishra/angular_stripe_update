@@ -1,0 +1,124 @@
+<div class="activity_area">
+	<h2>Recent activity</h2>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="activity_box">
+				<h3>Recent questions</h3>
+				<div class="panel_body" *ngIf="questions?.length > 0">
+					<div class="question_block" *ngFor="let question of questions | slice:0:2">
+						<div class="user_avtar">
+							<div class="user-avatar__inner fx-c"><img height="48" width="48" src="{{question?.user?.avatar || 'assets/images/profile-image.png'}}" class="user-avatar--image"></div>
+						</div>
+						<a  [routerLink]="['/', getSlug(question.user)]" >{{question?.title}}</a>
+					</div>
+				</div>
+				<div class="panel_body" *ngIf="questions?.length == 0">
+					<div class="question_block">
+						No records found
+					</div>
+				</div>
+				<div class="panel_footer" *ngIf="questions?.length > 3">
+					<button type="button" class="btn btn-link" (click)="browseqa(2)">Browse all questions</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="activity_box">
+				<h3>Recent instructor announcements</h3>
+				<div class="panel_body" *ngIf="courseDetail?.user?.user_announcements?.length > 0">
+					<div class="question_block" *ngFor="let announcements of courseDetail?.user?.user_announcements | slice:0:2">
+						<img height="48" width="48" src="{{courseDetail.user?.avatar || 'assets/images/profile-image.png'}}" class="user-avatar--image">
+						<a [routerLink]="['/', getSlug(courseDetail.user)]">{{announcements?.title}}</a>
+					</div>
+				</div>
+				<div class="panel_body" *ngIf="courseDetail?.user?.user_announcements?.length == 0">
+					<div class="question_block">
+						No records found
+					</div>
+				</div>
+				<div class="panel_footer" *ngIf="courseDetail?.user?.user_announcements?.length > 3">
+					<button type="button" class="btn btn-link" (click)="browseqa(3)">Browse all announcements</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="about_course_area">
+	<h2>About this course</h2>
+	<p>{{courseDetail?.primary_thought}}</p>
+	<div class="course_block">
+		<div class="row">
+			<div class="col-sm-3">By the numbers</div>
+			<div class="col-sm-4">
+				<div>Skill level: {{courseDetail?.course_standers?.title}}</div>
+				<div *ngIf="courseDetail?.user_course">Students: {{courseDetail?.user_course.length}}</div>
+				<div>Languages: English</div>
+			</div>
+			<div class="col-sm-5">
+				<div>Lectures: {{courseDetail?.video_count}}</div>
+				<div>Video: {{courseDetail?.duration}} hours</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="course_block">
+		<div class="row">
+			<div class="col-sm-3">Features</div>
+			<div class="col-sm-4">
+				<span *ngIf="courseDetail.categories?.length == 1">Available on 
+					<a href="#" target="_blank" rel="noopener noreferrer">{{courseDetail.categories[0].name}}</a>
+				</span>
+				<span *ngIf="courseDetail.categories?.length == 2">Available on 
+					<a href="#" target="_blank" rel="noopener noreferrer">{{courseDetail.categories[0].name}}</a>
+					and
+					<a href="#" target="_blank" rel="noopener noreferrer">{{courseDetail.categories[1].name}}</a>
+				</span>
+				<span *ngIf="courseDetail.categories?.length > 2">Available on 
+					<a *ngFor="let caregory of courseDetail.categories; let isLast=last" href="#" target="_blank" rel="noopener noreferrer">{{caregory.name}}{{isLast ? '' : ', '}}</a>
+				</span>
+			</div>
+			<div class="col-sm-5">
+				<!-- <div>Certificate of Completion</div> -->
+			</div>
+		</div>
+	</div>
+
+	<div class="course_block">
+		<div class="row">
+			<div class="col-sm-3">Description</div>
+			<div class="col-sm-9">
+				<div [ngClass]="(seeMoreArea==false)?'description_block':'description_block_visible'">
+						<div [innerHtml]="courseDetail?.description" class="des_area"></div>
+				</div>
+				<div (click)="seeMore()" class="seemore" *ngIf="seeMoreArea==false && courseDetail?.description?.length > 875">+ See more</div>
+				<div (click)="seeLess()" class="seemore" *ngIf="seeMoreArea==true">- See less</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="course_block">
+		<div class="row">
+			<div class="col-sm-3">Instructor</div>
+			<div class="col-sm-9">
+				<div class="instructor_profile">
+					<img alt="User photo" height="64" width="64" src="{{courseDetail?.user?.avatar || 'assets/images/profile-image.png'}}"
+					 class="user-avatar">
+					<div class="instructor-profile--title">
+						<a [routerLink]="['/', getSlug(courseDetail.user)]">{{getUserName(courseDetail.user)}}</a>
+						<p>{{courseDetail?.user?.profile?.head_line}}</p>
+					</div>
+					<div class="social_area">
+							
+						<a href="{{link?.value}}" target="_blank" *ngFor="let link of courseDetail?.user?.profile?.social_links | keys">
+							<i *ngIf="link?.key == 'facebook' && link?.value" class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i *ngIf="link?.key == 'twitter' && link?.value" class="fa fa-twitter-square" aria-hidden="true"></i>
+							<i *ngIf="link?.key == 'youtube'&& link?.value" class="fa fa-youtube-square" aria-hidden="true"></i>
+							<i *ngIf="link?.key == 'linkedin'&& link?.value" class="fa fa-linkedin-square" aria-hidden="true"></i>
+						</a>
+					</div>
+					<p> {{courseDetail?.user?.profile?.biography}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

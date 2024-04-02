@@ -1,0 +1,29 @@
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border: 1px solid #dc3545;
+}
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    box-shadow: none;
+    opacity: .65;
+}
+:host ::ng-deep .ck-editor__editable {
+    min-height: 300px;
+}
+.tooltip_circle{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    background: #8a8a8a;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+}
+.tooltip_bg{
+    background: #3eb7aa;
+}

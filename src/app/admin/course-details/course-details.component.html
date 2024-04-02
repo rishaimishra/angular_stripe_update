@@ -1,0 +1,78 @@
+<div class="rightPanel">
+
+  <div class="centerHeading">
+    <h2 style="text-transform: uppercase;">{{courseData?.title}}</h2>
+    <div style="text-align: right;">
+      <button type="button" class="btn btn-info" (click)="backClicked();">Back</button>
+    </div>
+  </div>
+  <br>
+  <div class="transcTop">
+    <div class="orderSchedule">
+      <div class="row">
+        <div class="col-md-12">
+          <label for="" class="control-label"><strong>Tutor Information</strong></label>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <img src="{{courseData?.user?.avatar}}" style="width: 80px;
+              border: 1px #ccc solid; border-radius: 50%;">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p><strong>Full Name</strong> : {{courseData?.user?.profile?.full_name}}</p>
+          <p><strong>Email</strong> : {{courseData?.user?.email}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="transcBottom">
+    <div class="table-responsive table_cont" *ngFor="let rs of courseData?.course_modules">
+      <label>
+        <strong>{{rs.title}}</strong>
+      </label>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th width="30%">Title</th>
+            <th class="text-right">Duration</th>
+            <th class="text-center">Lecture Mode</th>
+            <th>Short Description</th>
+            <th class="text-center">Links</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="rs.course_lectures.length > 0">
+          <tr *ngFor="let ls of rs.course_lectures">
+            <td>{{ls.title}}</td>
+            <td class="text-right">{{ls.duration}}</td>
+            <td class="text-center" style="text-transform: uppercase;">{{ls.lecture_mode}}</td>
+            <td [innerHtml]="ls.description"></td>
+            <td class="text-center">
+              <a href="{{ls.lecture_link}}" target="_">
+                  <i class="fa fa-download" aria-hidden="true"></i>                  
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="rs.course_lectures.length === 0">
+          <tr>
+            <td colspan="5" class="text-center">
+              No item is recorded yet.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="text-align: right; clear: both; padding: 10px 0px 0px 5px;">
+    <button type="button" class="btn btn-info" (click)="backClicked();">Back</button>
+  </div>
+
+</div>

@@ -1,0 +1,77 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>Wishlist</h2>
+	</div>
+
+	<div class="table-responsive table_cont" *ngIf="records.length > 0">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th width="20%">
+						Image
+					</th>
+					<th width="20%">
+						Name
+					</th>
+					<th width="20%">
+						Type
+					</th>
+					<th>Total Amount</th>
+					<th style="width:10%" class="text-center">Action</th>
+				</tr>
+			</thead>
+			<tbody *ngIf="records.length > 0">
+				<tr *ngFor="let rs of records">
+					<td>
+						<a target="_blank" [routerLink]="[getWishableUrl(rs), rs?.product_details?.slug]"> <img style="height: 50px;" [src]="getImage(rs)" alt="{{rs?.product_details?.title}}" class="img-fluid"></a>
+					</td>
+					<td><a target="_blank" [routerLink]="[getWishableUrl(rs), rs?.product_details?.slug]">{{rs?.product_details?.title}}</a></td>
+					<td>{{getWishableType(rs)}}</td>
+					<!-- Old price code -->
+					<!-- <td>{{rs?.product_details?.price | currency:rs?.product_details?.currency:'symbol':'2.2-2'}}</td> -->
+					<!-- New price code -->
+					<td *ngIf="rs?.product_details?.pricable.length">
+							<ng-container *ngIf="rs?.product_details?.pricable[0].usd_price">
+								{{rs?.product_details?.pricable[0].usd_price | number:'1.2-2' }} USD
+							</ng-container>
+							<br>
+							<ng-container *ngIf="rs?.product_details?.pricable[0].sxl_price">
+								{{rs?.product_details?.pricable[0].sxl_price |currency:'SLX' }}
+							</ng-container>
+  
+					</td>
+					<td *ngIf="!rs?.product_details?.pricable.length">Free</td>
+
+					<td class="text-center">
+						<button class="btn btn-sm btn-danger" (click)="removeFromWishList(rs)" type="button"><i class="fa fa-times"></i></button>
+					</td>
+				</tr>
+
+			</tbody>
+			<tbody *ngIf="records.length === 0">
+				<tr>
+					<td colspan="5" class="text-center">
+						No item is added in your wishlist.
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination">
+				<tr>
+					<td colspan="5">
+						<app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="row mt30" *ngIf="records.length === 0">
+		<div class="col-12">
+			<div class="alert alert-warning text-center">
+				<strong>Oops!</strong>
+				No record found.
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,43 @@
+.toolBox {
+    .saveBtn { float: right;}
+}
+
+.itemMainDiv {
+    border: rgba(0, 0, 0, 0.02) solid 1px;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 20px;
+    .detailsDiv {
+        .itemChkbox {
+            text-align: center;
+
+            input[type="checkbox"]{ position: absolute; left: 0; top: 0;  cursor: pointer; opacity: 0;}
+            .checkBoxMark{ position: relative; left: 0; top: 0; font-size: 22px; color: #39b54a;}
+            .checkBoxMark:after{ content: '\f096'; font-family: FontAwesome;}
+            input:checked + .checkBoxMark:after{ content: '\f046'; font-family: FontAwesome;}
+        }
+        
+        .itemUtility {
+            .revwRat {
+                display: block;
+                .itemReview {
+                    float: left;
+                }
+                .itemRating {
+                    float: right;
+                }
+            }
+            .userPrice {
+                display: block;
+                font-size: 14px;
+                .vendorNm {
+                    float: left;
+                }
+                .priceVl {
+                    float: right;
+                    .originalPrc{ font-size: 10px; text-decoration: line-through; display: inline-block; padding: 0 8px 0 0; vertical-align: middle;}
+                }
+            }
+        }
+    }
+}

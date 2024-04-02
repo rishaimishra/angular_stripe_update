@@ -1,0 +1,35 @@
+<a  [routerLink]="['/event-details', item?.slug]">
+<div class="featuredSingleWrap cartListTransform">
+    <div class="featuredSingle">
+      <div class="featuredSingleImg fastSelling">										
+          <img *ngIf="getEventFeaturedThumbnailImage(item?.images)" [src]="getEventFeaturedThumbnailImage(item?.images)" alt="">
+          <div class="carouselImgTag" *ngIf="item?.is_fast_selling && cardType!='past'" >Fast Selling</div>
+      </div>
+      <div class="featuredDate">
+        <span>{{item?.event?.start_date | date : 'MMM'}} <br> 
+          <small>{{item?.event?.start_date | date : 'dd'}}</small></span> 
+          <div title="{{item?.title}}" class="showWrap">{{item?.title}}</div>
+					<!-- <div class="showWraphhh" *ngIf="item?.event_speakers"> 
+            <small class="spName" *ngFor="let speaker of item.event_speakers">{{speaker.name}}</small> 
+          </div> -->
+      </div>
+      
+        <div class="btn_area" *ngIf="ticketBookingStatus=='open'">
+					<a class="btnBuy" [routerLink]="['/event-details', item?.slug]">Buy</a>
+				</div>
+				<div class="btn_area" *ngIf="ticketBookingStatus=='past'">
+						<!-- <a class="btnClose" [routerLink]="['/event-details', item?.slug]">Past Event</a> -->
+        </div>
+        <div class="btn_area" *ngIf="ticketBookingStatus=='ongoing'">
+          <a class="btnClose" [routerLink]="['/event-details', item?.slug]">Opps, you’re late!</a>
+        </div>
+				<div class="btn_area" *ngIf="ticketBookingStatus=='close'">
+						<a class="btnClose" [routerLink]="['/event-details', item?.slug]">Tickets sale closed!</a>
+        </div>
+        <div class="btn_area" *ngIf="ticketBookingStatus=='full'">
+						<a class="btnClose" [routerLink]="['/event-details', item?.slug]">Sold out</a>
+				</div>
+      
+    </div>
+  </div>
+</a>

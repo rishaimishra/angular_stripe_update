@@ -1,0 +1,27 @@
+.pdfElement {
+    overflow: auto; 
+    max-height: 500px; 
+    background: white;
+    border-style: ridge;
+    border-color: #3eb7aa;
+    width: 100%;
+    padding: 20px;
+}
+label.checkBoxCustom{ margin: 0px; padding: 0px; position: relative; font-size: 15px; color: #231f20;
+    input[type="checkbox"]{ position: relative; left: 0; top: 0; width: 100%; height: 100%; cursor: pointer; opacity: 0;}
+   .checkBoxMark{ position: relative; left: 0; top: 0; font-size: 22px; color: #39b54a;}
+   .checkBoxMark:after{ content: '\f096'; font-family: FontAwesome;}
+   input:checked + .checkBoxMark:after{ content: '\f046'; font-family: FontAwesome;}
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+  }
+  
+  
+  .pdfContainer {
+      width: 800px;      
+  }
+  

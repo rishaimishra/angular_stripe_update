@@ -1,0 +1,488 @@
+@media (max-width: 1760px) {
+  .topOffer ul{ padding-left: 160px; padding-right: 160px;}
+  .topOffer .topAdd{ width: 150px;}
+  .siteBanner .bannerCont h2{ font-size: 30px;}
+  .siteBanner .bannerCont h3{ font-size: 14px; padding: 7px 0;}
+  .siteBanner .bannerCont .linkSlide{ padding-top: 8px; padding-bottom: 8px;}
+}
+
+@media (max-width: 1365px) {
+  .topOffer .topAdd{ width: 105px;}
+  .siteBanner .bannerCont h2{ font-size: 20px;}
+  .siteBanner .bannerCont h3{ line-height: 18px;}
+}
+
+@media (max-width: 1279px) {
+  .container{ max-width: 1140px;}
+  .quantity_area{
+    .input-group-btn{
+      .btn{
+        padding: 0.375rem 5px;
+      }
+    }
+  }
+  .cartLeft{
+    .cartItemPrice{
+      h3{
+        font-size:12px;
+      }
+    } 
+  }
+  .cartTotal h3{
+    font-size: 21px !important;
+  }
+}
+
+@media (max-width: 1139px) {
+  .container{ max-width: 1000px;}
+  .howItWorks .topCategory ul li a{ font-size: 13px;}
+  h2{ font-size: 25px;}
+  .customerViewing{ padding-top: 15px;}
+  .footerBottom .footerLogo, .footerTop p, .footerBottom .footLink li a, .footerTop .footNav li a{ font-size: 13px;}
+  .footerTop .footSocial li{ margin-left: 10px;}
+  .footerTop .footSocial li a{ font-size: 20px;}
+
+  .owl-nav, .featuredSide .owl-nav{ text-align: right;}
+  .owl-nav button, .featuredSide .owl-nav button{ position: static; left: inherit; right: inherit; margin: 0; background: #151840 !important; width: 40px; height: 40px; margin-left: 8px;}
+  .featuredSide .owl-nav button.owl-prev{ background: #151840 !important; margin-left: 0;}
+  .owl-nav button.owl-prev{ margin-left: 0;}
+  .owl-nav button span, .featuredSide .owl-nav button span{ display: inline-block; color: #FFF !important; font-size: 30px; line-height: 30px; margin: -6px 0 0 0;}
+
+  .vendor .owl-nav{ display: none;}
+  .testimonial .owl-nav, .customerViewing .owl-nav{ padding: 30px 0 0 0;}
+
+  .popInstructure .owl-nav{ margin-top: 25px !important;}
+
+  .siteBanner.forCarousal .owl-nav{ padding-top: 35px;}
+  .feaTuredBanner-cont h4{ font-size: 18px; padding: 0;}
+  .expCourse{ padding: 4px 15px !important; margin: 10px 0 0 0 !important;}
+  .feaTuredBanner-cont .bnPrice{ font-size: 18px !important; padding: 0 !important;}
+  .customSelect{ width:100% !important;}
+  .quantity_area .input-number{
+    width:50px!important;
+    text-align: center;
+  }
+  .heading_txt{
+    min-height: 48px;
+  }
+  h2.headTitle:after{
+    border: none !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .container{ max-width: 960px;}
+  .siteNav{ position: fixed; width: 100%; left: -100%; top: 0; height: 100%; overflow-y: auto; background: #3eb7aa; z-index: 99; @include transition(left 0.5s ease);
+    ul{
+      li{ float: none; margin: 0; border-top: 1px solid #239e91;
+        a{ display: block; color: #FFF !important; text-transform: uppercase; padding: 8px;}
+      }
+    }
+  }
+  .siteNav.acTive{ left: 0;}
+  .siteNavClose{ display: block;}
+  .mobNavOpen{ display: block;}
+  .howItWorks .videoWrap{ margin-bottom: 40px;}
+  .topOffer{ padding-top: 0; padding-bottom: 30px;}
+  .featuredEvent{ padding-top: 30px;}
+  .howItWorks{ padding-top: 30px; padding-bottom: 40px;}
+
+  // .topSearchCont{ margin-top: 0; position: absolute; right: 0; top: 0; z-index: 9;}
+  .topSearchCont.acTive{ width: 322px; margin-right: 15px;}
+  // .topSearchCont input[type="search"]{ height: 82px;}
+
+  .footerBottom .footerLogo{ text-align: center; border-bottom: 1px solid #292c4e; padding-bottom: 20px;}
+  .footerBottom .footLink{ text-align: center; float: none;}
+  .footerBottom .footLink li{ float: none; display: inline-block; margin: 0 10px;}
+  .footerBottom .footerLogo img{ margin-right: 15px;}
+  .footerTop p{ word-break: break-all; line-height: 20px;}
+  .footerTop .footSocial li{ margin-left: 5px;}
+  .topOffer .topAdd{ top: 30px; width: 76px;}
+  .topOffer ul{ padding-left: 135px; padding-right: 135px;}
+  .siteBanner .bannerCont .linkSlide{ padding: 4px 15px; min-width: 194px; margin-top: 5px;}
+  .siteNav ul li a.active-link{
+    color:#151840;
+  }
+
+}
+@media (max-width: 991px) {
+  .eventBanner {
+    .banner_new_txt{
+      top:0;
+
+      .selltagpara{
+        margin: 0 !important;
+      }
+      h4{
+        padding: 0 !important;
+      }
+    }
+  }
+  .eventBanner, .courseDtlBanner{
+    min-height: unset !important;
+  }
+  .cartTotal{
+    margin-top: 20px;
+  }
+  .quantity_area .input-group{
+    justify-content: flex-start;
+  }
+  .eventDetailsGalleryCont[_ngcontent-c7] h3[_ngcontent-c7]{
+    margin:15px 0 0 0;
+  }
+  .heading_txt{
+    min-height: auto;
+  }
+  .plan_d_none{
+    display: none;
+  }
+  .courseDtlBanner h2{
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 767px) {
+  .container{ max-width: 100%;}
+  .topOffer ul li{ width: 100% !important; margin-top: 15px;}
+  .logo{ padding: 5px 0 20px 0; float: none; width: auto; text-align: center; border: none; /*border-bottom: 1px solid #ebebeb;*/ margin-left: -15px; margin-right: -15px;}
+  .headerTop{ text-align: center;}
+  .topSocial{ border-right: 0;}
+  .headerTopRight{ float: none; width: 100%;}
+  .search_sec{ float: none !important; width: 100% !important; margin: 0 !important;}
+  .topSearch{ margin: 5px 10px 0 10px; float: none; display: inline-block; vertical-align: top;}
+  .signUp{ padding: 0 20px 0 20px; height: auto; float: none; display: inline-block; vertical-align: top;}
+  .cartIcon{ padding: 5px 39px 5px 39px; height: auto; float: none; display: inline-block; vertical-align: top;}
+  .cartnum{ top: 5px;}
+  .topSocial{ padding: 5px 0 5px 0;}
+  .topSocial ul li a{ font-size: 18px;}
+  .mobNavOpen{ padding: 4px; padding-left: 0;}
+
+  .featuredCourse{ padding-top: 20px;}
+  .topSearchCont.acTive{ width: 100%; margin-right: 0;}
+  .topSearchCont{ top: 95px;}
+  .topSearchCont input[type="search"]{ /*height: 38px;*/ border: none; border: 1px solid #ebebeb;}
+
+  .footerTopSingle{ border-bottom: 1px solid #0f122f; padding: 15px 0;}
+  .footerTopSingle.noBdr{ border: none; padding-bottom: 0;}
+  .footerTop .footSocial{ float: none; padding: 0;}
+  .footerTop{ padding: 15px 0;}
+  .dispnM{ display: none;}
+  .footerTop p.pAlt{ padding-top: 0;}
+  .loginModal .modal-body{ padding-left: 15px; padding-right: 15px;}
+  .topSocial .linkTop{ margin-right: 0 !important; margin-left: 15px;}
+
+  .topOffer ul{ padding-left: 0; padding-right: 0;}
+  .topOffer .topAdd{ display: none;}
+  .siteBanner .owl-carousel .owl-item img{ min-height: 220px;  object-fit: cover; width:100%;}
+  .siteBanner.respEventBanner .owl-carousel .owl-item img{ min-height: auto;  object-fit: cover; width:100%;}
+  .siteBanner .owl-dots{ text-align: right;}
+  .siteBanner .owl-dot{ width: 20px;}
+  .siteBanner .owl-dots{ bottom: 10px;}
+  .siteBanner .bannerCont .linkSlide{ font-size: 13px;}
+  .siteBanner img {width: 100%; /*min-height: 220px;*/ object-fit: cover;}
+  .signUp.active_user{ float: right;}
+  .userAvDrop{
+    top:54px;
+    right:-5px;
+    text-align: left;
+  }
+  a.profile-upload-btn .fa{ font-size: 18px !important;}
+  .eventBanner.respCourseBanner { min-height: auto !important;;background-repeat: no-repeat;}
+  .listing{
+    .thumbInfoBox{ text-align: center !important;
+      .carouselCont{ padding: 0 10px 18px 10px !important;}
+      .carouselImg{ float: none !important; width:auto !important; margin-right:-12px !important; margin-left: -12px !important;
+          img{
+              min-height: 270px !important;
+              width:100% !important;
+          }
+      }
+
+      .list_cont{ float:none !important; width:100% !important;
+          .ratingsDiv{ width:100% !important; float: none !important; margin-top: 0;}
+          h6{ width:100% !important; float: none !important; text-align: center !important;}
+      }
+    }
+
+    .featuredSingle{ padding: 0 15px 34px 15px;}
+    .featuredSingleImg{float: none; width:auto; margin-right: -15px !important; margin-left: -15px !important;
+      img{ width: 100%;  height: auto !important;  object-fit: cover; }
+    }
+    .list_cont{ float: none; width:100%;
+      .btn_area{ text-align: center !important;}
+      .btnBuy{
+        margin: 30px 0 0 0 !important;
+      }
+    }
+  }
+
+  .eventSort{
+    ul.pull-left{
+      float: none !important;
+      display: block;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+    ul{ float: none !important; display: block; overflow: hidden;}
+  }
+
+  .howItWorks .topCategory ul li{ width: 100%; margin: 10px 0 0 0;}
+  .feaTuredBanner-cont{ margin-top: 20px; border-top: 1px solid #f5f5f5;}
+
+  .cc-window{
+    margin-bottom: 39px;
+  }
+  
+  .eventBanner {
+    .banner_new_txt{
+      position: relative;
+      padding: 15px;
+      background: #1d1f4f;
+      top:0;
+    }
+  }
+  .topNotificAlt{
+    margin: 12px 0px 0 17px;
+  }
+
+  .topNotificDropAlt{
+    right:unset;
+    left:-5px;
+    top:0;
+  }
+  .topNotificDropAlt:after, .topNotificDropAlt:before{
+    right:unset;
+    left:5px;
+  }
+  .topNotificDropInnerAlt{
+    text-align: left;
+  }
+
+  .tabsRadio .panel{
+    padding: 0 !important;
+  }
+  .checkoutItem{
+    margin-bottom: 15px;
+  }
+  
+  .logIn, .siUp{
+    padding: 6px 8px;
+  }
+  .pageHeading h2{
+    font-size: 20px;
+  }
+  .tabsRadio .inputBlock ul li{
+    width:100% !important;
+  }
+  .tabsRadio .inputBlock ul li.secureCode{
+    width:160px !important;
+    float:left !important;
+  }
+  .eventSort ul li:last-child{
+    float: left !important;
+    width:100%;
+    margin: 10px 0 0 0 !important;
+  }
+  .eventSort ul li.sortIcon{
+    margin-bottom:10px !important;
+  }
+  .select-1{
+    box-shadow: none !important;
+    border:1px solid #c5c5c5 !important;
+  }
+  .eventSort ul li:first-child{
+    margin-left: 0 !important;
+  }
+  .eventSort .select-1{
+    margin-bottom: 0 !important;
+    width:100%;
+  }
+  .footerBottom{
+    padding: 20px 0 50px 0;
+  }
+  .loginModal .popSign{
+    padding: 20px 0 28px 0;
+  }
+  .cmsWrap .tabFeatured ul li a{
+    padding: 10px 12px !important;
+  }
+  .cmsWrap .tabFeatured ul li a:focus,  .cmsWrap .tabFeatured ul li a:hover{
+    background: #3eb7aa;
+    color: #FFF !important;
+  }
+  .about_course_area .course_block .instructor_profile .instructor-profile--title{
+    width: 100%;
+    float: right;
+    margin-top: 15px;
+    margin-left: 0;
+  }
+  .eventSort .sortIcon{
+    display: none;
+  }
+  .total_video_container .left_area{
+    width: 50% !important;
+    max-width: 340px; 
+  }
+  .total_video_container .slidediv{
+    padding: 0 0 0 50% !important;
+  }
+  .search_sec{
+    .topSearch{
+      margin: 22px 0 0 0 !important; 
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .checkoutMain .panel{
+    margin-bottom: 15px;
+  }
+  .checkoutMain .btnCheckout{
+    width:100% !important;
+  }
+  .checkoutMain .checkoutRight h2, .checkoutMain .checkoutRight h2 span{
+    font-size: 15px !important;
+  }
+  .checkoutMain .checkoutItem .checkoutItemSingle h5{
+    font-size: 14px !important;
+  }
+  .tabsRadio .divCompletePayment div{
+    padding-left: 0 !important;
+    width:100%;
+    margin: 5px 0;
+  }
+  .modal-body .orderTopDiv .highlightedTxt{
+    font-size: 18px !important;
+  }
+  .video-js .vjs-tech{
+    position: relative !important;
+  }
+  .courseOver_cont{
+    margin-top: 20px !important;
+  }
+  .instructor_profile{
+    margin-top: 20px !important;
+  }
+  .activity_area .col-sm-6{
+    margin-bottom: 20px;
+  }
+  .search_box, .or, .search_question .blue_btn {
+    width:100%;
+    flex: unset;
+  }
+  .or{
+    justify-content: center;
+    padding: 15px 0 !important;
+  }
+  .writer_area{
+    margin-top: 10px;
+  }
+  .float-right{
+    float: none !important;
+  }
+  .float-right .buttonLink:first-child {
+    padding-left: 0  !important;
+  }
+  .accordian_cont .acc_cont ul li a .description{
+    width:auto !important;
+  }
+  .lectures_right{
+    float: none !important;
+  }
+  .courseOver_cont .progress_bar_area .onlybararea .progress_bar{
+    width:56% !important;
+  }
+  .orderSummary{
+    width:100%;
+  }
+  .social_area_link_ara {
+    width:100% !important;
+  }
+  
+  .social_area_link_icon:nth-child(2){
+    margin-left:0 !important; 
+  }
+  .card-header{
+    padding: 0;
+  }
+  .total_video_container .right_area .dashboard_link{
+    font-size: 14px !important;
+  }
+  .total_video_container .right_area .cancel-btn{
+    top: -3px !important;
+    left: 7px !important;
+  }
+  .total_video_container .right_area .cancel-btn img{
+    width:40%;
+  }
+  .total_video_container .right_area .video_area .video_header{
+    padding: 0 0 0 10px !important;
+  }
+  
+}
+
+@media (max-width: 567px) {
+  .howItWorks .topCategory ul li{ width: 100%; margin: 10px 0 0 0;}
+  .signUp{ padding-left: 15px; padding-right:15px;}
+  .user_avatar{ margin: 0;}
+  .cartIcon{ padding-right: 15px;}
+  .footerBottom .footerLogo span{ display: block;}
+  .footerBottom .footerLogo img{ margin-right: 0;}
+  .topSocial .linkTop{ font-size: 13px; margin-left: 5px; padding-left: 6px; padding-right: 6px;}
+  .tabFeatured{
+    position: relative;
+    ul{
+      text-align: center !important;
+    }
+  }
+  .select-1{
+    width:100%;
+    margin-bottom: 15px;
+  }
+  .cartLeft{
+    .cartItemImg, .cartItemDetails, .cartItemAction, .cartItemPrice{
+      float:none !important;
+      width:100% !important;
+      padding-left: 0 !important;
+      text-align: center !important;
+    }
+    ul{
+      li{
+        flex-direction: column;
+      }
+    }
+    .quantity_area .input-group{
+      justify-content: center;
+    }
+    .cartTotal h3{
+      font-size: 15px !important;
+    }
+  }
+
+}
+@media (max-width: 360px) {
+  .eventSort ul li:last-child{
+    float: none !important;
+    width:100%;
+    margin: 10px 0 0 0 !important;
+  }
+  .eventSort ul li.sortIcon{
+    margin-bottom:10px !important;
+  }
+  .select-1{
+    box-shadow: none !important;
+    border:1px solid #c5c5c5 !important;
+  }
+  .eventSort ul li:first-child{
+    margin-left: 0 !important;
+  }
+}
+@media (max-width: 320px) {
+  
+  .topNotificDropInnerAlt{
+    width:234px;
+  }
+  .signUp{
+    margin-bottom: 20px;
+  }
+}

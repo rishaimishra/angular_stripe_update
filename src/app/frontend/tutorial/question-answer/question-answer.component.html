@@ -1,0 +1,83 @@
+<div class="alert alert-danger" *ngIf="error_message !=''">
+	{{error_message}}
+</div>
+<div *ngIf="listQuestionAnswer">
+	<div class="search_question">
+		<div class="search_box">
+			<input placeholder="Search for a question" (keyup)="search($event)" type="text" value="">
+		</div>
+		<span class="or">Or</span>
+		<button class="blue_btn " (click)="askQuestion()">Ask a new question</button>
+	</div>
+	<div class="shorting">
+		<div class="row">
+			<div class="col-sm-6">
+				<select class="select-1 ng-pristine ng-valid ng-touched" (change)="onChangeSort($event);">
+					<option value="-id">Newest</option>
+					<option value="id">Oldest</option>
+				</select>
+			</div>
+			<!-- <div class="col-sm-6 select_box">
+				<span>
+					<input type="checkbox" name="" /> See questions I'm following</span>
+				<span>
+					<input type="checkbox" name="" /> See questions without responses</span>
+			</div> -->
+		</div>
+	</div>
+	<div class="row" *ngIf="loader">
+		<div class="col-xl-12 col-lg-12 col-md-12 text-center">
+			<i class="fa fa-spinner fa-3 fa-spin"></i>
+		</div>
+	</div>
+	<div class="qa_content" *ngIf="questions?.length > 0" (quEvent)="receiveMessage()">
+		<div class="qa_block" (click)="onClickQuestion(question)" *ngFor="let question of questions">
+			
+			<div class="user_avtar">
+				<div class="user-avatar__inner fx-c">
+					<span class="user-initials">
+						{{(question?.user?.profile?.first_name | slice: 0:1) + (question?.user?.profile?.last_name | slice: 0:1)}}
+					</span>
+				</div>
+			</div> 
+			<div class="question_list">
+				<div>
+					<strong>{{question?.title}}</strong>
+				</div>
+				<div class="qa_des">{{question?.description}}</div>
+			</div>
+			<div class="response">
+				<div class="cont">
+					<strong>{{question?.response_count ? question?.response_count : 0}}</strong>
+				</div>
+				<div>Responses</div>
+			</div>
+
+		</div>
+
+	</div>
+	<div class="qa_content" *ngIf="questions?.length == 0">
+		<div class="qa_block">
+			No record found
+		</div>
+	</div>
+</div>
+
+<div *ngIf="addQuestionAnswer" class="question-overview--wrapper--2yUqR">
+
+	<p class="ask_qa"><strong>Have a technical issue? Our</strong>
+		<a href="#">Support Team</a> <strong>can help.</strong></p>
+
+	<div class="reply_frm_area">
+	<input type="text" class="input-sm question-editor--title-editor--2n8ko" placeholder="Question Title" #titleInput
+	 name="title" autocomplete="off">
+
+	<textarea #descriptionInput (keyup)="onDescriptionKeyUp($event)" ng-model="description" class="" placeholder="Describe what you're trying to achieve and where you're getting stuck"
+	 name="description"></textarea>
+
+	<button [disabled]="buttonActive !== 1" data-purpose="post-question" type="button" class="btn btn-info" (click)="addNewQuestionAnswer(titleInput.value,descriptionInput.value)">Post Question</button>
+
+	<button data-purpose="cancel" (click)="cancelQuestionAnswer()" type="button" class="btn btn-sm btn-tertiary">Cancel</button>
+	</div>
+
+</div>

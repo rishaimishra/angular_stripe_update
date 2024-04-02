@@ -1,0 +1,166 @@
+<div class="rightPanel alt">
+	<breadcrumb>
+		<li class="active"><span>Attendee Information</span></li>
+	</breadcrumb>
+	<div class="row">
+		<div class="col-md-12">
+			<h2 class="headTitle">Attendee Information</h2>
+		</div>
+
+	</div>
+	<section class="mainContainer attendanceInfo_wrapper">
+		
+		<ng-container *ngIf="updateAttendeeStatus">
+			<div class="row">
+				<div class="col-md-12">
+					<p class="attendeeText">Kindly verify and fill up the details on all tickets purchased for you and any
+							guest in
+							the form below.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p class="warrningMsg">Note: There must be a unique email address for every person who recive a ticket.
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<form [formGroup]="attendeeForm">
+						<div class="alert alert-danger" *ngIf="attendeeForm.controls.items.errors?.duplicateEmail">
+							Please enter unique Email.
+						</div>
+						<!-- <div class="alert alert-danger" *ngIf="attendeeForm.controls.items.errors?.duplicateName">
+              Please enter unique Name.
+            </div> -->
+
+						<div class="row">
+						<div formArrayName="items" class="col-sm-12  col-md-4"	*ngFor="let item of attendeeForm.get('items')['controls']; let i = index;">
+							<div [formGroupName]="i" class="attendeeInfoContainer">
+								<div class="row">
+									<div class="col">
+										<p class="attendeeTitle">Attendee {{i+1}}</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label for="" class="ticketCategory">Ticket Category:</label>
+										<span class="badge badge-warning ticketCat">
+											{{ curEvent.payment_category | titlecase }}</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label for="" class="eventName">Event:</label>
+										<span>&nbsp; {{attendeeInfo[0]?.events?.title}}</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label for="">First Name*:</label>
+										<div class="form-group" *ngVar="item.get('first_name') as first_name">
+											<input class="form-control" formControlName="first_name" name="first_name"
+												placeholder="First Name" type="text">
+											<form-validation-message [fromInstance]="first_name">
+											</form-validation-message>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label for="">Last Name*:</label>
+										<div class="form-group" *ngVar="item.get('last_name') as last_name">
+											<input class="form-control" formControlName="last_name" name="last_name"
+												placeholder="Last Name" type="text">
+											<form-validation-message [fromInstance]="last_name">
+											</form-validation-message>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label for="">Email*:</label>
+										<div class="form-group" *ngVar="item.get('email') as email">
+											<input class="form-control" formControlName="email" name="email"
+												placeholder="Email" type="text">
+											<form-validation-message [fromInstance]="email"></form-validation-message>
+
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label for="">Country*:</label>
+										<div class="form-group" *ngVar="item.get('country_id') as country_id">
+											<!-- <select class="form-control" id="" formControlName="country_id" name="country" placeholder="Country">
+  
+                              <option *ngFor="let country of countries" value="country.value">{{ country.name}}</option>
+                             
+                          </select> -->
+											<ng-select class=" " [items]="countries" bindLabel="name" bindValue="id"
+												placeholder="Select Country" formControlName="country_id"
+												(change)="onCountrySelect($event,i)">
+											</ng-select>
+											<form-validation-message [fromInstance]="country_id">
+											</form-validation-message>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<label for="">Phone No*:</label>
+										<ng-select [items]="countries" bindLabel="label" bindValue="phone_code"
+											formControlName="phone_code" class="">
+											<!-- <ng-template ng-label-tmp let-item="item">
+                                {{item.label}}
+                            </ng-template> -->
+											<ng-template ng-label-tmp let-item="item">
+												<img height="15" width="15" [src]="item.image ? item.image: ''" />
+												{{item.label}}
+											</ng-template>
+											<ng-template ng-option-tmp let-item="item" let-index="index"
+												let-search="searchTerm">
+												<img height="15" width="15" [src]="item.image ? item.image: ''" />
+												<b>{{item.label}}</b>
+											</ng-template>
+										</ng-select>
+									</div>
+									<div class="col">
+										<label for="">&nbsp;</label>
+										<div class="form-group">
+											<input class="form-control" formControlName="phone_number"
+												name="phone_number" placeholder="Phone No" minlength=10 maxlength=10
+												type="text" (keypress)="keyPress($event)">
+
+										</div>
+									</div>
+								</div>
+								<div class="row" *ngVar="item.get('phone_number') as phone_number">
+									<form-validation-message [fromInstance]="phone_number"></form-validation-message>
+								</div>
+
+								<!-- <input formControlName="first_name" placeholder="First Name">
+              <input formControlName="last_name" placeholder="Last Name">
+              <input formControlName="email" placeholder="Email">
+              <input formControlName="country_id" placeholder="Country">
+              <input formControlName="phoneNo" placeholder="Phone No"> -->
+							</div>
+						</div>
+					</div>
+						<div class="clearfix"></div>
+						<input class="submitBtn" type="submit" name="" value="Submit"
+							[swal]="{text:'Are you sure?',type:'question'}" (confirm)="saveInfo()"
+							[ngClass]="{'disableSubmit': !attendeeForm.valid}" [disabled]="!attendeeForm.valid">
+					</form>
+				</div>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="!updateAttendeeStatus">
+			<div class="alert alert-danger blankInfo">
+				Sorry, update attendee date Expire..
+			</div>
+		</ng-container>
+	</section>
+
+
+</div>

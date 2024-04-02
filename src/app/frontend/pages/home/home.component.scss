@@ -1,0 +1,55 @@
+.howItWorks .topCategory ul li a { 
+    font-size: 15px;
+} 
+.newProducts h4 {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.fa.fa-spinner{
+    padding: 10px;
+    font-size: 50px;
+}
+
+.newProducts, .featuredCourse{
+    .ratingsDiv{
+        padding: 6px 0 0 0;
+        .Left{
+            display: inline-block;
+            margin: 0;
+            font-size: 20px;
+            color: #616161;
+        }
+        .Right{
+            display: inline-block;
+            margin: 0px 5px;
+            font-size: 13px;
+            color: #616161;
+            span{
+                font-size: 20px;
+                color: #000;
+            }
+        }
+        .noreview{           
+            margin:0;
+            
+        }
+
+    }
+}
+
+.originalPrc{ font-size: 12px;
+    text-decoration: line-through;
+    display: inline-block;
+    padding: 0 8px 0 0;
+    vertical-align: middle;
+}
+
+
+.imgOverStar{
+    z-index: 999;
+}
+.sxlBancor{
+    padding: 40px 0 40px 0;
+}

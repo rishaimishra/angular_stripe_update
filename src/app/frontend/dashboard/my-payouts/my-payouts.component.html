@@ -1,0 +1,58 @@
+<div class="rightPanel">
+
+    <div class="centerHeading">
+      <h2>My Payouts</h2>
+    </div>
+    <div>
+      <ng-container  >
+          <a href="javascript:void(0);" routerLink="/dashboard/my-wallet" class="btn btn-primary btn-sm titleLink02 pull-right">Back</a>
+           <!-- <button *ngIf="walletData?.amount>0 && !anyPayoutPending" class="btn btn-primary btn-sm pull-right titleLink02" (click)="payOutModal()">Request for a Payout</button>	 -->
+      </ng-container>
+    </div>
+    
+    <div class="table-responsive table_cont" *ngIf="records.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Comments</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th class="text-right">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="records.length > 0">
+          <tr *ngFor="let rs of records">
+            <td>{{ rs?.comments }}</td>
+            <td>{{ rs?.approved_date | date: 'dd-MM-yyyy'}}</td>
+            <td>{{ rs?.status }}</td>
+            <td class="text-right">{{ rs?.amount  | number:'1.2-2'}} USD</td>
+          </tr>
+  
+        </tbody>
+        <tbody *ngIf="records.length === 0">
+          <tr>
+            <td colspan="4" class="text-center">
+              No record found
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="tabPagination">
+          <tr>
+            <td colspan="4">
+              <app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)"
+               (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="row mt30" *ngIf="records.length === 0">
+      <div class="col-12">
+          <div class="alert alert-warning text-center">
+              <strong>Oops!</strong>
+              No record found.
+          </div>
+      </div>
+  </div>
+  
+  </div>

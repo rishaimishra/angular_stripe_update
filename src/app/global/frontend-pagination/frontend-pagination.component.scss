@@ -1,0 +1,16 @@
+@import "../../../assets/scss/custom-mixin";
+.siteBreadcrumb{ padding: 25px 0 0 0;
+    ul{ text-align: center;
+     li{ display: inline-block; vertical-align: top; margin: 0 7px;
+       a{ display: block; width: 34px; height: 34px; border: 1px solid #d5d5d5; border-radius: 50%; font-size: 19px; color: #757575; text-align: center; @include linear-gradient(#FFF, #ececec); line-height: 32px;
+        &.active{ @include linear-gradient(#767676, #adaaaa); color: #FFF;}
+       }
+       &:first-child a{ background: url(../../../assets/images/arr-prev1.png) center center no-repeat; border: none; margin-right: 10px;}
+       &:last-child a{ background: url(../../../assets/images/arr-next1.png) center center no-repeat; border: none; margin-left: 10px;}
+     }
+    }
+
+    .dot-blank {
+        padding: 10px 15px;
+    }
+}

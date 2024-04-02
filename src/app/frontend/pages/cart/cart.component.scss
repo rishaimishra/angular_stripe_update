@@ -1,0 +1,100 @@
+.pageHeading{ background: url(../../../../assets/images/page-heading.jpg) top center no-repeat; background-size: cover; min-height: 145px;
+  h2{ color: #FFF; font-size: 36px; font-weight: 300;}
+  h3{ color: #FFF; font-size: 16px; font-weight: 300;}
+}
+
+.cartMain{ padding: 40px 0 0 0;}
+.featuredCourseForCart{ padding-bottom: 40px;}
+
+.cartLeft{
+  h2{ font-size: 18px; color: #29303b;
+    &.saveLater{ padding: 30px 0 0 0;}
+  }
+  ul{ padding: 12px 0 0 0;
+    li{ overflow: hidden; border: 1px solid #d9d9d9; padding: 10px; margin: -1px 0 0 0; align-items: center; display: flex;}
+  }
+  .cartItemImg{ float: left; width: 17%;}
+  .cartItemDetails{ float: left; width: 50%; padding: 0 0 0 15px;
+    h3{ font-size: 15px; color: #231f20; font-weight: 700; padding: 2px 0 0 0;}
+    h4{ font-size: 13px; color: #616161; padding: 7px 0 0 0;}
+
+
+    .codeCoupon{ position: relative; margin: 13px 0 0 0; overflow: hidden;
+      input[type="text"]{ width: 70%; float: left; font-size: 12px; color: #7b7b7b; border: 1px solid #cdcdcd; padding: 15px;}
+      input[type="submit"]{ width: 30%; float: left; background: #3eb7aa; color: #FFF; font-size: 15px; font-weight: 700; border: none; height: 50px; border-top-right-radius: 2px; border-bottom-right-radius: 2px;}
+    }
+    .appliedCoupon {
+      h5{ font-size: 13px; color: #616161; padding: 22px 0 0 0;}
+      h6{ font-size: 15px; color: #616161; font-weight: 700; padding: 5px 0 0 0;
+        span{ font-weight: 400;}
+      }
+    }
+  }
+  .cartItemAction{ float: left; width: 17%;
+    a{ display: inline-block; font-size: 18px; color: #003845; text-align: right; padding: 0 5px;
+      .fa-trash{
+        color:red;
+      }
+      .fa-heart{
+        color:red;
+      }
+      .fa-heart-o{
+        color:red;
+      }
+      .fa-shopping-bag{
+        color:#484848;
+      }
+    }
+  }
+  .cartItemPrice{ float: left; width: 27%; text-align: right; padding: 0 10px 0 0;
+    h3{ font-size: 15px; color: #ec5252; font-weight: 700;}
+    h4{ font-size: 15px; color: #686f7a; padding: 4px 0 0 0;
+     span{ text-decoration: line-through;}
+    }
+  }
+
+  .cartQuantity {
+    margin: 10px 0 0 10px;
+    width: 60px;
+    display: inline-block;
+  }
+
+  
+  .quantity_area{
+    margin-top: 20px;
+    margin-left: 10px;
+    .input-group-btn{
+      background: #ddd;
+    }
+  }
+}
+
+.cartTotal{
+  h2{ font-size: 18px; color: #29303b;}
+  h3{ font-size: 36px; color: #484848; font-weight: 600; padding: 4px 0;}
+  h4{ font-size: 15px; color: #616161; line-height: 24px;
+    span{ text-decoration: line-through;}
+  }
+  h5{ font-size: 13px; color: #616161; padding: 22px 0 0 0;}
+  h6{ font-size: 15px; color: #616161; font-weight: 700; padding: 5px 0 0 0;
+    span{ font-weight: 400;}
+  }
+  a.btnCheckout{ background: #ec5252; color: #FFF; font-size: 15px; font-weight: 700; border-radius: 2px; padding: 12px 0; display: block; text-align: center; margin: 15px 0 0 0;}
+  
+  .codeCoupon{ position: relative; margin: 13px 0 0 0; overflow: hidden;
+    input[type="text"]{ width: 70%; float: left; font-size: 12px; color: #7b7b7b; border: 1px solid #cdcdcd; padding: 15px;}
+    input[type="submit"]{ width: 30%; float: left; background: #3eb7aa; color: #FFF; font-size: 15px; font-weight: 700; border: none; height: 50px; border-top-right-radius: 2px; border-bottom-right-radius: 2px;}
+  }
+
+}
+
+.emptyCart {
+  text-align: center; margin-top: 20px;
+  a.btnShopping{ width: 220px; background: #3eb7aa; color: #FFF; font-size: 15px; font-weight: 700; border-radius: 2px; padding: 12px 0; display: block; text-align: center; margin: 15px auto;}
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

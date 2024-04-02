@@ -1,0 +1,92 @@
+<section class="mainContainer">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-2 col-lg-3 leftPanel">
+          <app-dashboard-left-panel></app-dashboard-left-panel>
+        </div>
+        
+      
+        <div class="col-xl-10 col-lg-9">
+          <div class="rightPanel">
+              <!-- <div Class= "alert-success"   *ngIf="successMsg">
+                  {{successMsg}}
+              </div> -->
+           <div class="centerHeading alt">
+             <h2>First, let’s find out what type of course you’re making.</h2>
+           </div>
+           <div class="stepTop">
+             <ul>
+               <li><a class="active" href="#"><i class="fa fa-check" aria-hidden="true"></i> Step 1</a></li>
+               <li><a href="#"><i class="fa fa-check" aria-hidden="true"></i> Step 2</a></li>
+               <li><a href="#"><i class="fa fa-check" aria-hidden="true"></i> Step 3</a></li>
+             </ul>
+           </div>
+           <div class="courseHead">
+             <img src="assets/images/course-icon2.png" alt="">
+             <h3>Course</h3>
+             <p>Create rich learning experiences with the help of video lectures, quizzes, coding exercises,etc.</p>
+           </div>
+
+           <form [formGroup]="courseCreateFrom" (ngSubmit)="courseCreate()">
+           <!-- <notification-message [messages]="messages" *ngIf="errorMsg"></notification-message> -->
+              <div class="formSection">
+                <h3>How about a working title?</h3>
+                <h4>It’s ok if you can’t think of a good title now. You can change it later.</h4>
+                <div class="inpWrapBack" *ngVar="courseCreateFrom.get('title') as title">
+                  <input class="inpField inpFieldAlt" type="text" name="title" value="" placeholder="e.g. Learn Photoshop CS6 from Scratch" formControlName="title" >
+                  <!-- <input class="submitAbs" type="submit" name="" value="go"> -->
+                  <form-validation-message [fromInstance]="title"></form-validation-message>
+                </div>
+                
+                
+              </div>
+
+              <div class="formSection">
+                <h3>What catagory best fits the Knowledge you’ll share?</h3>
+                <h4>If you’re not sure about the right category, you can change it later.</h4>
+                <div class="inpWrapBack" *ngVar="courseCreateFrom.get('categories') as categories">
+                  <!-- <select class="inpField inpFieldAlt" name="">
+                    <option value="">Choose category</option>
+                    <option value="">Choose category</option>
+                  </select> -->
+                  <ng-select  [items]="categoryList"
+                  bindLabel="name"
+                  bindValue="id"						
+                  groupBy="parent_name"           	
+                  [groupValue]="groupValueFn"				
+                  placeholder="Select parent category"												 
+                  dropdownPosition="auto"
+                  name="categories"
+                  formControlName="categories"								 
+                  >
+                </ng-select>
+                <form-validation-message [fromInstance]="categories"></form-validation-message>
+                </div>
+              </div>
+
+              <div class="formSection">
+                <h3>How much time can you spend creating your course per week?</h3>
+                <h4>There's no wrong answer. We can help you achieve your goals even if you don't have much time.</h4>
+                <div class="inpWrapBack" *ngVar="courseCreateFrom.get('course_time_id') as course_time_id">
+                      <span class="sideRadio" *ngFor="let courseTime of courseTimes">
+                        <input class="" type="radio" name="course_time_id"  value="{{courseTime.id}}" formControlName="course_time_id">
+                        <label class="form-check-label" for="">
+                            {{courseTime.name}}
+                        </label>
+                        <form-validation-message [fromInstance]="course_time_id"></form-validation-message>
+                        <br>
+                      </span>
+                </div>
+              
+              </div>
+
+            <div class="text-center create_course_btn">
+              <input class="submitButton" type="submit" name="" [className]="courseCreateFrom.valid ? 'submitBtn  ' : 'submitBtn disableSubmit'" value="Create Your Course">
+            </div>
+          </form> 
+      </div>
+    </div>
+
+    </div>
+  </div>
+</section>

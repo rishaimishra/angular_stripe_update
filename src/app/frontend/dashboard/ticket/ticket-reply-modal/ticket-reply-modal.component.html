@@ -1,0 +1,52 @@
+
+<div class="rightPanel">
+  <div class="centerHeading">
+    <h1>
+      Replies
+      <div class="back" >
+          <a [routerLink]="['/dashboard'+'/support-ticket']"> <input class="backBtn" type="button" name="" value="Back" ></a>
+      </div>
+    </h1>
+  </div>
+ 
+    <div class="subject">
+        <span [innerHtml]="ticketDetails?.subject" class="content_heading"></span>
+        <p [innerHtml]="ticketDetails?.description" class="small_description"></p>
+        <ng-container *ngIf="ticketDetails?.attachments?.length>0">
+          <a href="{{ticketDetails?.attachments[0]?.attachment_url}}"  target="_blank" download  >Attachments: 
+            <span><i class="fa fa-file" aria-hidden="true"></i></span>
+          </a>
+        </ng-container>
+    </div>
+    <div class="main-panel" id="chatElement" infiniteScroll
+    [infiniteScrollDistance]="3"
+    [infiniteScrollThrottle]="50"
+    [infiniteScrollContainer]="selector"
+    [fromRoot]="true"
+    (scrolled)="onScroll()" *ngIf="conversations.length">
+
+          <!-- <div class="container" *ngFor="let reply of replies; index as i; "  [ngClass]="{'darker': reply.user_id == curUser.id }">
+             <img src="/w3images/bandmember.jpg" alt="Avatar"> 
+            <h3 class="user " [ngClass]="{'right': reply.user_id == curUser.id }">{{reply.user_id == curUser.id ? 'Me' :'Admin' }}</h3>
+            <p [innerHtml]="reply.body" ></p>
+            <span class="time-right">11:00</span> 
+          </div> -->
+
+          <div class="textbox" *ngFor="let conversation of conversations; index as i; "  >
+            <!-- <img src="/w3images/bandmember.jpg" alt="Avatar"> 
+           <h3 class="user " [ngClass]="{'right': reply.user_id == curUser.id }">{{reply.user_id == curUser.id ? 'Me' :'Admin' }}</h3> -->
+           <p class="right">{{ conversation?.created_at |  amTimeAgo : true}} ago</p>
+           <p [innerHtml]="conversation.body" ></p>
+           <!-- <span class="time-right">11:00</span>  -->
+         </div>
+    </div>
+  
+  <!-- <div class="replyBox">
+    	<ckeditor [config]="ckConfig"   name="reply"  [editor]="Editor" required ></ckeditor>
+  </div>
+  <div class="submit" >
+      <input class="submitBtn" type="submit" name="" value="Submit" >
+  </div> -->
+ 
+
+</div>

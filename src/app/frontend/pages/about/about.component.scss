@@ -1,0 +1,95 @@
+@import "../../../../assets/scss/custom-mixin";
+
+// About Page
+.innerPageBanner{ position: relative; text-align: center;
+  img{ width: 100%;}
+  .innerPageBannerCont{ position: absolute; width: 100%; height: 100%; left: 0; top: 0; z-index: 9;
+    h2{ color: #FFF; font-size: 52px; text-shadow: 0 0 15px #000;
+     span{ font-size: 70px;}
+    }
+  }
+}
+
+.descTxt{ text-align: center; padding: 50px 0 40px 0;
+  h2{ font-size: 36px; color: #4d4d4d; font-weight: 300;}
+  h3{ font-size: 24px; color: #4d4d4d; font-weight: 300; padding: 35px 0 0 0;}
+}
+
+.howItWorks.forAbout{ display: block; background: none;
+  .howItWorksWrap{ background: #f7f8fa;}
+  .videoWrap{ margin: 0;}
+  .contHow{ padding: 30px 40px 30px 15px;
+   p{ font-size: 15px; color: #454545; padding: 25px 0 0 0;}
+  }
+}
+
+.ourTeam{ padding: 0 0 60px 0;
+  h2{ text-align: center; padding: 0 0 30px 0;}
+  .teamSingle{ padding:0 20px 18px 20px; margin: 10px 2px 30px 2px; @include box-shadow(0, 0px, 7px, rgba(0, 0, 0, 0.2)); border-radius: 4px; text-align: center;
+    .teamSingleImg{ margin-left: -20px; margin-right: -20px;
+      img{ width: 100%;}
+    }
+    h3{ font-size: 18px; color: #323232; text-transform: uppercase; padding: 20px 0 0 0;}
+    p{ font-size: 14px; color: #6c6c6c;}
+  }
+}
+
+.broadAdd{ @include linear-gradient(#3eb4ac, #348ec8); text-align: center; position: relative;
+  h2{ font-size: 30px; color: #FFF;}
+  p{ font-size: 15px; color: #FFF; padding: 15px 0 0 0;}
+  .imgRightFull{ min-height: 500px; text-align: center;}
+  .imageRightMain{ width: 50%; position: absolute; right: 0; top: 0; height: 100%; background: #000;}
+  .imgFirst{ background: url(../../../../assets/images/img-1.jpg) no-repeat top center; background-size: cover;}
+  .posN{ position: static;}
+  .learnMore{ background: #151840; color: #FFF; font-size: 16px; display: inline-block; padding: 12px 28px; border-radius: 25px; margin: 25px 0 0 0;}
+  .txtLeft{ padding-right: 100px; margin-left: -100px;}
+  .rightVideoIcon{ width: 100%;}
+  .counter{ text-align: center; padding: 40px 0 0 0;
+    li{ display: inline-block; vertical-align: top; color: #FFF; font-size: 44px; font-weight: 700; line-height: 34px; padding: 0 15px; text-align: center;
+     span{ font-size: 16px; font-weight: 400;}
+    }
+  }
+}
+
+.broadAdd.alt{
+  .imageRightMain{ right: inherit; left: 0;}
+  .txtLeft{ padding-right: 0; margin-left: 0; padding-left: 100px; margin-right: -100px;}
+  .imgFirst{ background: url(../../../../assets/images/img-2.jpg) no-repeat top center; background-size: cover;}
+}
+// About Page
+
+
+@media (max-width: 1500px) {
+  .broadAdd .txtLeft{ margin-left: 0;}
+  .broadAdd.alt .txtLeft{ margin-right: 0;}
+}
+
+@media (max-width: 1139px) {
+  .innerPageBanner .innerPageBannerCont h2{ font-size: 34px;}
+  .innerPageBanner .innerPageBannerCont h2 span{ font-size: 50px;}
+  .broadAdd .txtLeft{ padding-left: 0; padding-right: 0;}
+  .broadAdd.alt .txtLeft{ padding-left: 0;}
+}
+
+@media (max-width: 1023px) {
+  .broadAdd .imageRightMain{ position: static; width: 100%; min-height: 300px;}
+  .broadAdd .imgRightFull{ min-height: 50px; margin-left: -15px; margin-right: -15px;}
+  .broadAdd .txtLeft{ padding-top: 80px; padding-bottom: 80px;}
+  .broadAdd .order-last{ order: inherit;}
+}
+
+@media (max-width: 767px) {
+  .innerPageBanner .innerPageBannerCont h2{ font-size: 18px;}
+  .innerPageBanner .innerPageBannerCont h2 span{ font-size: 30px;}
+  .descTxt h2{ font-size: 24px;}
+  .descTxt h3{ font-size: 18px;}
+  .howItWorks.forAbout .contHow{ padding-right: 15px;}
+}
+
+@media (max-width: 567px) {
+  .innerPageBanner .innerPageBannerCont h2{ font-size: 13px;}
+  .innerPageBanner .innerPageBannerCont h2 span{ font-size: 16px;}
+}
+
+
+.ourTeam .teamSingle .teamSingleImg { background-color: #bfbfbf;}

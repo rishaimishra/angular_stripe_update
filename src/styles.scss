@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+@import "~bootstrap/scss/bootstrap";
+@import "~ngx-bootstrap/datepicker/bs-datepicker";
+
+@import "~owl.carousel/dist/assets/owl.carousel.min.css";
+@import "~font-awesome/css/font-awesome.css";
+@import '~@ngx-share/button/themes/default/default-theme';
+
+
+@import "assets/scss/custom-mixin";
+@import "assets/scss/front-admin";
+@import "assets/scss/header";
+@import "assets/scss/page";
+@import "assets/scss/footer";
+@import "assets/scss/responsive";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import 'node_modules/angular2-toaster/src/toaster';

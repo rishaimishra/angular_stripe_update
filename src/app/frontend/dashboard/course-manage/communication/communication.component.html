@@ -1,0 +1,66 @@
+<section class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h2>Communication</h2>
+  </div>
+</section>
+
+<section class="cmsWrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-course-manage-left-panel></app-course-manage-left-panel>
+      </div>
+      <div class="col-lg-9">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 text-center" *ngIf="checkFinish">
+            <div class="alert alert-warning"> Please fill previous steps. </div>
+        </div>
+
+        <div class="formSEc" *ngIf="!checkFinish">
+          <h2>Write messages to your students (optional) that will be sent automatically when they join or complete your course to encourage students to engage with course content. If you do not wish to send a welcome or congratulations message, leave the text box blank.</h2>
+          <!-- <div Class= "alert-success"   *ngIf="successMsg">
+              {{successMsg}}
+          </div> -->
+          <form class="form-horizontal" [formGroup]="communicationForm" (ngSubmit)="updateCommunication()" >
+              <div *ngIf="errorMsg">
+                  <!-- <notification-message [messages]="messages"></notification-message> -->
+              </div>
+                <div class="groupForm">
+                  <div class="groupFormSingle">
+                    <label for="">Welcome Message*</label>
+                    <div class="inpWrap"  *ngVar="communicationForm.get('wellcome_template') as wellcome_template">
+                      <textarea class="inpClass" name="name" formControlName="wellcome_template"></textarea>
+                      <!-- <div class="inpWrapCount alt">57</div> -->
+                      <form-validation-message [fromInstance]="wellcome_template"></form-validation-message>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="groupForm">
+                  <div class="groupFormSingle">
+                    <label for="">Congratulations Message*</label>
+                    <div class="inpWrap" *ngVar="communicationForm.get('congrats_template') as congrats_template">
+                      <textarea class="inpClass" name="name" formControlName="congrats_template"></textarea>
+                      <!-- <div class="inpWrapCount alt">57</div> -->
+                      <form-validation-message [fromInstance]="congrats_template"></form-validation-message>
+                    </div>
+                  </div>
+                </div>
+               
+                <div class="text-right com_btn_area">
+                  <a routerLink="/dashboard/course-edit/price-and-coupons" class="pre_btn" >  Back</a>
+                  <input _ngcontent-c11="" class="ansSave" name="" type="submit"  [className]="communicationForm.valid ? 'ansSave  ' : 'ansSave disableSubmit'" value="Finish">
+                </div>
+                <div class="clearfix"></div>
+          </form>      
+          <!-- <div class="pre_nxt_btn_area">
+              <a routerLink="/dashboard/course-edit/price-and-coupons" class="pre_btn" >  Back</a>
+              <div class="clearfix"></div>
+          </div>         -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</section>

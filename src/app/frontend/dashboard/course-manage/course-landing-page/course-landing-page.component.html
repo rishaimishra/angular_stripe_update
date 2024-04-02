@@ -1,0 +1,354 @@
+<section class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h2>Course Landing</h2>
+  </div>
+</section>
+
+<section class="cmsWrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-course-manage-left-panel></app-course-manage-left-panel>
+      </div>
+      <div class="col-lg-9">
+          <!-- <div Class= "alert-success"   *ngIf="successMsg">
+              {{successMsg}}
+          </div> -->
+        <div class="formSEc">
+        <form class="form-horizontal" [formGroup]="courseLandingPageForm" (ngSubmit)="updateLandingPage()" >
+            <!-- <div *ngIf="errorMsg">
+                <notification-message [messages]="messages"></notification-message>
+            </div> -->
+          <div class="groupForm first">
+            <div class="groupFormSingle">
+              <label for="">Course Title*</label>
+              <div class="inpWrap" *ngVar="courseLandingPageForm.get('title') as title">
+                <input type="text" class="inpClass" placeholder="Title" formControlName="title">
+                <!-- <div class="inpWrapCount">57</div> -->
+                <form-validation-message [fromInstance]="title"></form-validation-message>
+              </div>
+            </div>
+          </div>
+
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Course Subtitle*</label>
+              <div class="inpWrap" *ngVar="courseLandingPageForm.get('sub_title') as sub_title">
+                <input type="text" class="inpClass" placeholder="Insert your course subtitle" formControlName="sub_title"  maxlength="250">
+                <!-- <div class="inpWrapCount">120</div> -->
+                <form-validation-message [fromInstance]="sub_title"></form-validation-message>
+              </div>
+            </div>
+          </div>
+
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Course Description*</label>
+              <div class="inpWrap" *ngVar="courseLandingPageForm.get('description') as description">
+                <!-- <textarea name="name" class="inpClass" placeholder="Insert your course description" ></textarea> -->
+                <ckeditor [editor]="Editor" tagName="textarea" formControlName="description" [config]="{ label: 'Foo', toolbar: [ 'heading', '|', 'bold', 'italic', 'undo', 'redo' ] }" (ready)="onReady($event)"></ckeditor>
+                <form-validation-message [fromInstance]="description"></form-validation-message>
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Course Meta Description</label>
+              <div class="inpWrap" >
+                <input type="text" class="inpClass" placeholder="Insert your course meta description" formControlName="meta_description"  maxlength="250">
+                <h6 class="fileFormatInfo"> *Max length is 250 </h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Course Meta Keywords</label>
+              <div class="inpWrap">
+                <input type="text" class="inpClass" placeholder="Insert your course meta meta keywords" formControlName="meta_keywords"  maxlength="250">
+              </div>
+            </div>
+          </div>
+
+          <div class="groupForm alt">
+              <div class="groupFormSingle">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label for="" style="display: block;font-size: 16px;color: #000;">Course Duration*</label>
+                    <ngb-timepicker [formControl]="ctrl" [readonlyInputs]="false" required name="time" (keypress)="keyPress($event)"></ngb-timepicker>
+                    <div>
+                      <div style="float:left; width:65px; text-align: center;">hour</div>
+                      <div style="float:left; width:20px; text-align: center;">&nbsp;</div>
+                      <div style="float:left; width:65px; text-align: center;">minute</div>
+                    </div>
+                    <div class="small form-text text-danger" *ngIf="!ctrl?.valid">
+                      <div *ngIf="ctrl?.errors['required'] && submited" style="font-size:11px;color: #ff0000 !important;">Time required</div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <label for="">What is Primary taught in your course?* </label>
+                      <div *ngVar="courseLandingPageForm.get('primary_thought') as primary_thought">
+                          <input type="text" class="inpClass" placeholder="e.g Landscape Photography" formControlName="primary_thought">
+                          <form-validation-message [fromInstance]="primary_thought"></form-validation-message>
+                        </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Basic Info</label>
+              <div class="row">
+                <div class="col-lg-6">
+                  <!-- <select class="inpClass withMerg" name="">
+                   <option value="">English (US)</option>
+                  </select> -->
+                  <label for="" class="sub_label">Language</label>
+                  <input type="text" value="English" class="inpClass" disabled >
+                </div>
+                <div class="col-lg-6" >
+                  <label for="" class="sub_label">Course Standard</label>
+                  <!-- <select class="inpClass withMerg" name="" formControlName="course_stander_id" >
+                      <option [value]="standerd.id" *ngFor="let standerd of course_stander">{{standerd.title|titlecase}}</option>
+                  </select> -->
+                  <ng-select class="inpClass multiselect"
+                    [items]="course_stander"
+                    bindLabel="title"
+                    bindValue="id"
+                    placeholder="Select Standerd"
+                    formControlName="course_stander_id">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                    <label for="" class="sub_label">Category*</label>
+                  <!-- <select class="inpClass" name="" formControlName="parent_category_id" (change)="subCategoryChange($event.target.value)">
+                    <option [value]="category.id" *ngFor="let category of parent_Category">{{category.name|titlecase}}</option>
+                  </select> -->
+                  <ng-select class="inpClass multiselect"
+                    [items]="parent_Category"
+                    bindLabel="name"
+                    bindValue="id"
+                    placeholder="Select Category"
+                    (change)="subCategory($event)"
+                    formControlName="parent_category_id">
+                  </ng-select>
+                  
+                </div>
+                <div class="col-lg-6" >
+                    <label for="" class="sub_label">Sub Category</label>
+                  <!-- <select class="inpClass" name="" formControlName="child_category_id" >
+                    <option >--Select--</option>
+                    <option [value]="childCategory.id" *ngFor="let childCategory of sub_Category">{{childCategory.name|titlecase}}</option>
+                  </select> -->
+
+                  <ng-select class="inpClass multiselect"
+                    [items]="sub_Category"
+                    bindLabel="name"
+                    bindValue="id"
+                    placeholder="Select Sub Category"
+                    formControlName="child_category_id">
+                  </ng-select>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">What is Primary taught in your course? </label>
+              <div class="row">
+                <div class="col-lg-12" *ngVar="courseLandingPageForm.get('primary_thought') as primary_thought">
+                  <input type="text" class="inpClass" placeholder="e.g Landscape Photography" formControlName="primary_thought">
+                  <form-validation-message [fromInstance]="primary_thought"></form-validation-message>
+                </div>
+                <div class="col-lg-6">
+                  <input type="text" class="inpClass" placeholder="e.g Landscape Photography">
+                </div> 
+              </div>
+            </div>
+          </div>-->
+
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Course Image*</label>
+              <div class="section_block imgUploadArea">
+                <div class="row">
+                    <ng-container *ngIf="newImage">
+                        <image-cropper
+                        [imageChangedEvent]="imageChangedEvent"
+                        [maintainAspectRatio]="true"
+                        [aspectRatio]="4 / 1"
+                        [resizeToWidth]="2000"
+                        format="png,jpeg,jpg,gif"
+                        (imageCropped)="imageCropped($event)"
+                        (imageLoaded)="imageLoaded()"
+                        (loadImageFailed)="loadImageFailed()"
+                      *ngIf="imageSrc"  ></image-cropper>
+                    </ng-container>
+
+                  <div class="col-lg-5">
+                    <div class="courseIMg"><img [src]="croppedImage || 'assets/images/demo.png'" alt=""></div>
+                  </div>
+                  <div class="col-lg-7">
+                    <div class="courseTXt">
+                    
+                      <div class="inpWrap"> 
+                          <div class="text-right">
+                            <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="file" class="form-control" (change)="uploadFile($event)" id="file" style="width: 124px;" required ></span>
+                            <!-- <a href="javascript:void(0);" class="btn btn-sm btn-primary btnSpace uploads3" *ngIf="!!fileInstance"  (click)="uploadToS3()">Upload Course Image</a> -->
+                            <a href="javascript:void(0);" class="btn btn-sm btn-primary btnSpace uploads3 form_imgbtn" *ngIf="newCourseImageFile"  (click)="uploadToS3()">Upload Course Image</a>
+                          </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div hidden="true" [innerHtml]="thumbnail" class="link"></div>
+                    
+                  </div>
+
+                </div>
+              </div>
+              <h6 class="fileFormatInfo"> *Image best view upload ratio is 2000px x 500px (width*height). </h6>
+            
+              <h6  class="fileFormatInfo"> *Image needs to be in png,jpeg,jpg,gif format. </h6>
+            </div>
+          </div>
+          <!-- Thumb Image -->
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Course Thumb Image*</label>
+              <div class="section_block imgUploadArea">
+                <div class="row">
+                    <ng-container *ngIf="newThumbImage">
+                        <image-cropper
+                        [imageChangedEvent]="thumbImageChangedEvent"
+                        [maintainAspectRatio]="true"
+                        [aspectRatio]="1 / 1"
+                        [resizeToWidth]="400"
+                        format="png,jpeg,jpg,gif"
+                        (imageCropped)="thumbImageCropped($event)"
+                        (imageLoaded)="thumbImageLoaded()"
+                        (loadImageFailed)="loadThumbImageFailed()"
+                      *ngIf="thumbImageSrc"  ></image-cropper>
+                    </ng-container>
+
+                  <div class="col-lg-5">
+                    <div class="courseIMg"><img [src]="croppedThumbImage || 'assets/images/demo.png'" alt=""></div>
+                  </div>
+                  <div class="col-lg-7">
+                    <div class="courseTXt">
+                     
+                      <div class="inpWrap"> 
+                          <div class="text-right">
+                            <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="file" class="form-control" (change)="uploadThumbFile($event)" id="file" style="width: 124px;" required ></span>
+                
+                            <a href="javascript:void(0);" class="btn btn-sm btn-primary btnSpace uploads3 form_imgbtn" *ngIf="newCourseThumbImageFile"  (click)="uploadToS3Thumb()">Upload Thumb Image</a>
+                          </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div hidden="true" [innerHtml]="thumbnailImage" class="link"></div>
+                    
+                </div>
+
+                </div>
+              </div>
+              <h6 class="fileFormatInfo"> *Image best view upload ratio is 400px x 400px (width*height). </h6>
+            
+              <h6  class="fileFormatInfo"> *Image needs to be in png,jpeg,jpg,gif format. </h6>
+            </div>
+          </div>
+          <!-- Thumb Image -->
+
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Promotional Video*</label>
+              <div class="section_block">
+                <div class="row">
+                  <!-- <div class="col-lg-5">
+                    <div class="courseIMg"><img src="../assets/images/clip.jpg" alt=""></div>
+                  </div> -->
+                  <div class="col-lg-12">
+                    <div class="courseTXt">
+                      <!-- <p>Interested in the field of Machine Learning? Then this course is for you!</p>
+                      <p>This course has been designed by two professional Data Scientists so that we can share our knowledge and help you learn complex theory, algorithms and coding libraries in a simple way.</p>
+                      <p>We will walk you step-by-step into the World of Machine Learning. With every tutorial you will develop new skills and improve your understanding of this</p> -->
+                      <div class="inpWrap">
+                        <!-- <input type="file" (change)="uploadVideo($event)" style="width: 90px;overflow: hidden;
+                        "> -->
+
+                        <ng-container *ngIf="path">
+                            <video width="100%" height="100%" controls>
+                              <source [src]="path">
+                            </video>
+                        </ng-container>
+                        
+                        <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="file" class="form-control" (change)="uploadVideo($event)" id="file" style="width: 124px;" required ></span>
+
+                        <!-- <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="!!videoInstance"  (click)="uploadToS3Video()">Upload Course Video</a> -->
+                        <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="newPromotionalVideo"  (click)="uploadToS3Video()">Upload Course Video</a>
+                        <br>
+
+                        <span hidden="true" [innerHtml]="path"  class="link"></span>
+
+                      
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h6 class="fileFormatInfo">*Video needs to be in mp4,mkv,3gpformat.</h6>
+            </div>
+            
+          </div>
+
+          <!-- <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">Instructor Profile(s)</label>
+              <div class="groupBlock">
+                <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> All visible instructors of this course must complete their profile before the course can be published. This includes name, image, and a short summary of your background 50 words minimum.</p>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for=""><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>  <img src="../assets/images/avatar-1.jpg" alt=""> Sanju Agarwal</label>
+              <div class="groupBlock">
+                <p>Your instructor biography must have at least 50 words.</p>
+                <p><a href="#">Update your profile</a></p>
+              </div>
+            </div>
+          </div> -->
+          <div class="text-right">
+          <a routerLink="/dashboard/course-edit/curriculum"  class="pre_btn">  Back</a>
+          <button type="submit" class="nxt_btn btn btn-primary"  [className]="courseLandingPageForm.valid && ctrl.valid ? 'nxt_btn' : 'nxt_btn disableSubmit'" >Save & Next</button>
+          <div class="clearfix"></div>
+          </div>
+        </form>
+
+        <!-- <div  class="pre_nxt_btn_area">
+            <a routerLink="/dashboard/course-edit/curriculum"  class="pre_btn">  Back</a>
+            <a routerLink="/dashboard/course-edit/price-and-coupons" class="nxt_btn" > Next </a>
+            <div class="clearfix"></div>
+        </div> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+</section>

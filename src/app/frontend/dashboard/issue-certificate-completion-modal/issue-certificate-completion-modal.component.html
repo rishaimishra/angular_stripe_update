@@ -1,0 +1,47 @@
+
+    <div class="loginModal">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Issue Certificate</h4>
+          <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       
+        <div class="modal-body">
+      
+  
+            <div class="total_messg_area">
+         
+             
+              <form  [formGroup]="certificateIssueForm" (ngSubmit)="uploadCertificate()" >
+                <div  class="input_area">
+                  <!-- <input  autocomplete="off" class="input-sm question-editor--title-editor--2n8ko" name="comments" placeholder="Write Your response" type="text" > -->
+                  <span class="btn btn-primary btn-file btnSpace choose_file"> 
+                    Choose File 
+                    <input  type="file" name="" class="form-control" (change)="uploadResourceFile($event)" id="" style="width: 124px;" required >
+                  </span>
+                  <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="newResourceSelectFile"  (click)="uploadResourceToS3()">Upload Resource</a> 
+                  <br>
+                  <span hidden="true" [innerHtml]="certificate" class="path"  ></span>
+                  <span *ngIf="newUplodedResource" class="upload_txt">
+                      <a href="{{certificate}}">Uploded Certificate : 
+                        <span><i class="fa fa-file-archive-o" aria-hidden="true"></i></span>
+                      </a>
+                  </span>
+                  <br> 
+                  <h6  class="fileFormatInfo"> *File needs to be in pdf,doc format. </h6>
+                  <br>
+                  <button type="submit"  data-purpose="post-question" [className]="certificate ? 'btn btn-info ' : 'btn btn-info disableSubmit'" >Add Certificate </button>
+                
+                </div>
+              </form>
+            </div>
+          
+  
+        </div>
+      </div>
+    
+    
+    
+    
+    

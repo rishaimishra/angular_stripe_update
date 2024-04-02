@@ -1,0 +1,9 @@
+<a  routerLink="/event-details/{{item.slug}}">
+<div class="featuredSideSingle cartListTransform">
+    <div class="featuredSideSingleImg">
+      <img [src]="item?.images[0]?.thumbnail || 'assets/images/featured.jpg'" alt="" >
+    </div>
+    <h3>{{item?.title |titlecase}}</h3>
+    <!-- <h3>{{item?.event?.start_date | date:'dd-LL-yyyy'}}</h3> -->
+</div> 
+</a>

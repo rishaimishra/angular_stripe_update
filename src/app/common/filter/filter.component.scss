@@ -1,0 +1,60 @@
+// filter content area start
+.filter_cont_area{
+    margin: 0;
+    padding: 25px;
+    min-height: 300px;
+    width:100%;
+    border:1px solid #d1d1d1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+
+    .col-sm-4{
+      margin-bottom: 15px;
+    }
+  
+    .cancel_btn_area{
+      position: absolute;
+      display: inline-block;
+      top:10px;
+      right:20px;
+      z-index: 2;
+      a{
+        display: inline-block;
+      }
+      img{
+        width:25px;
+        height: 25px;
+      }
+    }
+  
+    label{
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .flitersec02{
+      margin-top: 20px;
+    }
+    .rating_block{
+      margin: 0 0 10px 0;
+      padding: 0;
+      .rate_num{
+        font-size: 13px;
+        margin-left: 8px;
+      }
+      .count{
+        font-size: 13px;
+        margin-left: 6px;
+      }
+      a{
+        color:#f89828;
+        
+      }
+    }
+  
+    .pricerange{
+      margin-top: 20px;
+    }
+    
+  }
+  
+  

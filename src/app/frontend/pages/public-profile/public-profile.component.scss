@@ -1,0 +1,168 @@
+@import "../../../../assets/scss/custom-mixin";
+
+//======== start Vendor profile
+
+.user_prfile_banner{
+    margin: 0;
+    padding: 0;
+
+    h3{
+        margin-top: 20px;
+    }
+    
+}
+
+.profile_img_area{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+    img{
+        border-radius: 50%;
+        object-fit: cover;
+        width:120px;
+        height: 120px;
+    }
+}
+.social_area{
+    margin-top: 30px;
+    text-align: center;
+    a{
+        font-size: 24px;
+        color:#3eb7aa;
+        padding: 0 10px
+    }
+}
+.rating{
+    margin-top: 15px;
+    text-align: center;
+
+    .fa{ color:#F4C150; font-size: 14px; padding: 0 3px;}
+}
+
+.rht_cont{
+    margin: 0;
+    padding: 0;
+
+    .number_area{
+        margin: 50px 0 0 0;
+        padding: 0;
+        list-style: none;
+
+        li{
+            margin: 0;
+            padding: 0 15px;
+            list-style: none;
+            display: inline-block;
+            border-right:1px solid #d1d1d1;
+
+            &:first-child{
+                padding-left:0;
+            }
+
+            .small_txt{
+                font-size: 14px;
+            }
+            .number{
+                font-size: 24px;
+            }
+        }
+    }
+}
+
+
+// .ratingsDiv{
+//     padding: 6px 0 0 0;
+//     .Left{
+//         display: inline-block;
+//         margin: 0;
+//         font-size: 20px;
+//         color: #616161;
+//     }
+//     .Right{
+//         display: inline-block;
+//         margin: 0px 5px;
+//         font-size: 13px;
+//         color: #616161;
+//         span{
+//             font-size: 20px;
+//             color: #000;
+//         }
+//     }
+//     .noreview{           
+//         margin:0;
+        
+//     }
+
+// }
+
+.userID {
+    font-size: 12px;
+    font-weight: 400;
+    color: #FFF;
+}
+
+.ratingsDiv{
+    padding: 6px 0 0 0;
+    .Left{
+        display: inline-block;
+        margin: 0;
+        font-size: 20px;
+        color: #616161;
+    }
+    .Right{
+        display: inline-block;
+        margin: 0px 5px;
+        font-size: 13px;
+        color: #616161;
+        span{
+            font-size: 20px;
+            color: #000;
+        }
+    }
+    .noreview{           
+        margin:0;
+        
+    }
+
+}
+.originalPrc{ font-size: 12px;
+    text-decoration: line-through;
+    display: inline-block;
+    padding: 0 8px 0 0;
+    vertical-align: middle;}
+.imgOverStar{
+    z-index: 999;
+}
+
+
+.error_container{
+    margin: 5vh 0;
+    text-align: center;
+    .sad_img{
+        text-align: center;
+    }
+    .sad_txt{
+        color: #a6a6a6;
+        font-size: 124px;
+        line-height: 100px;
+        text-align: center;
+        letter-spacing: -5px;
+    }
+    p{ font-size: 30px; margin-top: 30px; }
+    .small_txt{
+        font-size: 18px;
+        line-height:20px;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .error_container{
+        .sad_txt{
+            font-size: 90px;
+            line-height: 63px;        
+        }
+        p{font-size: 20px;}
+    }
+}

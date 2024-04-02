@@ -1,0 +1,55 @@
+.balance_payout{
+    margin: 0;
+    padding: 0;
+}
+.balance_box{
+    margin: 0;
+    padding: 15px;
+    width:390px;
+    float: left;
+    background: #00b5c2;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#fff;
+    font-weight: 700;
+    font-size: 25px;
+    position: relative;
+}
+.balance{
+    padding: 19px;
+}
+.balance_box:before{
+    position: absolute;
+    content: '';
+    width:50%;
+    height: 100%;
+    right:0;
+    top:0;
+    background: #057078;
+}
+.balance_box:after{
+  position: absolute;
+  content:'';
+  left:50%;
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #00b5c2;
+}
+.balance_box span{
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+.balance_box span:first-child{
+    width: 50%;
+}
+.balance_box span:last-child{
+    width: 50%;
+}
+.payout_link{
+    float: right;
+}

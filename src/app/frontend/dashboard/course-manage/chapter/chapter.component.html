@@ -1,0 +1,90 @@
+
+<div class="secDefault" id="chapter_{{chapterCount}}">
+
+    <button type="button" class="btn btn-default remove"
+    (click)="removeObject()" *ngIf="!data" > <i class="fa fa-times" aria-hidden="true"></i></button>
+  <div *ngIf="data" >
+
+        <div class="secDefaultHeading" *ngIf="!editClick">
+        <strong>Chapter:</strong> {{data.title}}
+        <span style="float:right;">
+          <a (click)="editChapter()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+          <a (click)="deleteChapter()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        </span>
+        </div>
+        <div *ngIf="editClick">
+            <!-- <a (click)="editChapterRemove()">X</a> -->
+
+            <form [formGroup]="chapterUpdateFrom" (ngSubmit)="update()">
+                <button type="button" class="btn btn-default remove"
+                (click)="editChapterRemove()" > <i class="fa fa-times" aria-hidden="true"></i></button>
+                <!-- <notification-message [messages]="messages" *ngIf="errorMsg"></notification-message> -->
+            <div class="groupForm first">
+              <div class="groupFormSingle">
+                 <label for="">Title </label>
+                 <div class="inpWrap" *ngVar="chapterUpdateFrom.get('title') as title">
+                   <input _ngcontent-c8="" class="inpClass" placeholder="Title" type="text" formControlName="title">
+                   <!-- <div _ngcontent-c8="" class="inpWrapCount">57</div> -->
+                   <form-validation-message [fromInstance]="title"></form-validation-message>
+                  </div>
+              </div>
+            </div>
+            <div class="groupForm alt">
+              <div class="groupFormSingle">
+                 <label for="">What will students be able to do at the end of this section?</label>
+                 <div class="inpWrap" *ngVar="chapterUpdateFrom.get('description') as description" >
+
+                   <!-- <textarea class="inpClass" placeholder="Description" type="text" formControlName="description"></textarea> -->
+                   <ckeditor [editor]="Editor" tagName="textarea" formControlName="description" [config]="{ label: 'Foo', toolbar: [ 'heading', '|', 'bold', 'italic', 'undo', 'redo' ] }" (ready)="onReady($event)"></ckeditor>
+                   <!-- <div _ngcontent-c8="" class="inpWrapCount">57</div> -->
+                   <form-validation-message [fromInstance]="description"></form-validation-message>
+                  </div>
+              </div>
+            </div>
+            <div class="text-right btnGr">
+              <!-- <a class="btn" (click)="editChapterRemove()">Cancel</a> -->
+              <button type="submit" class="btn btn-primary"  [className]="chapterUpdateFrom.valid ? 'submitBtn  ' : 'submitBtn disableSubmit'" >Save Chapter</button>
+            </div>
+          </form>
+        </div>
+ </div>
+          <div #section></div>
+
+  <div *ngIf="data" >
+      <div class="groupForm alt">
+        <a href="javascript:void(0)" class="addClass alt" (click)="addSection(0)"><i aria-hidden="true" class="fa fa-plus"></i> Add Section</a>
+      </div>
+  </div>
+  <div *ngIf="!data" >
+    <form [formGroup]="chapterCreateFrom" (ngSubmit)="save()">
+        <!-- <notification-message [messages]="messages" *ngIf="errorMsg"></notification-message> -->
+    <div class="groupForm first">
+      <div class="groupFormSingle">
+         <label for="">Title </label>
+         <div class="inpWrap" *ngVar="chapterCreateFrom.get('title') as title">
+           <input _ngcontent-c8="" class="inpClass" placeholder="Title" type="text" formControlName="title">
+           <!-- <div _ngcontent-c8="" class="inpWrapCount">57</div> -->
+           <form-validation-message [fromInstance]="title"></form-validation-message>
+          </div>
+      </div>
+    </div>
+    <div class="groupForm alt">
+      <div class="groupFormSingle">
+         <label for="">What will students be able to do at the end of this section?</label>
+         <div class="inpWrap" *ngVar="chapterCreateFrom.get('description') as description" >
+
+           <!-- <textarea class="inpClass" placeholder="Description" type="text" formControlName="description"></textarea> -->
+           <ckeditor [editor]="Editor" tagName="textarea" formControlName="description" [config]="{ label: 'Foo', toolbar: [ 'heading', '|', 'bold', 'italic', 'undo', 'redo' ] }" (ready)="onReady($event)"></ckeditor>
+           <!-- <div _ngcontent-c8="" class="inpWrapCount">57</div> -->
+           <form-validation-message [fromInstance]="description"></form-validation-message>
+          </div>
+      </div>
+    </div>
+    <div class="text-right btnGr">
+      <!-- <a class="btn"(click)="removeObject()">Cancel</a> -->
+      <button type="submit" class="btn btn-primary"  [className]="chapterCreateFrom.valid ? 'submitBtn  ' : 'submitBtn disableSubmit'" >Save Chapter</button>
+    </div>
+  </form>
+  </div>
+ </div>
+

@@ -1,0 +1,95 @@
+<div class="rightPanel alt">
+    <breadcrumb>
+        <li class="active"><span>Profile Details</span></li>
+    </breadcrumb>
+
+    <div class="row">
+    <div class="col-9"><h2 class="headTitle">Profile Details</h2></div>
+    <div class="col-3">
+        <h2 class="backLink">
+            <a routerLink="/admin/users/{{userRole}}" >Back </a> 
+        </h2>  
+    </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-4">
+            <img  class="img-thumbnail" src="{{userData?.user?.avatar}}"   onError="this.src='assets/images/no-picture-available-icon-1.jpg';"  alt="..." />
+        </div>
+        <div class="col-sm-8">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>First name</th>
+                        <td>{{userData.first_name}}</td>
+                    </tr>
+                    <!-- <tr>
+                        <th>Middle name</th>
+                        <td>{{userData.middle_name}}</td>
+                    </tr> -->
+                    <tr>
+                        <th>Last name</th>
+                        <td>{{userData.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Full name</th>
+                        <td>{{userData.full_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Head line</th>
+                        <td>{{userData.head_line}}</td>
+                    </tr>
+                    <tr>
+                        <th>Biography</th>
+                        <td>{{userData.biography}}</td>
+                    </tr>
+                    <tr>
+                        <th>Timezone</th>
+                        <td>{{userData.timezone}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="userRole=='customer'">
+        <div class="col-md-12"><h2 class="orderTitle">Orders</h2></div>
+        <div class="table-responsive table_cont" *ngIf="orders.length > 0" >
+            <table class="table table-striped custom_table" >
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Purches date</th>
+                            <th>Total Amount</th>			
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="orders.length > 0">
+                            <tr *ngFor="let rs of orders">
+                                <td > <a [routerLink]="['/admin', 'orders', 'detail', rs?.id]"> {{getOrderID(rs.id)}}</a> </td>
+                                <td>{{rs.ordered_on | date : 'dd-MM-yyyy'}}</td>
+                                <td>
+                                    <ng-container *ngIf="rs?.total_order_price_usd > 0">
+                                        {{rs?.total_order_price_usd | number:'1.2-2'}} USD
+                                    </ng-container> 
+                                    <ng-container *ngIf="rs?.total_order_price_usd > 0 && rs?.total_order_price_sxl > 0">
+                                        +
+                                    </ng-container>
+                                    <ng-container *ngIf="rs?.total_order_price_sxl > 0">
+                                        SXL  {{rs?.total_order_price_sxl | number:'1.2-2' }} 
+                                    </ng-container> 
+                                </td>
+                            </tr>
+                    </tbody> 
+            </table>
+        </div>
+        <div class="col-md-12 noRecordFound" *ngIf="orders.length === 0">
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                <strong>Oops!</strong>
+                No record found.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

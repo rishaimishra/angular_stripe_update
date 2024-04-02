@@ -1,0 +1,30 @@
+.error_container{
+    margin: 5vh 0;
+    text-align: center;
+    .sad_img{
+        text-align: center;
+    }
+    .sad_txt{
+        color: #a6a6a6;
+        font-size: 124px;
+        line-height: 100px;
+        text-align: center;
+        letter-spacing: -5px;
+    }
+    p{ font-size: 30px; margin-top: 30px; }
+    .small_txt{
+        font-size: 18px;
+        line-height:20px;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .error_container{
+        .sad_txt{
+            font-size: 90px;
+            line-height: 63px;        
+        }
+        p{font-size: 20px;}
+    }
+}

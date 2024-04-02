@@ -1,0 +1,58 @@
+
+    <div class="loginModal">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Course Promote</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     
+      <div class="modal-body">
+         
+
+          
+
+            <form [formGroup]="promoteForm" (ngSubmit)="payment()" >
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="">Start Date:</label>
+                        <div class="inputWrap" >
+                          <input class="inpField" placeholder="yyyy-mm-dd" name="startDp" formControlName="start_date" ngbDatepicker #startDp="ngbDatepicker" (click)="startDp.open()" [minDate]="minStartDate" [maxDate]="maxStartDate" (dateSelect)="onStartDateSelection($event, startDp)" autoClose="outside">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="">End Date:</label>
+                        <div class="inputWrap" >
+                          <!-- <input class="inpField" placeholder="yyyy-mm-dd" name="dp"> -->
+                          <input class="inpField" placeholder="yyyy-mm-dd" name="endDp" formControlName="end_date" ngbDatepicker #endDp="ngbDatepicker" (click)="endDp.toggle()" [minDate]="minEndDate" [maxDate]="maxEndDate" (dateSelect)="onEndDateSelection($event, endDp)" autoClose="outside">
+                        
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                      <label for="">Price for promotion</label>
+                      <div class="inputWrap"  >
+                        <input type="text" class="inpClass"  formControlName="amount" [value]="payAmount" readonly>
+                     
+                      </div>
+                    </div>
+                    <p class="price">USD</p>
+                </div>
+
+                <button type="submit"  data-purpose="post-question"  [className]="promoteForm.valid ? 'btn btn-info ' : 'btn btn-info disableSubmit'">Pay</button>
+                <!-- <a routerLink="/dashboard/course-promote-checkout">pay</a> -->
+             
+            
+            </form>
+        
+        
+
+    </div>
+  </div>
+  
+  
+  
+  
+  

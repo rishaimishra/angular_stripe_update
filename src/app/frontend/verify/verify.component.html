@@ -1,0 +1,44 @@
+<app-header></app-header> <!-- Header  -->
+
+<section class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h3><i class="fa fa-home" aria-hidden="true"></i> / {{title}}</h3>
+    <h2>{{title}}</h2>
+  </div>
+</section>
+
+<section class="cmsWrap">
+  <div class="container">
+
+    <div class="row justify-content-center">
+
+      <div class="col-lg-6">
+        <!-- <app-message></app-message> -->
+        <p style="color: green;font-size: 18px;" *ngIf="userType === 'vendor'">
+          <!-- Your account has been successfully verified and activated. You can now login and use our services. -->
+          <!-- Your account has been verified and activated.
+          <br><br>
+          <a  (click)="loginFormModal()" style="color: #38a5b9; cursor: pointer;">Please login </a>  to the portal and fill your profile details and start to upload your course. -->
+          Your account has been successfully verified and activated. Please <a  (click)="loginFormModal()" style="color: #38a5b9; cursor: pointer;">Login</a> to explore the features of SuccessLife!
+        </p>
+        <p style="color: green;font-size: 18px;" *ngIf="userType === 'customer'">
+            <!-- Your account has been successfully verified and activated. You can now login and use our services. -->
+            <!-- Your account has been verified and activated. <a  (click)="loginFormModal()" style="color: #38a5b9; cursor: pointer;">Please login </a> and explore the courses and start learning today.          -->
+            Your account has been successfully verified and activated. Please <a  (click)="loginFormModal()" style="color: #38a5b9; cursor: pointer;">Login</a> to explore the features of SuccessLife!
+        </p>
+
+        <p  style="color: rgb(134, 9, 4);font-size: 18px;" *ngIf="errorMSG != ''" >{{errorMSG}}</p>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+</section>
+
+
+
+
+<app-footer></app-footer>

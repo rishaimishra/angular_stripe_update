@@ -1,0 +1,90 @@
+.titleLink{
+    float: right;
+    margin-bottom: 10px;
+ }
+
+ .main-panel {
+    height: 600px;
+    overflow-y: auto;
+ 
+  } 
+  .labelClass{
+     padding-right: 20px;
+     width:24%;
+  }
+  .search {
+   width: 76%;
+   border: 1px solid #ebebeb;
+   padding: 6px 12px;
+   color: #949494;
+   font-size: 13px;
+   display: inline-block;
+  }
+  .search_btn{
+   margin-top: 10px;
+}
+
+.status{
+   margin: 0;
+   padding: 0;
+   border:none;
+   position: relative;
+   padding-bottom: 5px;
+   width:157px;
+   background: none;
+   font-weight: 900;
+  // border-bottom: 1px dashed #ccc9c9;
+} 
+
+.priority{
+   margin: 0;
+   padding: 0;
+   border:none;
+   margin-top: 5px;
+   width:72px;
+   background: none;
+   font-weight: 900;
+}
+.title{
+   font-size: 15px;
+   cursor: pointer;
+   a{
+      color: #2b2b2b;
+   }
+}
+.title span{
+   font-weight: 700;
+}
+.centerHeading h1{
+   margin: 0 0 20px 0;
+   padding: 0 0 20px 0; 
+   font-size:30px;
+   font-weight: 700;
+  // border-bottom:1px solid #d1d1d1;
+ }
+ .table-striped tbody tr{
+    background: #fff; 
+ }
+
+ .searchBtn{
+   margin-top:4px;
+ }
+
+ .table_bg thead{
+   display: table;
+   width: calc(100% - 13px);
+   table-layout: fixed;
+ }
+
+ .table_bg tbody{
+   display: block;
+   height: 500px;
+   overflow-y: scroll;
+   width: 100%;
+ }
+ .table_bg tbody tr{
+   display: table;
+   width: 100%;
+   table-layout: fixed;
+ }
+ 

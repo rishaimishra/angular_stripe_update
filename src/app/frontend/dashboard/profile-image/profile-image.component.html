@@ -1,0 +1,40 @@
+<div class="loginModal">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Upload your image</h4>
+		<button type="button" class="close" aria-label="Close" (click)="closeImageModal()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div Class="alert-success" *ngIf="successMsg">
+		{{successMsg}}
+	</div>
+	<div [className]="isFormVisable ? 'modal-body' : 'display_hide'">
+		<notification-message [messages]="messages" *ngIf="errorMsg"></notification-message>
+		<div class="form-group clearfix">
+			<label for="content" class="control-label">Select your file to upload
+				<span class="btn btn-file"> Upload File
+					<input type="file" name="file" class="btn btn-info" (change)="uploadFile($event)" id="file" style="width: 124px;" required>
+				</span>
+			</label>
+			<div class="crop_bg" *ngIf="isVisable">
+				<image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1/1" [resizeToWidth]="173"
+				 format="png, jpeg,jpg" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()">
+				</image-cropper>
+			</div>
+			<h6 class="fileFormatInfo"> *Image needs to be in png,jpeg,jpg format. </h6>
+			<div class="clearfix"></div>
+
+			<div class="preview_Img">
+				<div class="imageField">
+					<!-- <span class="img-preview">Preview</span> -->
+					<img id="blah" [src]="croppedImage || 'assets/images/demo.png'" alt="your image" style="width:150px;" />
+				</div>
+				<div class="save_btn">
+					<a class="btn btn-file btnSpace" *ngIf="!!fileInstance" (click)="uploadToS3()">Save</a>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+
+	</div>
+</div>

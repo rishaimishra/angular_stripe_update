@@ -1,0 +1,202 @@
+<div class="rightPanel alt">
+  <breadcrumb>
+    <li class="active"><span>Courses</span></li>
+  </breadcrumb>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class="headTitle">All Courses</h2>
+    </div>
+    <div class="col-lg-12 custom_form">	 
+        <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+        <div class="row">
+              <div class="col-sm-2">
+                  <label style="width:100%;">Search Key</label>
+                  <div class="topSearchCont acTive">
+                      <input autocomplete="off" formControlName="string" name="string"
+                          placeholder="Search" type="search" class="form-control" >
+                  </div>
+              </div>
+              <div class="col-sm-2">
+                  <label>Category</label>
+                  <ng-select 
+                  [items]="categories"
+                  bindLabel="name"
+                  bindValue="id"						
+                  groupBy="parent_name"           	
+                  [groupValue]="groupValueFn"				
+                  placeholder="Select Category"												
+                  formControlName="category"
+                  dropdownPosition="auto"
+                  name="parent_id"						 
+                >
+                </ng-select>
+                
+              </div>
+              <div class="col-sm-2">
+                  <label>Tutor</label>
+                  <ng-select [items]="vendors" bindLabel="profile.full_name"
+                    [closeOnSelect]="false" bindValue="id"  formControlName="created_by" placeholder="Select Tutor">
+                    <ng-template ng-option-tmp let-item="item" >
+                      {{item.profile.full_name}}
+                    </ng-template>
+                  </ng-select>
+              </div>
+              <div class="col-sm-2">
+                  <label>Published</label>
+                  <ng-select [items]="publishOptions" bindLabel="label"
+                    [closeOnSelect]="false" bindValue="value"  formControlName="is_publish" placeholder="Select" >
+                    <ng-template ng-option-tmp let-item="item" >
+                      {{item.label}}
+                    </ng-template>
+                  </ng-select>
+              </div>
+              <div class="col-sm-2">
+                  <label>Featured</label>
+                  <ng-select [items]="featureOptions" bindLabel="label"
+                    [closeOnSelect]="false" bindValue="value"  formControlName="is_featured" placeholder="Select">
+                    <ng-template ng-option-tmp let-item="item" >
+                      {{item.label}}
+                    </ng-template>
+                  </ng-select>
+              </div>
+              <div class="col-sm-2">
+                  <label>Price</label>
+                  <ng-select [items]="price" bindLabel="label"
+                    [closeOnSelect]="false" bindValue="value"  formControlName="price_filter" placeholder="Select">
+                    <ng-template ng-option-tmp let-item="item"  >
+                      {{item.label}}
+                    </ng-template>
+                  </ng-select>
+              </div>
+             
+              <!-- <div class="topSearchCont acTive">
+                <input autocomplete="off" formControlName="string" name="string"
+                    placeholder="Search" type="search" >
+              </div>-->
+              <div class="col-sm-12 search_btn">
+                <div class="text-right">
+                  <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                </div> 
+              </div>
+              <div class="clearfix"></div>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="table-responsive">
+
+    <!-- <notification-message [messages]="error_messages"></notification-message> -->
+
+    <table class="table table-striped" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+
+      <thead>
+        <tr>
+          <th>Course Title</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Created By</th>
+          <th>Status</th>
+          <th>Approval Status</th>
+          <th>Feature</th>
+          <th>Date</th>
+          <th width="220px">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of mf.data; let i = index">
+          <td>{{item?.title |titlecase }}</td>
+          <td>{{item?.categories[0]?.name |titlecase }}</td>
+          <!-- Old price code -->
+          <!-- <td *ngIf="item.price">{{item?.price |currency }}</td> 
+          <td *ngIf="!item.price">Free</td>-->
+          <!-- New price code -->
+          <td *ngIf="item.pricable.length">
+              <ng-container *ngIf="item?.pricable[0].usd_price">
+                  {{item?.pricable[0].usd_price| number:'1.2-2' }} USD
+              </ng-container>
+              <ng-container *ngIf="item?.pricable[0].sxl_price">
+                 SXL {{item?.pricable[0].sxl_price | number:'1.2-2' }}
+              </ng-container>
+
+          </td>
+          <td *ngIf="!item.pricable.length">Free</td>
+          
+          <td>{{item?.user?.profile?.full_name | titlecase}}</td>
+          <!-- <td><button [swal]="{text:'Do you want to continue',type:'question'}"
+              (confirm)="changeStatus(item.status,item.id,i)" [className]="item.status=='publish' ? 'btn btn-sm btn-success linkBg' : 'btn btn-sm btn-warning linkBg'"
+              [innerHtml]="item.status=='publish'?'Published' : 'Draft'"></button></td> -->
+          <td>
+              <!-- <label  [ngClass]="{
+                'btn-sm btn-warning linkBg': item.status=='publish' && item.approved_status,
+                'btn-sm btn-success linkBg': item.status=='publish' && item.approved_status,
+                'btn-sm btn-info linkBg': item.status=='draft'
+              }">
+                {{ item.status=='publish'? item.approved_status?'Published' : 'Waiting for approval' : 'Draft' }}
+              </label> -->
+              <label class='btn-sm btn-success linkBg' *ngIf="item.status=='publish' && item.approved_status"> Publish</label>
+              <label class='btn-sm btn-warning linkBg' *ngIf="item.status=='publish' && !item.approved_status"> Waiting for approval</label>
+              <label class='btn-sm btn-info linkBg' *ngIf="item.status=='draft'" > Draft</label>
+              
+          </td>
+          <td>
+            <ng-container *ngIf="!item?.approved_status && item.status=='publish' ">
+                <button [swal]="{text:'Do you want to continue',type:'question'}"
+                (confirm)="changeApproveStatus(item.id,i)" [className]="'btn btn-sm btn-success linkBg'"
+                [innerHtml]="'Publish'"></button>
+            </ng-container>
+            <ng-container *ngIf="item?.approved_status">
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </ng-container>
+            
+          </td>
+          <td>
+            <button [swal]="{text:'Do you want to continue',type:'question'}"
+              (confirm)="changeFeatureStaus(item.is_featured,item.id,i)"
+              [innerHtml]="item.is_featured==1? featureYes : featureNo" *ngIf="item.status=='publish'"
+              class="btn btn-sm btn-success linkBg"></button>
+          </td>
+          <td>{{item.created_at | date: 'dd-MM-yyyy'}}</td>
+          <td>
+            <!-- <button >Edit</button> -->
+            <a *ngIf="item?.approved_status" routerLink="/course-details/{{item.slug}}" class="btn btn-sm btn-info linkBg"><i
+                class="fa fa-line-chart"></i></a>
+            <!-- <a (click)="deleteCourse(item)" class="btn btn-sm btn-success linkBg" ><i class="fa fa-trash"></i></a> -->
+            <button [swal]="{text:'Are you sure you want to delete?',type:'question',confirmButtonText:'Yes',cancelButtonText:'No'}"
+            (confirm)="deleteCourse(item)" [innerHtml]="trashBtn" 
+            class="btn btn-sm btn-danger linkBg"  ></button>
+             
+            <button [swal]="{text:'Do you want to continue',type:'question'}"
+              (confirm)="changeActiveStaus(item.is_active,item.id,i)"
+              [innerHtml]="item.is_active==1? 'Enable' : 'Disable'" 
+              class="btn btn-sm btn-primary linkBg"></button>
+             
+              <a routerLink="/admin/course/details/{{item.slug}}" class="btn btn-sm btn-info linkBg"><i
+                class="fa far fa-eye"></i></a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="tabPagination">
+        <tr>
+          <td colspan="8">
+            <mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+
+    <div class="row mt30" *ngIf="data.length === 0">
+      <div class="col-12">
+          <div class="alert alert-warning text-center">
+              <strong>Oops!</strong>
+              No record found.
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

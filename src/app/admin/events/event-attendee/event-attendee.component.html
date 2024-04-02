@@ -1,0 +1,76 @@
+<div class="rightPanel alt">
+  <breadcrumb>
+    <li class="active"><span>Event Attendee </span></li>
+  </breadcrumb>
+  
+  <div class="row">
+   <div class="col-md-4"><h2 class="headTitle">All Event Attendee</h2></div>
+    
+  </div>
+  
+  
+    <div class="table-responsive">
+      
+      <notification-message [messages]="error_messages"></notification-message>
+
+      <table class="table table-striped" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+        <tr>
+          <th>
+              <mfDefaultSorter by="order_id">Order Id</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="name">Event Name</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="title">Consumer Name</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="slug">Consumer Email</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="title">No. Of Attendee</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="title">Ticket Sent Date</mfDefaultSorter>
+          </th>
+          <th class="text-center">Action</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data; let i = index">
+            <td>
+              <a *ngIf="item?.order_id" [routerLink]="['/admin', 'orders', 'detail', item?.order_id]">
+              {{env?.orderIdPrefix + item?.order_id}}
+              </a>
+            </td>
+            <td>{{item?.events?.title}}</td>
+            <td>{{item?.user?.profile?.full_name}}</td>
+            <td>{{item?.user?.user_name}}</td>
+            <td style="text-align: center;">{{item?.attendee_details?.length}}</td>
+            <td>{{item?.ticket_sent_date | date: 'dd-MM-yyyy'}}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-success linkBg" (click)="eventAttendeeInfo(item)">
+                <i class="fa fa-pencil-square-o"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="tabPagination"> 
+          <tr>
+            <td colspan="6">
+              <mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="row mt30" *ngIf="data.length === 0">
+        <div class="col-12">
+          <div class="alert alert-warning text-center">
+            <strong>Oops!</strong>
+            No record found.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

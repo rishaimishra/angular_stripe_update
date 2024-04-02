@@ -1,0 +1,40 @@
+<section class="pageHeading d-flex">
+    <div class="container align-self-center">
+      <h2>Curriculum</h2>
+    </div>
+  </section>
+  
+  <section class="cmsWrap chapter">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+          <app-course-manage-left-panel></app-course-manage-left-panel>
+        </div>
+        <div class="col-lg-9">
+          <div class="formSEc">
+            <!-- <div><input _ngcontent-c11="" class="ansSave nomerg clBlue" name="" type="submit" value="Bulk Uploader"></div> -->
+            <div class="groupForm">
+              <h2>Start putting together your course by creating chapters, lectures below.</h2>
+            </div>
+            <div class="chapter">
+              <div #chapter></div> 
+            </div>
+            <div class="groupForm alt">
+                <a  href= "javascript:void(0)"class="addClass forchapter_btn alt" (click)="addChapter(0)"><i aria-hidden="true" class="fa fa-plus"></i> Add Chapter</a>
+            </div>
+
+            <div class="pre_nxt_btn_area">
+                <a routerLink="/dashboard/course-edit/target-your-students" class="pre_btn">  Back</a>
+                <a href="javascript:void(0);" class="nxt_btn"  [className]="isNextVisible ? 'nxt_btn  ' : 'nxt_btn disableSubmit'" (click)="saveNext()"> Save & Next  </a>
+                <div class="clearfix"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+
+  </section>
+  

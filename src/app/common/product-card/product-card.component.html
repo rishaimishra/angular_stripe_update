@@ -1,0 +1,37 @@
+<a *ngIf="item" [routerLink]="['/product-details', item?.slug]">
+	<div class="thumbInfoBox">
+		<div class="carouselCont">
+			<div class="carouselImg">
+				<img *ngIf="!getCoverThumbnailImage(item?.images)" [src]="noImage?.size400x400" alt="No Image">
+				<img *ngIf="getCoverThumbnailImage(item?.images)" [src]="getCoverThumbnailImage(item?.images)" alt="">
+				<!-- <div class="carouselImgTag">Best seller</div> -->
+			</div>
+			<div class="list_cont">
+				<h3 title="{{item?.title}}">{{(item?.title?.length > 30) ? (item?.title | slice: 0:30) + '...' : (item?.title)}}</h3>
+				<!-- <h4>96 lectures | 14.5 hours | All Levels</h4> -->
+				<h5>{{(item?.short_description?.length > 30) ? (item?.short_description | slice: 0:30) + '...' : (item?.short_description)}}</h5>
+				<div class="ratingsDiv">
+					<div class="ratings Left">
+							<ngb-rating [rate]=item?.rating></ngb-rating>
+					</div>
+					<div class="ratings Right">{{item?.rating}}
+						<span>({{item?.avg_reviews}})</span>
+					</div>
+				</div>
+				<!-- <div class="ratingsDiv">
+					<div class="ratings Left">
+						<ngb-rating [rate]="item?.rating"></ngb-rating>
+					</div>					
+				</div> -->
+				<!-- Price old code -->
+				<!-- <h6>{{((item?.price) ? (item?.price) : '0') | currency : item?.currency :'symbol':'2.2-2'}}</h6> -->
+				<!-- Price New code -->
+				<h6 *ngIf="productPrice?.usd_price > 0"> 
+						{{productPrice?.usd_price | number:'1.2-2'}} USD</h6>
+				<h6 *ngIf="productPrice?.sxl_price > 0">SXL {{productPrice?.sxl_price | number:'1.2-2'}}</h6>
+				<h6 *ngIf="productPrice?.total_price == 0">Free </h6>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</a>

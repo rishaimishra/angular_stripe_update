@@ -1,0 +1,24 @@
+/* leftPanel */
+.mainContainer{ position: relative;}
+.leftPanel{ background: #1d1f4e; min-height: 100vh; position: relative; z-index: 9;}
+.profileDesc{ text-align: center; padding: 25px 0 0 0; color: #FFF;}
+.profileDesc h2{ font-size: 20px; font-weight: 600; padding: 15px 0 0 0;}
+.profileDesc h3{ font-size: 14px; color: #d7d7d7; padding: 10px 0 0 0;}
+.profileDescImg{ width: 173px; margin: 0 auto;}
+.profileDescImg img{ width: 173px; height: 173px; border-radius: 50%;}
+.sideNav{ margin-left: -15px; margin-right: -15px; margin-top: 0 !important;}
+.sideNav ul li a{ display: block; font-size: 15px; color: #FFF; border-top: 1px solid #383a64; padding: 10px 10px;}
+.sideNav ul li a:hover{ background: #3798c2;}
+.sideNav ul li a .fa{ margin-right: 8px;}
+.sideNav ul li ul{ background: #c5c6dc; display: none;}
+.sideNav ul li ul.sidebar-active{ display: block;}
+.sideNav ul li ul li a{ font-size: 14px; padding: 8px; padding-left: 35px; color: #000227;}
+.sideNav ul li ul li a:hover{ color: #000;}
+.sideNav ul li ul li a .fa{ margin-right: 2px;}
+/* leftPanel */
+.sideNav ul li a.active { background-color: #eeeeee; color:#000;}
+.sideNav ul li a.sidebar-active { background-color: #eeeeee; color:#000;}
+.hasSublink{ position: relative;}
+.hasSublink:after{ content: '\f105'; font-family: FontAwesome; position: absolute; right: 16px; top: 10px;}
+.hasSublink.active:after{ content: '\f107'; font-family: FontAwesome; }
+ 

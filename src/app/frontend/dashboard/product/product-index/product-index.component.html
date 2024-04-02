@@ -1,0 +1,95 @@
+<div class="rightPanel">
+
+	<div class="centerHeading clearfix">
+		<h2>Product List</h2>
+		<a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/dashboard', 'product', 'create']">
+			<i class="fa fa-plus"></i> Add Product
+		</a>
+	</div>
+
+	<div class="table-responsive table_cont" *ngIf="records.length > 0">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th width="20%">
+						Title
+					</th>
+					<th  width="30%">Short Description</th>
+					<th  width="20%">
+						Plan
+					</th>
+					<!-- <th class="text-center">
+						Offered Price
+					</th>
+					<th class="text-center">Discount</th> -->
+					<th class="text-center"  width="15%">Status</th>
+					<th  width="15%" class="text-center">Action</th>
+				</tr>
+			</thead>
+			<tbody *ngIf="records.length > 0">
+				<tr *ngFor="let rs of records">
+					<td>{{rs?.title}}</td>
+					<td>{{rs?.short_description}}</td>
+					<td>
+						<div class="d-block priceBlk" *ngFor="let rsp of rs?.pricable">
+							<div class="col-12">
+								<b>Quantity: </b>
+								<span class="text-bold">{{rsp?.quantity}}</span>
+							</div>
+							<div class="col-12" *ngIf="rsp?.payment_type?.id !== 4">
+								<b>Price: </b>
+								<ng-container *ngIf="rsp?.sxl_price > 0">
+									<span class="text-bold">{{rsp?.sxl_price | number: '1.2-2'}} SXL</span>
+								</ng-container>
+								<ng-container *ngIf="rsp?.sxl_price > 0 && rsp?.usd_price>0">
+									&nbsp;+
+								</ng-container>
+								<ng-container *ngIf="rsp?.usd_price>0">
+									<span class="text-bold">{{rsp?.usd_price | number: '1.2-2'}} USD</span>
+								</ng-container>
+								<ng-container *ngIf="rsp?.sxl_price == 0 && rsp?.usd_price==0">
+									Free
+								</ng-container>
+							</div>
+							<div class="col-12" *ngIf="rsp?.payment_type?.id === 4">
+								<b>Price: </b>
+								<span class="text-bold">FREE</span>
+							</div>
+						</div>
+					</td>
+					<td class="text-center">
+						<span [ngClass]="getStatusClass(rs)" (click)="setProductStatus(rs)" style="cursor: pointer;" title="Click here to changes the status">{{getStatusTest(rs)}}</span>
+					</td>
+					<td class="text-center">
+						<a class="btn btn-sm btn-success linkBg" [routerLink]="['/dashboard', 'product', 'edit', rs?.id]"><i class="fa fa-pencil-square-o"></i></a>
+						<button class="btn btn-sm btn-danger linkBg" type="button" (click)="deleteRecord(rs?.id)"><i class="fa fa-trash-o"></i></button>
+					</td>
+				</tr>
+
+			</tbody>
+			<tbody *ngIf="records.length === 0">
+				<tr>
+					<td colspan="8" class="text-center">
+						No product is added yet.
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination">
+				<tr>
+					<td colspan="8">
+						<app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="row mt30" *ngIf="records.length === 0">
+		<div class="col-12">
+			<div class="alert alert-warning text-center">
+				<strong>Oops!</strong>
+				No record found.
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,190 @@
+/* Font --- */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+/* --- Font */
+
+/* Reset css --- */
+* {padding:0px; margin:0px;}
+*:focus {outline: 0;}
+body{margin:0; padding:0; font-size:14px; color:#2b2b2b; font-family: 'Open Sans', sans-serif; overflow-x:hidden;}
+ol, ul {list-style: none; margin:0; padding:0;}
+:focus {outline: 0;}
+a, a:link {text-decoration: none; outline:none;}
+p { padding:2px 0; margin:0;}
+.clear {clear:both;}
+a {color:#337ab8; text-decoration:none;}
+a:hover {text-decoration:none; color:#0c528f;}
+a:focus{outline:none !important;}
+:hover{transition: all 0.5s ease; -webkit-transition: all 0.5s ease; -moz-transition: all 0.5s ease;}
+h1, h1 a, h2, h2 a, h3, h4, h5, h6 { margin:0; padding:0; font-weight:normal;}
+img {border:0; max-width:100%; height:auto;}
+::-webkit-input-placeholder {opacity:1; color: #7d7d7d;}
+:-moz-placeholder{opacity:1; color: #7d7d7d;}
+::-moz-placeholder{opacity:1; color: #7d7d7d;}
+:-ms-input-placeholder{opacity:1; color: #7d7d7d;}
+/* --- Reset css */
+
+
+/* Header */
+.logo{ text-align: center; padding: 15px 0; position: relative;}
+.navSpan{ position: absolute; right: 0; top: 17px; font-size: 28px; display: none;}
+.headerRight{ background: #3eb7aa; padding: 10px 0;}
+.headerRightMain{ padding: 0 0 0 60px;}
+.headerRightMain input[type="text"]{ width: 100%; border: none; background: #FFF; font-size: 14px; color: #7d7d7d; padding: 17px; border-radius: 4px;}
+.inpWrap{ position: relative;}
+.inpWrap .fa{ position: absolute; right: 18px; top: 12px; color: #45a1c4; font-size: 25px;}
+.topRight{ float: right; padding: 0 60px 0 0;}
+.topCart{ float: left; position: relative; padding: 8px 0 0 9px; margin: 8px 0 0 0;}
+.topCart span{ color: #FFF;}
+.topCartItem{ width: 25px; height: 25px; background: #FFF; border-radius: 50%; text-align: center; position: absolute; left: 0; top: 0; color: #3eb7aa; line-height: 24px;}
+.topNotific{ float: left; position: relative; margin: 15px 30px 0 30px;}
+.notoficCount{ background: #ff0000; color: #FFF; position: absolute; right: -5px; top: -7px; padding:0 6px; border-radius: 50%; font-size: 12px; font-weight: 600;}
+.topNotific .fa{ color: #FFF; font-size: 25px;}
+.topProfile{ float: left; position: relative; margin: 2px 0 0 0; cursor: pointer;}
+.topProfile span{ display: inline-block; font-size: 16px; color: #FFF;}
+.topProfile span.topProfileImg{ width: 50px; height: 50px; margin: 0 10px 0 0;}
+.topProfile span .fa{ margin: 0 0 0 5px;}
+.topProfile span.topProfileImg img{ width: 50px; height: 50px; border-radius: 50%;}
+
+.topProfileDrop{ position: absolute; top: 42px; right: 0; z-index: 9; padding: 22px 0 0 0; display: none;}
+.topProfileDropInner{ background: #FFF; padding: 15px; width: 220px; border-radius: 2px; border-top: 1px solid #e8e9eb; box-shadow: 0 4px 16px rgba(20,23,28,.25); color: #505763; font-size: 14px;}
+.topProfileDrop ul li a{ display: block; border-top: 1px solid #f1f1f1; color: #6f6f6f; font-size: 15px; padding: 5px 0;}
+.topProfileDrop ul li:first-child a{ border-top: 0;}
+.topProfileDrop ul li a .fa{ margin-right: 6px;}
+.topProfileDrop:before{ border-style: solid; border-width: 0 10px 13px; content: ""; height: 0; position: absolute; right: 14px; top: 10px; width: 0; border-color: transparent transparent #e8e9eb;}
+.topProfileDrop:after{ border-style: solid; border-width: 0 10px 13px; content: ""; height: 0; position: absolute; right: 14px; top: 10px; width: 0; border-color: transparent transparent #fff;}
+.topProfile:hover .topProfileDrop{ display: block;}
+
+.topNotificDrop{ position: absolute; top: 16px; right: -15px; z-index: 9; padding: 35px 0 0 0; display: none;}
+.topNotific:hover .topNotificDrop{ display: block;}
+.topNotificDrop:before{ border-style: solid; border-width: 0 10px 13px; content: ""; height: 0; position: absolute; right: 14px; top: 23px; width: 0; border-color: transparent transparent #e8e9eb;}
+.topNotificDrop:after{ border-style: solid; border-width: 0 10px 13px; content: ""; height: 0; position: absolute; right: 14px; top: 23px; width: 0; border-color: transparent transparent #fff;}
+.topNotificDropInner{ background: #FFF; padding: 15px; width: 290px; border-radius: 2px; border-top: 1px solid #e8e9eb; box-shadow: 0 4px 16px rgba(20,23,28,.25); color: #505763; font-size: 14px;}
+.NotificDropSingle{ position: relative; min-height: 40px; padding: 5px 0 5px 50px; border-top: 1px solid #ececec;}
+.NotificDropSingle:first-child{ border-top: 0;}
+.NotificDropSingle p{ font-size: 13px; line-height: 16px; padding: 0 0 0 0;}
+.NotificDropSingle p span{ display: inline-block; padding: 4px 0 0 0; font-style: italic;}
+.NotificDropSingleName{ width: 40px; height: 40px; border: 1px solid #a2a2a2; border-radius: 50%; text-align: center; position: absolute; left: 0; top: 5px; color: #333; font-size: 15px; line-height: 38px;}
+.notificSeeAll{ text-align: left; padding: 12px; background: #f3f3f3; text-align: right; margin: 15px -15px -15px -15px;}
+.notificSeeAll .fa{ color: #337ab8; font-size: 16px;}
+.notificSeeAll a{ color: #337ab8;}
+
+.topCartDrop{ position: absolute; top: 16px; right: -15px; z-index: 9; padding: 42px 0 0 0; display: none;}
+.topCart:hover .topCartDrop{ display: block;}
+.topCartDrop:before{ border-style: solid; border-width: 0 10px 13px; content: ""; height: 0; position: absolute; right: 14px; top: 30px; width: 0; border-color: transparent transparent #e8e9eb;}
+.topCartDrop:after{ border-style: solid; border-width: 0 10px 13px; content: ""; height: 0; position: absolute; right: 14px; top: 30px; width: 0; border-color: transparent transparent #fff;}
+.topCartDropInner{ background: #FFF; padding: 15px; width: 300px; border-radius: 2px; border-top: 1px solid #e8e9eb; box-shadow: 0 4px 16px rgba(20,23,28,.25); color: #505763; font-size: 14px;}
+.topCartProduct{ position: relative; min-height: 50px; padding: 5px 0 5px 60px; border-top: 1px solid #efefef;}
+.topCartProduct:first-child{ border-top: 0;}
+.topCartProduct p{ font-size: 13px; padding: 0 0 3px 0; line-height: 16px;}
+.topCartProduct h5{ font-size: 18px; color: #ff0000; padding: 2px 0 0 0;}
+.topCartProduct h5 span{ font-size: 14px; color: #383838; text-decoration: line-through;}
+.topCartTotal h4{ font-size: 18px;}
+.topCartTotal h4 span{ color: #afafaf; font-weight: 300; text-decoration: line-through; display: inline-block; padding-left: 15px; font-size: 15px;}
+.topCartProductImg{ width: 50px; height: 50px; position: absolute; left: 0; top: 7px;}
+.topCartProductImg img{ width: 50px; height: 50px;}
+.topCartTotal{ padding: 12px; background: #f3f3f3; margin: 15px -15px -15px -15px;}
+.topCartTotal .gotoCart{ background: #3eb7aa; border-radius: 2px; font-size: 16px; font-weight: 700; padding: 8px; text-align: center; display: block; color: #FFF; margin: 12px 0 0 0;}
+/* Header */
+
+
+/* leftPanel */
+.mainContainer{ position: relative;}
+.leftPanel{ background: #1d1f4e; min-height: 100vh; position: relative; z-index: 9;}
+.profileDesc{ text-align: center; padding: 25px 0 0 0; color: #FFF;}
+.profileDesc h2{ font-size: 20px; font-weight: 600; padding: 15px 0 0 0;}
+.profileDesc h3{ font-size: 14px; color: #d7d7d7; padding: 10px 0 0 0;}
+.profileDescImg{ width: 173px; margin: 0 auto;}
+.profileDescImg img{ width: 173px; height: 173px; border-radius: 50%;}
+.sideNav{ margin-left: -15px; margin-right: -15px; margin-top: 20px;}
+.sideNav ul li a{ display: block; font-size: 18px; color: #FFF; border-top: 1px solid #383a64; padding: 15px 15px;}
+.sideNav ul li a:hover{ background: #3798c2;}
+.sideNav ul li a .fa{ margin-right: 12px;}
+.sideNav ul li ul{ background: #c5c6dc;}
+.sideNav ul li ul li a{ font-size: 15px; padding: 8px; padding-left: 50px; color: #000227;}
+.sideNav ul li ul li a:hover{ color: #FFF;}
+.sideNav ul li ul li a .fa{ margin-right: 2px;}
+/* leftPanel */
+
+
+/* rightPanel */
+.rightPanel{ padding: 40px 25% 70px 45px;}
+.centerHeading{ text-align: center;}
+.centerHeading h2{ font-size: 30px; color: #000;}
+.centerHeading h3{ font-size: 16px; color: #303030; font-weight: 300; padding: 8px 0 0 0;}
+.formWrap{ padding: 30px 50px 50px 50px; -webkit-box-shadow: 0 0 10px 0 #ADADAD; box-shadow: 0 0 10px 0 #ADADAD; border-radius: 5px; margin-top: 40px;}
+.rightPanel label{ font-size: 16px; color: #000;}
+.inpField{ width: 100%; background: #f8f8f8; border: 1px solid #d1d1d1; font-size: 16px; color:#434343; padding: 18px 24px;}
+.inputWrap{ position: relative; margin-bottom: 16px;}
+.inputWrap .fa{ position: absolute; right: 20px; top: 18px; color: #6c6c6c; font-size: 20px;}
+.submitBtn{ background: #151840; font-size: 16px; color: #FFF; font-weight: 600; border: 2px solid #044cb8; border-radius: 50px; padding: 15px 30px; cursor: pointer;}
+.siteDivide{ height: 1px; background: #dcdcdc; margin: 35px -50px 20px -50px;}
+.fieldInst{ font-size: 13px; color: #565656; display: inline-block; padding: 5px 0 0 0;}
+.inputWrap .iconLeft .fa{ position: static; font-size: 32px; text-align: center; display: block; line-height: 60px;}
+.inputWrap .iconLeft{ position: absolute; left: 0; top: 0; width: 62px; height: 62px; background: #efefef; border: 1px solid #d1d1d1;}
+.inputWrap.alt .inpField{ padding-left: 80px;}
+/* rightPanel */
+
+
+/* siteFooter */
+.siteFooter{ background: #0a0c29; width: 100%; left: 0; bottom: 0;}
+.bgFill{ background: #1d1f4e;}
+.siteFooterRight{ padding: 30px 60px 30px 60px;}
+.copyrightTxt{ float: left; font-size: 15px; color: #FFF;}
+.siteFooterRight ul{ float: right;}
+.siteFooterRight ul li{ float: left; margin: 0 0 0 25px;}
+.siteFooterRight ul li a{ font-size: 15px; color: #FFF;}
+/* siteFooter */
+
+
+/* Responsive --- */
+@media (max-width: 1400px) {
+  .rightPanel{ padding-right: 30px;}
+  .sideNav ul li a{ font-size: 14px;}
+  .sideNav ul li ul li a{ padding-left: 30px; font-size: 13px;}
+  .copyrightTxt, .siteFooterRight ul li a{ font-size: 13px;}
+  .inpField{ font-size: 14px;}
+}
+
+@media (max-width: 1279px) {
+}
+
+@media (max-width: 1139px) {
+  .headerRightMain{ padding-left: 0;}
+  .rightPanel{ padding-left: 15px;}
+  .siteFooterRight{ padding-left: 15px;}
+  .formWrap{ padding-left: 25px; padding-right: 25px;}
+  .siteDivide{ margin-left: -25px; margin-right: -25px;}
+  .headerRight{ padding-left: 15px; padding-right: 15px;}
+  .topRight{ padding-right: 0;}
+}
+
+@media (max-width: 1023px) {
+  .leftPanel{ height: auto; min-height: 15px;}
+  .rightPanel{ padding-left: 0; padding-right: 0;}
+  .profileDesc{ position: relative; text-align: left; padding: 15px 0 15px 70px;}
+  .profileDescImg{ position: absolute; left: 0; top: 15px; width: 50px; height: 50px;}
+  .profileDescImg img{ width: 50px; height: 50px;}
+  .profileDesc h2{ padding-top: 0;}
+  .sideNav{ margin-top: 0; display: none;}
+  .navSpan{ display: block;}
+}
+
+@media (max-width: 767px) {
+  .topNotific{ margin-left: 15px; margin-right: 15px;}
+  .topProfile{ margin: 14px 0 0 0;}
+  .topProfile span{ font-size: 14px;}
+  .topProfile span.topProfileImg{ width: 25px; height: 25px;}
+  .topProfile span.topProfileImg img{ width: 25px; height: 25px;}
+  .topProfile span.topProfileImg{ margin-right: 4px;}
+  .formWrap{ padding-left: 15px; padding-right: 15px; padding-bottom: 20px;}
+  .siteDivide{ margin-left: -15px; margin-right: -15px;}
+  .siteFooterRight{ padding: 20px 0;}
+  .copyrightTxt{ width: 100%; text-align: center;}
+  .siteFooterRight ul{ width: 100%; text-align: center; border-top: 1px solid #171a44; margin: 16px 0 0 0; padding: 10px 0 0 0;}
+  .siteFooterRight ul li{ float: none; display: inline-block; margin: 0 10px;}
+  .logo{ text-align: left;}
+}
+
+@media (max-width: 567px) {
+}
+/* --- Responsive */

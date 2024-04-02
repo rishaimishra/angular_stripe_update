@@ -1,0 +1,27 @@
+.priceBlk {
+    background-color: #adb4b8;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+.titleLink02{
+    margin: 18px 0px 0px 0px;
+}
+
+.search_sec{
+    margin: 0 0 0 15px;
+    padding:0;
+    position: relative;
+}
+.search_sec .topSearchCont.acTive{ width: calc(100% - 33px); margin-right: 0;}
+.search_sec .topSearch{
+    margin: 18px 0 0 0;
+
+}
+.search_sec .topSearch button{
+    background: #3eb7aa;
+    border:none;
+    padding: 6px 10px;
+    color:#fff;
+}
+

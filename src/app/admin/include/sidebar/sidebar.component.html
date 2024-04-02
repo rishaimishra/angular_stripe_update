@@ -1,0 +1,208 @@
+<div class="sideNav"  *ngIf="showHideDashboardadmin=='1'">
+    <ul>
+        <li class="ml">
+          <a class="" href="javascript:void(0)" routerLink="dashboard"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
+        </li>
+        <li class="ml">
+            <a class="" href="javascript:void(0)" (click)="changeRoute('/admin/settings')" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-cog"></i> Settings</a>
+        </li>
+        <li class="ml">
+          <a class="hasSublink" href="javascript:void(0)">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              User Management
+          </a>
+            <ul>
+              <li><a  href="javascript:void(0)" routerLink="users/customer"   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"></i> Consumer</a></li>
+              <li><a  href="javascript:void(0)" routerLink="users/vendor"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"></i> Tutor</a></li>
+              <!-- <li><a  href="javascript:void(0)" routerLink="users/reseller"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-angle-right" aria-hidden="true"></i> Reseller</a></li> -->
+            </ul>
+        </li> 
+        <li class="ml">
+            <a  href="javascript:void(0)" routerLink="tutor-bank-details"   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-id-card-o"></i> Tutor Bank Details</a>
+        </li>
+        <!-- <li class="">
+            <a  href="javascript:void(0)" routerLink="role"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-crosshairs" aria-hidden="true"></i>Manage User Roles</a>
+        </li> -->
+        <li class="ml">
+            <a  href="javascript:void(0)" routerLink="pages"    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-file"></i> Content Pages</a>
+        </li>
+        <li class="ml">
+                <a  href="javascript:void(0)" routerLink="orders" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-calculator"></i> Sales Report</a>
+        </li>
+
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+                Manage Categories
+            </a>
+            <ul>
+                <li><a href="javascript:void(0)" routerLink="courses/category"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-list-alt"></i> Course Categories</a></li>
+                <li> <a href="javascript:void(0)" routerLink="events/category"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-list-alt"></i> Event Categories</a></li>
+            </ul>
+        </li>
+
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-bell" aria-hidden="true"></i>
+                Commission Report
+            </a>
+            <ul>
+                <li><a href="javascript:void(0)" routerLink="commission-report/tutor"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-list-alt"></i> Tutor commission report</a></li>
+                <!-- <li> <a href="javascript:void(0)" routerLink="commission-report/reseller"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-list-alt"></i> Reseller commission report</a></li> -->
+            </ul>
+        </li>
+
+        <li class="ml">
+            <a  href="javascript:void(0)" routerLink="slides"    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Banner Management </a>            
+        </li>
+        
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-database" aria-hidden="true"></i>
+                Manage Course 
+            </a>
+              <ul>
+                <li><a  href="javascript:void(0)" routerLink="course-list"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"></i> Manage Courses</a>
+                </li>
+              </ul>
+        </li> 
+        <!-- <li>
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                Product Management
+            </a>
+              <ul>
+                <li><a routerLink="product-list"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-angle-right" aria-hidden="true"></i> Manage Products</a>
+                </li>
+              </ul>
+        </li> -->
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                Event Management
+            </a>
+              <ul>
+                <li><a routerLink="event-list"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"></i> Manage Events</a>
+                </li>
+                <li><a routerLink="event-attendee"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"></i> Manage Event Attendee</a>
+                </li>
+                <li><a routerLink="resend-ticket"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"></i> Resend Event Ticket</a>
+                </li>
+              </ul>
+        </li>
+        <li class="ml">
+            <a  href="javascript:void(0)" routerLink="testimonial"   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-comment" aria-hidden="true"></i> Manage Testimonials  </a>            
+        </li>
+        <!-- <li class="">
+            <a  href="javascript:void(0)" [routerLink]="['/admin', 'reseller', 'courses-request']"   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-random"></i> Reseller Requests </a>            
+        </li> -->
+
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                Manage Payouts 
+            </a>
+            <ul>
+                <!-- <li>
+                    <a   href="javascript:void(0)" routerLink="requested-payout-list"   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-angle-right" aria-hidden="true"></i> Requested Payout</a>
+                </li> -->
+                
+                <li>
+                    <a   href="javascript:void(0)" routerLink="payout-list"   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"></i> Payout List</a>
+                </li>
+            </ul>
+        </li> 
+
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-bell" aria-hidden="true"></i>
+                Notifications
+            </a>
+              <ul>
+                <li><a  href="javascript:void(0)" routerLink="notification/create" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"  ></i> Create Notification</a></li>
+                <li><a  href="javascript:void(0)" routerLink="notifications" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"  ></i> Notification List</a></li>
+              </ul>
+        </li> 
+        <li class="ml">
+                <a  href="javascript:void(0)" routerLink="annoucements"   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="changeDashBoardStatus()"><i class="fa fa-bullhorn" aria-hidden="true"  ></i> Announcements</a>
+        </li>
+
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                Manage Our Team 
+            </a>
+              <ul>
+                <li><a  href="javascript:void(0)" routerLink="our-team/create" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"  ></i> Create Team Member</a></li>
+                <li><a  href="javascript:void(0)" routerLink="our-team"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"  ></i> Our Team List</a></li>
+              </ul>
+        </li>
+
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-user-o" aria-hidden="true"></i>
+                Speaker Management
+            </a>
+              <ul>
+                <li><a  href="javascript:void(0)" routerLink="speaker/create" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true" ></i> Create Speaker</a></li>
+                <li><a  href="javascript:void(0)" routerLink="speaker"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"  ></i> Speaker List</a></li>
+              </ul>
+        </li>
+
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-th-list" aria-hidden="true"></i>
+                Ticket Categories
+            </a>
+            <ul>
+                <li><a  href="javascript:void(0)" routerLink="payment-category/create" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true" ></i> Create Ticket Category</a></li>
+                <li><a  href="javascript:void(0)" routerLink="payment-category"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true" ></i> Ticket Category List</a></li>
+            </ul>
+        </li> 
+
+        <li class="ml">
+            <a class="hasSublink" href="javascript:void(0)">
+                <i class="fa fa-video-camera" aria-hidden="true"></i>
+                Event Video Management
+            </a>
+              <ul>
+                <li><a  href="javascript:void(0)" routerLink="video/create" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"  ></i> Create Video</a></li>
+                <li><a  href="javascript:void(0)" routerLink="videos"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  (click)="changeDashBoardStatus()"><i class="fa fa-angle-right" aria-hidden="true"></i> Video List</a></li>
+              </ul>
+        </li>
+
+       
+        <li class="ml">
+                <a  href="javascript:void(0)" routerLink="support-ticket"   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="changeDashBoardStatus()"><i class="fa fa-ticket" aria-hidden="true"  ></i> Service Request</a>
+        </li>
+        <!-- <li>
+            <a class="hasSublink"  href="javascript:void(0)">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                    Settings
+                </a>
+            <ul>
+            <li>
+                <a href="#">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i> 
+                    Settings 1
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i> 
+                    Settings 2
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i> 
+                    Settings 3
+                </a>
+            </li>
+            </ul>
+        </li>  -->
+
+        <li style="height: 85px;"></li>
+
+    </ul>
+</div>

@@ -1,0 +1,90 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>My Events</h2>
+		<a href="/events" class="btn btn-primary btn-sm titleLink02 pull-right"> Browse more events</a>
+	</div>
+
+	<div class="table-responsive table_cont" *ngIf="records.length > 0">
+		<table class="table table-striped" *ngIf="records.length > 0" >
+			<thead>
+				<th>Order Id</th>
+				<th >Title</th>
+				<!-- <th width="25%">Short Description</th> -->
+				<th>Ticket Category</th>
+				<th>Order Quantity</th>
+				<th>Event Date</th>
+				<th>Country</th>	
+				<th>Grand Total</th>		
+				
+			</thead>
+			<tbody>					
+				<tr *ngFor="let item of records; let i = index">
+					<td style="width:50px">{{getOrderID(item.id)}}</td>
+					<td class="topProfile profileImg" style="width:300px">
+						<a href="javascript:void(0);" [routerLink]="['/event-details', item?.slug]" target="_">
+							<span class="topProfileImg">
+									<img src="{{item?.event_image}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    ;
+							</span>
+							<br>
+							{{item?.title}}
+						</a>
+					</td>
+					<!-- <td style="vertical-align: top !important;">{{item?.product_details?.short_description}}</td> -->
+					<td style="text-align:center; vertical-align: top !important; width: 150px;">{{item?.payment_category}}</td>				
+					<td style="text-align:center; vertical-align: top !important; width: 50px;">{{item?.quantity}}</td>
+					<td style="vertical-align: top !important; width: 250px;">
+						<div class="d-block priceBlk ng-star-inserted">
+							<!-- <strong>Event Date</strong> -->
+							<div class="col-12">
+								<b>From : </b>
+								<span>
+									{{item?.start_date | date : 'dd-MM-yyyy' }}
+								</span>
+							</div>
+							<div class="col-12">
+								<b>To : </b>
+								<span>
+									{{item?.end_date | date : 'dd-MM-yyyy' }}
+								</span>
+							</div>
+						</div>
+					
+					</td>
+					<td style="vertical-align: top !important; width: 150px;">{{item?.country_name}}</td>
+					<td *ngIf="item?.total_usd>0 || item?.total_sxl>0" style="width: 200px;vertical-align: top !important;">
+						<ng-container *ngIf="item?.total_usd>0">
+							{{item?.total_usd}} USD
+						</ng-container>
+						<ng-container *ngIf="item?.total_usd>0 && item?.total_sxl>0">
+							+
+						</ng-container>
+						<ng-container *ngIf="item?.total_sxl>0">
+							{{item?.total_sxl}} SXL
+						</ng-container>
+					</td>
+					<td *ngIf="item?.total_usd==0 && item?.total_sxl==0" style="width: 200px;vertical-align: top !important;"> Free</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination" *ngIf="records.length > 0">
+				<tr>
+					<td colspan="7">
+						<app-pagination [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+
+	<div class="row mt30" *ngIf="records.length === 0">
+		<div class="col-12">
+			<div class="alert alert-warning text-center">
+				<strong>Oops!</strong>
+				No record found.
+			</div>
+		</div>
+	</div>
+  
+
+  
+</div>

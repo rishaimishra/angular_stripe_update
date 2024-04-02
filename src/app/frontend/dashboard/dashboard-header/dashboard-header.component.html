@@ -1,0 +1,97 @@
+<section class="topHeader">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-2 col-lg-3">
+          <div class="logo">
+            <!-- <a href="/"><img src="assets/images/logo.png" alt=""></a> -->
+            <a href="/"><img src="assets/images/logo.png" alt=""></a>
+            <div class="navSpan" (click)="showHideDashboard()"><i class="fa fa-bars" aria-hidden="true"></i></div>
+          </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 headerRight">
+          <div class="headerRightMain">
+            <div class="row">
+              <div class="col-xl-6 col-lg-5 col-md-5">
+                <!-- <div class="inpWrap">
+                  <input type="text" placeholder="Search for Courses">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </div> -->
+              </div>
+              <div class="col-xl-6 col-lg-7 col-md-7">
+                 <div class="topRight">
+                  <!-- <div class="topCart">
+                     <img src="assets/images/cart-icon.png" alt="">
+                     <span>Cart</span>
+                     <div class="topCartItem">2</div>
+                     <div class="topCartDrop">
+                       <div class="topCartDropInner">
+                         <div class="topCartProduct">
+                          <div class="topCartProductImg"><img src="assets/images/cart-item2.jpg" alt=""></div>
+                          <p><strong>Node.js</strong></p>
+                          <p>Maximilian Schwarzmüller, Professional Web Developer</p>
+                          <h5>₹700 <span>₹1700</span></h5>
+                         </div>
+                         <div class="topCartProduct">
+                          <div class="topCartProductImg"><img src="assets/images/cart-item2.jpg" alt=""></div>
+                          <p><strong>Node.js</strong></p>
+                          <p>Maximilian Schwarzmüller, Professional Web Developer</p>
+                          <h5>₹700 <span>₹1700</span></h5>
+                         </div>
+                         <div class="topCartTotal">
+                           <h4><small>Total:</small> ₹700 <span>₹1700</span></h4>
+                           <a class="gotoCart" href="#">Go to Cart</a>
+                         </div>
+                       </div>
+                     </div>
+                   </div>-->
+                  
+                   <div class="topNotific">
+                      <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
+                      <a class="dashboard_notification"  (click)="notificationClickEvent()" >
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                        <div class="notoficCount" *ngIf="notificationCount > 0">{{ notificationCount}}</div>
+                      </a>
+                    <!-- <div class="notoficCount" *ngIf="!notificationCount">0</div> -->
+                     <div class="topNotificDrop"  *ngIf="notificationCount > 0 && notificationShowstatus">
+                       <div class="topNotificDropInner" *ngIf="notificationRecordInHeader " >
+                         
+                         <div class="NotificDropSingle" *ngFor="let notifications of notificationRecords;">
+                          <div>
+                            <!-- SA -->
+                            <img class="NotificDropSingleName" src="{{notifications?.user?.avatar ? notifications?.user?.avatar  : 'assets/images/no-image.png'}}"     alt="..." /> 
+                          </div>
+                          <p>{{ notifications.data.length > 50 ? (notifications.data | slice: 0:50) + '...' : (notifications.data)}}</p>
+                          <p><span>{{notifications.created_at | amTimeAgo : true}}</span></p>
+                         </div>
+                      
+                         <div class="notificSeeAll"><a [routerLink]="['/dashboard', 'notifications']">See All <i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
+
+                       </div>
+                     </div>
+                   </div>
+
+                   <div class="topProfile dashboard_header">
+                     <span class="topProfileImg">
+                        <img src="{{userProfileImage}}"  onError="this.src='assets/images/no-image.png';"  alt="..." />  
+                      </span>
+                     <span  (click)="dashboardClickEvent()">{{userFullName.length > 20 ? (userFullName | slice:0:15) + '...' : userFullName }} <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                     <div class="topProfileDrop"  *ngIf="dashboardShowstatus">
+                       <div class="topProfileDropInner">
+                         <ul>
+                           <li><a routerLink="/dashboard"><i class="fa fa-cube" aria-hidden="true"></i> Dashboard</a></li>
+                           <!-- <li><a routerLink=""><i class="fa fa-cube" aria-hidden="true"></i> Help</a></li> -->
+                           
+                           <li><a [routerLink]="['/invite']" ><i class="fa fa-users" aria-hidden="true"></i> Invite Your Friends</a></li>
+                           <li><a [routerLink]="['/home/logout']" ><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
+                         </ul>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

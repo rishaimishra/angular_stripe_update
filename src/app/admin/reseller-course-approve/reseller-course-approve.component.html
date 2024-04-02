@@ -1,0 +1,95 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>Reseller Course Request</h2>
+
+		<div class="row">
+			<div class="offset-md-9 col-3">
+				<a class="btn btn-primary btn-sm pull-left titleLink02" href="javascript:void(0);" (click)="onClickApprove($event)">
+					<i class="fa fa-check"></i> Approve
+				</a>
+				<a class="btn btn-danger btn-sm pull-right titleLink02" href="javascript:void(0);" (click)="onClickDisapprove($event)">
+					<i class="fa fa-ban"></i> Disapprove
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="table-responsive table_cont" *ngIf="records.length > 0">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th style="width:5%" class="text-center">
+						<input type="checkbox" name="all" [checked]="isCheckedAllRec()" (click)="onClickAllRec($event)">
+					</th>
+					<th width="30%">
+						Title
+					</th>
+					<th>Reseller Name</th>
+					<th>Added Date</th>
+					<th class="text-center">
+						Original Price
+					</th>
+					<th class="text-center">
+						Offered Price
+					</th>
+					<th class="text-center">Product Status</th>
+					<th class="text-center">Approval Status</th>
+				</tr>
+			</thead>
+			<tbody *ngIf="records.length > 0">
+				<tr *ngFor="let rs of records" [ngClass]="{'selectedRow': isCheckedRec(rs), '': (!isCheckedRec(rs))}">
+					<td class="text-center">
+						<input type="checkbox" [value]="rs?.id" name="rec[]" [checked]="isCheckedRec(rs)" (click)="onChangekRec($event, rs)">
+					</td>
+					<td (click)="onClickRec($event, rs)">
+						<div class="d-flex">
+							<div class="imageCourse">
+								<img class="img-fluid" style="width: 50px" [src]="getImage(rs?.courses)" alt="">
+							</div>
+							<div class="titleCourse">
+								<a *ngIf="rs?.courses?.slug" target="_blank" [routerLink]="['/affiliate', getResellerSlug(rs), 'course-details', rs?.courses?.slug]" title="{{rs?.courses?.title}}">{{ (rs?.courses?.title?.length > 25) ? (rs?.courses?.title | slice : 0:25) + '...' : (rs?.courses?.title)}}</a>	 
+								<em>{{rs?.courses?.sub_title | slice : 0:10}}</em>	 
+							</div>
+						</div>
+					</td>
+					<td (click)="onClickRec($event, rs)">{{rs?.reseller?.profile?.full_name}}</td>
+					<td>{{rs?.created_at | date: 'dd-MM-yyyy'}}</td>
+					<td class="text-center" (click)="onClickRec($event, rs)">{{rs?.courses?.price | currency:rs?.currency:'symbol':'2.2-2'}}</td>
+					<td class="text-center" (click)="onClickRec($event, rs)">{{getDiscountedPrice(rs) | currency:rs?.courses?.currency:'symbol':'2.2-2'}}</td>
+					<td class="text-center" (click)="onClickRec($event, rs)">
+						<span [ngClass]="getProductStatusClass(rs)">{{getProductStatusTest(rs)}}</span>
+					</td>
+					<td class="text-center" (click)="onClickRec($event, rs)">
+						<span [ngClass]="getApprovalStatusClass(rs)">{{getApprovalStatusTest(rs)}}</span>
+					</td>
+				</tr>
+
+			</tbody>
+			<tbody *ngIf="records.length === 0">
+				<tr>
+					<td colspan="8" class="text-center">
+						No course is added yet.
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination">
+				<tr>
+					<td colspan="8">
+						<app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+
+	<div class="row mt30" *ngIf="records.length === 0">
+		<div class="col-12">
+			<div class="alert alert-warning text-center">
+				<strong>Oops!</strong>
+				No record found.
+			</div>
+		</div>
+	</div>
+
+</div>

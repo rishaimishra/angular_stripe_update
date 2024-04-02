@@ -1,0 +1,223 @@
+<section class="checkoutMain">
+	<div class="container">
+		<div class="row">
+		
+			<div class="col-xl-8">
+				<div class="checkoutRight">
+					<h2>
+						Total: <span>{{coursePromoteInfo?.amount| number:'1.2-2' }} USD</span>
+						
+					</h2>
+					<div class="walletBal" *ngIf="wallet">
+						<label class="checkBoxCustom"*ngIf="isShowWalletCheckbox(wallet)">
+							<input type="checkbox" name="wallet" (change)="onChangeWallet($event)"
+								[checked]="isWalletChecked"> Use your wallet balance
+							{{ wallet?.amount | number:'1.2-2'}} USD
+							<span class="checkBoxMark"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="freeOrder tabsRadio" *ngIf="!isShowCard()">
+					<button type="button" class="paymentBtn" [disabled]="orderLoader"
+						(click)="orderWalletMethod($event)">Complete Order <i *ngIf="orderLoader"
+							class="fa fa-spinner fa-spin"></i></button>
+				</div>
+
+				<div class="freeOrder tabsRadio" *ngIf="(coursePromoteInfo?.amount === 0)">
+					<button type="button" class="paymentBtn" [disabled]="orderLoader"
+						(click)="orderFreeMethod($event)">Complete Order <i *ngIf="orderLoader"
+							class="fa fa-spinner fa-spin"></i></button>
+				</div>
+				<div class="tabsRadio" *ngIf="(coursePromoteInfo?.amount !== 0)">
+					<div class="tabsCustom">
+
+					
+
+						<!-- <div class="tabsRadioWrap" *ngIf="isShowCard()">
+
+							<label for="tab-5" class="label">
+								<input name="tabs" type="radio" id="tab-5" class="input"
+									(change)="onChangeMethod('sxl')" />
+								<span class="checkmark">
+									<span class="checkmark_round"></span>
+								</span>
+								SuccessLife (SXL) Token
+							</label>
+							<div class="panel"
+								[ngClass]="{'d-block': isSelectedMethod('sxl'), 'd-none': (!isSelectedMethod('sxl'))}">
+								<p>Pay using SuccessLife (SXL) payment mode</p>
+								<div class="divCompletePayment">
+									<div class="">
+										<button type="button" [disabled]="orderLoader" class="paymentBtn"
+											(click)="orderSLXMethod($event)">Complete Order <i *ngIf="orderLoader"
+												class="fa fa-spinner fa-spin"></i></button>
+									</div>
+								</div>
+							</div>
+						</div> -->
+
+						<div class="tabsRadioWrap" *ngIf="isShowCard()">
+
+							<label for="tab-1" class="label">
+								<input name="tabs" type="radio" id="tab-1" class="input"
+									(change)="onChangeMethod('cyber-source')" />
+								<span class="checkmark"><span class="checkmark_round"></span></span>
+								Cyber Source <img src="../../../assets/images/card.png" alt="">
+							</label>
+							<div class="panel"
+								[ngClass]="{'d-block': isSelectedMethod('cyber-source'), 'd-none': (!isSelectedMethod('cyber-source'))}">
+								<form [formGroup]="paypalFormObj" (submit)="orderCyberSourceMethod()">
+
+									<div class="inputWrap">
+										<input type="number" formControlName="card_no" placeholder="Card Number">
+										<i class="fa fa-lock" aria-hidden="true"></i>
+
+										<div class="form-validation-error" *ngIf="paypalFormError?.card_no">
+											<span *ngFor="let err of paypalFormError?.card_no">{{err?.message}}</span>
+										</div>
+									</div>
+
+									<div class="inputBlock">
+										<ul class="clearfix">
+											<li>
+												<select class="" formControlName="exp_mo">
+													<option value="">MM</option>
+													<option *ngFor="let rs of monthArr" value="{{rs?.value}}">
+														{{rs?.name}}</option>
+												</select>
+
+												<div class="form-validation-error" *ngIf="paypalFormError?.exp_mo">
+													<span
+														*ngFor="let err of paypalFormError?.exp_mo">{{err?.message}}</span>
+												</div>
+											</li>
+											<li>
+												<select class="" formControlName="exp_yr">
+													<option value="">YYYY</option>
+													<option *ngFor="let rs of yearArr" value="{{rs?.value}}">
+														{{rs?.name}}</option>
+												</select>
+												<div class="form-validation-error" *ngIf="paypalFormError?.exp_yr">
+													<span
+														*ngFor="let err of paypalFormError?.exp_yr">{{err?.message}}</span>
+												</div>
+											</li>
+											<li class="secureCode">
+												<div class="inputWrap">
+													<input type="password" formControlName="cvn"
+														placeholder="Security Code">
+													<i class="fa fa-question-circle" aria-hidden="true"></i>
+
+													<div class="form-validation-error" *ngIf="paypalFormError?.cvn">
+														<span
+															*ngFor="let err of paypalFormError?.cvn">{{err?.message}}</span>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+
+									<div class="inputWrap">
+										<input type="text" formControlName="card_holder_name"
+											placeholder="Name on Card">
+
+										<div class="form-validation-error" *ngIf="paypalFormError?.card_holder_name">
+											<span
+												*ngFor="let err of paypalFormError?.card_holder_name">{{err?.message}}</span>
+										</div>
+									</div>
+
+									
+
+									<div class="divCompletePayment">
+										<div class="">
+											<button type="submit" [disabled]="orderLoader" class="paymentBtn">Pay
+												{{ getPaybleAmount() | number:'1.2-2'}} USD <i
+													*ngIf="orderLoader" class="fa fa-spinner fa-spin"></i></button>
+										
+										</div>
+										<div class="">
+											<p>By completing your purchase you <br> agree to these <a href="#">Terms of
+													Service</a>.</p>
+										</div>
+										<div class="">
+											<i class="fa fa-lock" aria-hidden="true"></i> Secure Connection
+										</div>
+									</div>
+								</form>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">You have <span class="totalIntv">{{slxTransactionInterval}}</span> to make payment
+        througe SLX</h4>
+    </div>
+    <div class="modal-body">
+      <div class="orderDetailModalData" *ngIf="!slxLoader">
+        <div class="orderTopDiv">
+          <p>Your order # is <span class="highlightedTxt">{{env?.orderIdPrefix + slxTokenResponse?.order_id}}</span></p>
+          <p>Please wait. checking payment sattus in <span
+              class="highlightedTxt">{{slxPerMinuteObj?.secondsText}}</span></p>
+          <p>Once your payment is completed we will email you an order confirmation details and redemption info</p>
+          <p><i class="fa fa-info-circle"></i> Please send only exact amount. Do not send more or less.</p>
+    
+          <div class="amntDiv">
+            <img src="assets/images/keyword-icon.png" alt="" class="img-fluid">
+            <span class="highlightedTxt amntPrc">{{slxTokenResponse?.order_amount}} SXL</span>
+          </div>
+        </div>
+        <div class="orderBottomDiv">
+          <div class="tabBtn">
+            <ul class="nav nav-pills">
+              <li class="active"><a data-toggle="pill" href="#copy">COPY</a></li>
+              <li><a data-toggle="pill" href="#scan">SCAN</a></li>
+            </ul>
+          </div>
+          <div class="tab-content">
+            <div id="copy" class="tab-pane fade show active">
+              <div class="addressTopDiv">
+                <p>Please send success token to this address</p>
+                <p class="tokenAddress">{{slxTokenResponse?.address}}</p>
+              </div>
+              <div class="addressBottomDiv">
+								<div class="copyAddress">
+									<p class="boldData">{{slxTokenResponse?.address}}</p>
+									<a href="javascript:void(0);" (click)="copyToClipboard(slxTokenResponse?.address)" ngbTooltip="Copied: {{slxTokenResponse?.address}}" triggers="click:mouseout"><i class="fa fa-copy"></i> Copy Address</a>
+								</div>
+								<div class="copyAmount">
+									<p class="boldData">{{slxTokenResponse?.order_amount}} SXL</p>
+									<a href="javascript:void(0);" (click)="copyToClipboard(slxTokenResponse?.order_amount)" ngbTooltip="Copied: {{slxTokenResponse?.order_amount}}" triggers="click:mouseout"><i class="fa fa-copy"></i> Copy Amount</a>
+								</div>
+              </div>
+            </div>
+            <div id="scan" class="tab-pane fade">
+              <div class="addressTopDiv">
+                <p>Please scan success code</p>
+              </div>
+              <div class="qrcodeBottomDiv">
+                <div class="scanQRCodeDiv" *ngIf="slxTokenResponse?.address">
+                  <qrcode [qrdata]="slxTokenResponse?.address" [size]="100" [level]="'L'"></qrcode>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="orderDetailModalLoader" *ngIf="slxLoader">
+        <div class="loaderDivSlx">
+          <i *ngIf="orderLoader" class="fa fa-spinner fa-spin"></i> Processing your order.
+        </div>
+      </div>
+    </div>
+  
+  </ng-template>

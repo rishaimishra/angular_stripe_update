@@ -1,0 +1,44 @@
+<div class="featuredSide">          
+    <div class="item">
+      <!-- <ng-container *ngFor="let product of data; let i = index"> -->
+          <div class="featuredSideSingle"  *ngIf="item?.id!=currentProductId" >
+          
+                <div class="featuredSideSingleImg" >
+                  <!-- <img src="assets/images/featured.jpg" alt=""> -->
+                  <a routerLink="/product-details/{{item.slug}}">
+                    <img [src]="item.images[0]?.thumbnail || 'assets/images/noimg-98x138.jpg'" alt="" style="height: 100px;"> 
+                  </a>
+                </div>
+                <h3>{{item?.title}}</h3>
+                <div class="courseRating clearfix">
+                    <div class="courseRatingLeft">
+                            <ngb-rating [rate]="0"></ngb-rating>
+                    </div>
+                    <span>0.0 
+                        <!-- <small>(7,1118)</small> -->
+                    </span>
+                </div>
+                <!-- Old price code -->
+                <!-- <h5>${{item?.price}}</h5> -->
+
+                <!-- New price code --> 
+                <ng-container  *ngIf="productPrice?.usd_price > 0">
+                  <h5 *ngIf="productPrice?.usd_price > 0"> 
+                    {{productPrice?.usd_price | currency : 'USD' :'symbol':'1.2-2'}}
+                  </h5>
+                </ng-container>
+                <ng-container  *ngIf="productPrice?.usd_price > 0 && productPrice?.sxl_price > 0">
+                  +
+                </ng-container>
+                <ng-container  *ngIf="productPrice?.sxl_price > 0">
+                  <h5 *ngIf="productPrice?.sxl_price > 0">
+                    SXL  {{productPrice?.sxl_price | number:'1.2-2'}}
+                  </h5>
+                </ng-container>
+                
+                <h5 *ngIf="productPrice?.total_price == 0">Free </h5>
+          
+          </div>
+    <!-- </ng-container> -->
+    </div>
+</div>

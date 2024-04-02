@@ -1,0 +1,199 @@
+<!-- About Page -->
+<div class="innerPageBanner">
+  <img src="assets/images/inner-banner_about.jpg" alt="">
+  <div class="innerPageBannerCont d-flex">
+    <div class="container align-self-center">
+      <!-- <h2>The world’s Largest <br> <span>Selection of Courses</span></h2> -->
+    </div>
+  </div>
+</div>
+
+<!-- <section class="descTxt">
+    <div class="container">
+      <h2>The leading global marketplace for <br> learning and instruction</h2>
+       <h3>By connecting students all over the world to the be st instructors, SuccessLife is helping individuals reach their goals and pursue their dreams.</h3> 
+    </div>
+  </section> -->
+
+<section class="cmsWrap about_cont">
+  <div class="container" innerHTML="{{content}}"></div>
+</section>
+
+
+<!-- 
+<section class="howItWorks forAbout">
+  <div class="container">
+    <div class="howItWorksWrap">
+      <div class="row">
+     <div class="col-lg-6">
+       <div class="videoWrap"><iframe width="100%" height="450" src="https://www.youtube.com/embed/9Ca8zWJOlFQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+     </div>
+     <div class="col-lg-6 d-flex">
+       <div class="contHow align-self-center">
+         <h2>How it Works</h2>
+         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non nulla ac nunc cursus fermentum. Duis sit amet tellus nec turpis condimentum condimentum. Mauris lacinia nunc eu dapibus sodales. Curabitur accumsan nunc maximus, pulvinar dui molestie, consequat diam. </p>
+         <p>Proin et ipsum auctor mauris eleifend accumsan viverra at neque. Cras fringilla magna ut fringilla rutrum. Vestibulum sit amet velit ac tellus imperdiet ornare ut sed nulla. Sed vitae orci justo. Curabitur tempus dui imperdiet porttitor accumsan. Sed porta, mi non varius eleifend, magna dui tincidunt metus, quis facilisis arcu ipsum non libero. Praesent molestie odio vitae tellus mollis, quis cursus urna efficitur. Phasellus nunc diam, malesuada in lorem a, aliquet tincidunt tortor.</p>
+       </div>
+     </div>
+    </div>
+   </div>
+  </div>
+</section> -->
+
+
+<section class="ourTeam" *ngIf="myTeam.length > 0">
+  <div class="container">
+    <h2>Our Team</h2>
+    
+    <owl-carousel [options]="ourTeam" [carouselClasses]="['owl-theme', 'sliding']">
+
+      <div class="item" *ngFor="let rs of myTeam">
+        <div class="teamSingle cartListTransform">
+          <div class="teamSingleImg"><img src="{{( rs?.image !=undefined )? rs?.image :'assets/images/noimg-222x150.jpg'}}"
+              alt="" ></div>
+          <h3>{{rs?.name}}</h3>
+          <p>{{rs?.designation}}</p>
+        </div>
+      </div>
+    </owl-carousel>
+  </div>
+</section>
+
+<!-- <section class="broadAdd clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 order-last posN">
+       <div class="imgRightFull">
+         <div class="imageRightMain imgFirst d-flex">
+          <div class="align-self-center rightVideoIcon">
+            <img src="assets/images/youtubeicon.png" alt="">
+            <p>HOW LEARNING DRIVES PINTEREST’S <br> BUSINESS PERFORMANCE</p>
+          </div>
+         </div>
+       </div>
+      </div>
+      <div class="col-lg-6 align-self-center">
+        <div class="txtLeft">
+          <h2>Staying ahead of the future of work</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non nulla ac nunc cursus fermentum. Duis sit amet tellus nec turpis condimentum condimentum. Mauris lacinia nunc eu dapibus sodales.</p>
+          <a class="learnMore" href="#">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="broadAdd alt clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 posN">
+       <div class="imgRightFull">
+         <div class="imageRightMain imgFirst d-flex">
+          <div class="align-self-center rightVideoIcon">
+            <img src="assets/images/youtubeicon.png" alt="">
+            <p>HOW LEARNING DRIVES PINTEREST’S <br> BUSINESS PERFORMANCE</p>
+          </div>
+         </div>
+       </div>
+      </div>
+      <div class="col-lg-6 align-self-center">
+        <div class="txtLeft">
+          <h2>Our global reach</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non nulla ac nunc cursus fermentum. Duis sit amet tellus nec turpis condimentum condimentum. Mauris lacinia nunc eu dapibus sodales.</p>
+          <ul class="counter">
+            <li>24M <br> <span>Students</span></li>
+            <li>80K <br> <span>Course</span></li>
+            <li>150M <br> <span>Course enrollments</span></li>
+            <li>50+ <br> <span>Languages</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div class="container">
+    <h2>What Our Client’s Say</h2>
+    <owl-carousel [options]="testimonial"  [carouselClasses]="['owl-theme', 'sliding']" >
+
+      <div class="item">
+        <div class="testiSingle">
+          <div class="testiQuote"><img src="assets/images/quote.png" alt=""></div>
+          <div class="testiSingleTop">
+            <div class="testiImg"><img src="assets/images/testiimg.jpg" alt=""></div>
+            <h3>Aenean</h3>
+            <h4>Student, University of Kolkata</h4>
+          </div>
+          <p>My son loves it. It seems like it’s more fun for him. Maybe because of the smoother ride. It’s also way more comfortable for my husband and I. Nomore picking up the stroller for uneven sidewalk.</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="testiSingle">
+          <div class="testiQuote"><img src="assets/images/quote.png" alt=""></div>
+          <div class="testiSingleTop">
+            <div class="testiImg"><img src="assets/images/testiimg.jpg" alt=""></div>
+            <h3>Aenean</h3>
+            <h4>Student, University of Kolkata</h4>
+          </div>
+          <p>My son loves it. It seems like it’s more fun for him. Maybe because of the smoother ride. </p>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="testiSingle">
+          <div class="testiQuote"><img src="assets/images/quote.png" alt=""></div>
+          <div class="testiSingleTop">
+            <div class="testiImg"><img src="assets/images/testiimg.jpg" alt=""></div>
+            <h3>Aenean</h3>
+            <h4>Student, University of Kolkata</h4>
+          </div>
+          <p>My son loves it. It seems like it’s more fun for him. Maybe because of the smoother ride. It’s also way more comfortable for my husband and I. Nomore picking up the stroller for uneven sidewalk.</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="testiSingle">
+          <div class="testiQuote"><img src="assets/images/quote.png" alt=""></div>
+          <div class="testiSingleTop">
+            <div class="testiImg"><img src="assets/images/testiimg.jpg" alt=""></div>
+            <h3>Aenean</h3>
+            <h4>Student, University of Kolkata</h4>
+          </div>
+          <p>My son loves it. It seems like it’s more fun for him. Maybe because of the smoother ride. It’s also way more comfortable for my husband and I. Nomore picking up the stroller for uneven sidewalk.</p>
+        </div>
+      </div>
+
+    </owl-carousel>
+  </div>
+</section>
+
+<section class="vendor">
+  <div class="container">
+    <h2>Our top rated vendors</h2>
+    <owl-carousel [options]="vendors"  [carouselClasses]="['owl-theme', 'sliding']" >
+
+    <div class="item">
+      <div class="vendorSingle"><img src="assets/images/vendor-1.png" alt=""></div>
+    </div>
+
+    <div class="item">
+      <div class="vendorSingle"><img src="assets/images/vendor-2.png" alt=""></div>
+    </div>
+
+    <div class="item">
+      <div class="vendorSingle"><img src="assets/images/vendor-3.png" alt=""></div>
+    </div>
+
+    <div class="item">
+      <div class="vendorSingle"><img src="assets/images/vendor-4.png" alt=""></div>
+    </div>
+
+    <div class="item">
+      <div class="vendorSingle"><img src="assets/images/vendor-5.png" alt=""></div>
+    </div>
+
+    </owl-carousel>
+  </div>
+</section> -->

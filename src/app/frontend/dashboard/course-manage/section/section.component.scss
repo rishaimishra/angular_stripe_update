@@ -1,0 +1,43 @@
+.fa-trash{
+    color:red;
+}
+.section_block{
+    margin: 0;
+    padding: 15px;
+    background: #f6f6f6;
+    border:1px solid #d1d1d1 ;
+}
+.mode{
+    margin: 0;
+    padding: 0 0 10px 0;
+
+    span{
+        padding-right: 10px;
+    }
+}
+.sub_heading{
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+.choose_file{
+    font-size: 14px;
+    padding: 6px 14px;
+    font-weight: normal;
+    background: #3eb7aa;
+    border: none;
+}
+.upload_txt{
+    margin-top: 10px;
+    display: inline-block;
+    span{
+        padding: 0 5px;
+    }
+}
+.fileFormatInfo{
+    font-size: 12px;
+    padding: 3px;
+}
+:host ::ng-deep 
+.ck-editor__editable {
+    min-height: 200px;  
+}

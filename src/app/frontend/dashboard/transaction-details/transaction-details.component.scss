@@ -1,0 +1,37 @@
+.transcTop {
+    padding-top: 50px;
+    display: block;
+    .billingInfo {
+        width: 320px;
+        float: left;
+    }
+    .orderSchedule {
+        width: 320px;
+        float: right;
+        text-align: right;
+    }
+}
+
+.transcBottom {
+    padding-top: 20px;
+    clear: both;
+
+    .orderSummary {
+        float: right;
+        // width: 320px;
+    }
+
+    .imageCourse {
+        display: block;
+        padding: 5px;
+        width:100px;
+    }
+    .titleCourse {
+        display: block;
+        padding: 5px;
+    }
+    .table_cont{
+        margin-bottom: 20px;
+        border-bottom:1px solid #d1d1d1;
+    }
+}

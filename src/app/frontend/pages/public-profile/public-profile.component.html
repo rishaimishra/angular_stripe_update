@@ -1,0 +1,145 @@
+<ng-container *ngIf="foundData">
+<section class="pageHeading d-flex user_prfile_banner" id="record-set">
+	<div class="container align-self-center">
+		<h2>{{getUserName(userDetail)}}</h2>		
+		<div class="userID">{{getUserID(userDetail?.id)}}</div>
+		<h3>{{getUserHeadline(userDetail)}}</h3>
+	</div>
+</section>
+
+<section class="cmsWrap" >
+	<div class="container">
+		<div class="profile_top_part">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="profile_img_area">
+						<img height="120" src="{{( userDetail?.avatar !=undefined && userDetail?.avatar !='')? userDetail?.avatar:'assets/images/noimg-222x150.jpg'}}" alt="No Image"
+						 width="120">
+					</div>
+					<div class="social_area">
+							
+						<a href="{{link?.value}}" target="_blank" *ngFor="let link of userDetail?.profile?.social_links | keys">
+							<i *ngIf="link?.key == 'facebook' && link?.value" class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i *ngIf="link?.key == 'twitter' && link?.value" class="fa fa-twitter-square" aria-hidden="true"></i>
+							<i *ngIf="link?.key == 'youtube'&& link?.value" class="fa fa-youtube-square" aria-hidden="true"></i>
+							<i *ngIf="link?.key == 'linkedin'&& link?.value" class="fa fa-linkedin-square" aria-hidden="true"></i>
+						</a>
+					</div>					
+					<div class="ratingsDiv publicProfile text-center" *ngIf="userDetail?.avg_rating > 0">
+						<div class="ratings Left">
+							<ngb-rating [rate]=userDetail?.avg_rating></ngb-rating>
+						</div>						
+					</div>
+					
+					<div class="rating" *ngIf="userDetail?.avg_rating === 0">No review yet</div>
+				</div>
+				<div class="col-sm-9">
+					<div class="rht_cont">
+						<p> {{getUserBio(userDetail)}} </p>
+
+						<ul class="number_area">
+							<li>
+								<div class="small_txt">Total students </div>
+								<div class="number">0</div>
+							</li>
+							<li>
+								<div class="small_txt">Courses</div>
+								<div class="number">{{getCourseCount(userDetail)}}</div>
+							</li>
+							<li>
+								<div class="small_txt">Reviews</div>
+								<div class="number">{{getReviewCount(userDetail)}}</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="profile_bottom_part" *ngIf="userDetail?.courses?.length > 0">
+	<div class="container">
+		<h2>Courses taught by {{getUserName(userDetail)}}</h2>
+		<ngb-tabset class="tabFeatured">
+			
+			<ngb-tab *ngIf="userDetail?.courses?.length > 0">
+				<ng-template ngbTabTitle>Course</ng-template>
+				<ng-template ngbTabContent>
+					<owl-carousel *ngIf="userDetail?.courses?.length > 0" [options]="crouselConfig" [carouselClasses]="['owl-theme', 'sliding']">
+
+						<!-- Old Price Code -->
+						<!-- <div *ngFor="let rs of userDetail?.courses" class="item">
+							<div class="item">
+								<div class="carouselCont">
+								
+										<div class="carouselImg">
+											<img src="{{( rs?.images.thumbnail !=undefined )? rs?.images.thumbnail :'assets/images/noimg-222x150.jpg'}}" alt="" [routerLink]="['/course-details', rs?.slug]" style="cursor: pointer;">
+
+											<ng-container  *ngIf="httpService.isLoggednIn() && httpService.getUserRole()[0]=='customer'">
+													<a href="javascript:void(0);" (click)="addToWishList(rs.id)" *ngIf="!isAddedWishList(rs.id)" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+													<a href="javascript:void(0);" (click)="removeFromWishList(rs.id)" *ngIf="isAddedWishList(rs.id)" class="imgOverStar"><i class="fa fa-heart" aria-hidden="true"></i></a>
+											</ng-container>
+											<ng-container  *ngIf="!httpService.isLoggednIn()">
+													<a href="javascript:void(0);" (click)="openModal()" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+											</ng-container>
+										</div>
+										
+										<a [routerLink]="['/course-details', rs?.slug]">
+										<h3>{{rs?.title}}</h3>
+										
+										<h5>{{userDetail?.profile?.full_name }}</h5>
+										<div class="ratingsDiv" *ngIf="rs?.rating > 0">
+												<div class="ratingsDivLeft">
+													<span class="star_area" >
+														<ngb-rating [rate]="Math.round(rs?.rating)| number:'1.0-0'"></ngb-rating>
+													</span>	
+												</div>
+												<div class="ratingsDivRight">{{ Math.round(rs?.rating) | number:'1.0-0'}}
+													<span>({{rs?.avg_reviews}})</span>
+												</div>
+										</div>
+										<div class="ratingsDiv" *ngIf="rs?.rating === 0"><div class="ratings Right noreview">No review yet</div>
+										</div>
+
+
+										<h6 *ngIf="rs?.price > 0" >
+												<span class="originalPrc" *ngIf="hasOffer(rs)">
+													{{rs?.price | currency }}
+												</span>
+												<span class="actualPrc">
+													{{getPrice(rs) | currency }}
+												</span>
+										</h6>
+
+										<h6 *ngIf="rs?.price === 0">Free</h6>
+									</a>
+								</div>
+							</div>
+						</div> -->
+						<!-- New price Code -->
+						<ng-container *ngFor="let rs of userDetail?.courses">
+								<app-carousal-course-card [data]="rs"></app-carousal-course-card>
+						</ng-container>
+
+					</owl-carousel>
+				</ng-template>
+			</ngb-tab>
+		</ngb-tabset>
+	</div>
+</section>
+</ng-container>
+<!-- end Vendor profile -->
+
+<ng-container *ngIf="!foundData">
+	<section class="cmsWrap">
+		<div class="container">
+		  <div class="error_container">
+			<div class="sad_img"><img src="assets/images/sad_smiley.png" alt=""/></div>
+			<div class="sad_txt">Sorry!</div>
+			<p>We can't find the page you're looking for.</p>
+			<!-- <p class="small_txt">Visit our <a href="javascript:void(0)">support page</a> for any questions. (404)</p> -->
+		  </div>
+		</div>
+	  </section>
+</ng-container>

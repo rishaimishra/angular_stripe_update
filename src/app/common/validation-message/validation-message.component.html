@@ -1,0 +1,31 @@
+<ul class="sb-errors-list" *ngIf="invalid && (dirty || touched)">
+	<li [hidden]="!fromInstance.errors.required">
+	    This {{this.fieldName}}  is required.
+	</li>
+	<li [hidden]="!fromInstance.errors.minlength">
+	    This {{this.fieldName}} is too short. It should have {{fromInstance.errors.minlength?.requiredLength}} characters or more.
+	</li>
+	<li [hidden]="!fromInstance.errors.email">
+	    This {{this.fieldName}} should be a valid email address.
+	</li>
+	<li [hidden]="!fromInstance.errors.MatchPassword">
+			same
+	</li>
+	<li [hidden]="!fromInstance.errors.min">
+			Minimum accepted value  {{minValue}}.
+	</li>
+	<li [hidden]="!fromInstance.errors.max">
+			Maximum accepted value  {{maxValue}}.
+	</li>
+
+	<li [hidden]="!fromInstance.errors.password">
+		<ul>
+			<!-- <li>Password at least 8 characters</li>
+			<li>Password at least 1 numeric character</li>
+			<li>Password at least 1 lowercase letter</li>
+			<li>Password at least 1 uppercase letter</li>
+			<li>Password at least 1 special character</li> -->
+			<li>Password must have one uppercase, one lowercase, one numeric, one special character and should be at least 8 characters</li>
+		</ul>		
+	</li>
+ </ul>

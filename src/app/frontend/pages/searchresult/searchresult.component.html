@@ -1,0 +1,215 @@
+<div class="eventBanner d-flex">
+  <div class="container align-self-center">
+    <h2>Big data</h2>
+    <h3>Etiam vehicula sapien ac aliquet porttitor. Donec eget arcu <br> neque. Fusce sed nisl non..</h3>
+  </div>
+</div>
+
+<section class="forBusiness">
+  <div class="container">
+    <h3>274 results for bigdata</h3>
+    <div class="businessFilter clearfix">
+      <ul class="clearfix">
+        <li><span class="green">Hadoop <small>39</small></span></li>
+        <li><span>Apache Spark <small>29</small></span></li>
+        <li><span class="violet">Data Analysis <small>18</small></span></li>
+        <li>
+          <select class="" name="">
+            <option>Ratings</option>
+          </select>
+        </li>
+        <li>
+          <select class="greenSelect" name="">
+            <option>Duration</option>
+          </select>
+        </li>
+        <li class="filtRight">
+          <div class="btnFilter" (click)="filter_showhide()"><img src="assets/images/filter-icon.png" alt=""> Filters</div>
+        </li>
+      </ul>
+      <div class="filter_cont_area" *ngIf="btnFilter">
+        <span class="cancel_btn_area" (click)="buttton_showhide()"><a href="javascript:void(0);"><img src="assets/images/cancel_btn.png"/></a></span>
+        <div class="row">
+          <div class="col-sm-4">
+            <label>Topic</label>
+            <ng-select [items]="people" [multiple]="true" bindLabel="name" groupBy="gender" [selectableGroup]="true"
+              [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedPeople">
+              <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>--> {{item.gender |
+                uppercase}}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> --> {{item.name}}
+              </ng-template>
+            </ng-select>
+          </div>
+          <div class="col-sm-4">
+            <label>Level</label>
+            <ng-select [items]="lebel" [multiple]="true" bindLabel="name" groupBy="gender" [selectableGroup]="true"
+              [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedlebel">
+              <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>--> {{item.gender |
+                uppercase}}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> --> {{item.name}}
+              </ng-template>
+            </ng-select>
+          </div>
+          
+          <div class="col-sm-4">
+            <label>Duration</label>
+            <ng-select [items]="duration" [multiple]="true" bindLabel="name" groupBy="gender" [selectableGroup]="true"
+              [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedDuration">
+              <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>--> {{item.gender |
+                uppercase}}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> --> {{item.name}}
+              </ng-template>
+            </ng-select>
+        </div>
+
+
+        </div>
+        <div class="row flitersec02">
+            <div class="col-sm-4">
+              <label>Ratings</label>
+              <div class="star_rating">
+                <div class="rating_block">
+                  <span><img alt="" src="assets/images/ratings3.png"></span> <span class="rate_num">4.5 & up</span> <span class="count">2,459</span>
+                </div>
+                <div class="rating_block">
+                    <span><img alt="" src="assets/images/ratings3.png"></span> <span class="rate_num">4.5 & up</span> <span class="count">2,459</span>
+                  </div>
+                  <div class="rating_block">
+                      <span><img alt="" src="assets/images/ratings3.png"></span> <span class="rate_num">4.5 & up</span> <span class="count">2,459</span>
+                    </div>
+                    <div class="rating_block">
+                        <span><img alt="" src="assets/images/ratings3.png"></span> <span class="rate_num">4.5 & up</span> <span class="count">2,459</span>
+                      </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Vendor</label>
+                <ng-select [items]="vendor" [multiple]="true" bindLabel="name" groupBy="gender" [selectableGroup]="true"
+                  [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedVendor">
+                  <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                    <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>--> {{item.gender |
+                    uppercase}}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> --> {{item.name}}
+                  </ng-template>
+                </ng-select>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Price</label>
+              <ng-select [items]="price" [multiple]="true" bindLabel="name" groupBy="gender" [selectableGroup]="true"
+                [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedprice">
+                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                  <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>--> {{item.gender |
+                  uppercase}}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                  <!-- <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> --> {{item.name}}
+                </ng-template>
+              </ng-select>
+              <div class="pricerange">       
+                  <!-- <p>Value: <input type="number" [(ngModel)]="value"></p>        -->
+                <ng5-slider [value]="value" [options]="options"></ng5-slider>
+              </div>
+            </div>
+
+            
+          </div>
+      </div>
+    </div>
+
+    <!-- <div class="eventSort clearfix">
+      <ul>
+        <li class="sortIcon"><img src="assets/images/event-view1.png" alt=""></li>
+        <li class="sortIcon"><img src="assets/images/event-view2.png" alt=""></li>
+      </ul>
+    </div> -->
+
+    <div class="businessList">
+      <ul>
+
+        <li>
+          <div class="businessListMain clearfix">
+            <div class="businessListImg">
+              <img src="assets/images/business-img.jpg" alt="">
+              <div class="carouselImgTag">Best seller</div>
+            </div>
+            <div class="businessListCont">
+              <h4>The Ultimate Hands-On Hadoop - Tame your Big Data!</h4>
+              <h5>96 lectures | 14.5 hours | All Levels</h5>
+              <p>Curabitur tristique risus vel purus consequat molestie. Maecenas cursus interdum enim, in tincidunt
+                lorem mollis eget. Phasellus lacinia justo non nisl tincidunt</p>
+            </div>
+            <div class="businessLisRating justify-content-center align-self-center">
+              <h3>$450.00</h3>
+              <img src="assets/images/ratings3.png" alt="">
+              <h4>3.0 <span>(7,1118)</span></h4>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="businessListMain clearfix">
+            <div class="businessListImg">
+              <img src="assets/images/business-img.jpg" alt="">
+              <div class="carouselImgTag">Best seller</div>
+            </div>
+            <div class="businessListCont">
+              <h4>The Ultimate Hands-On Hadoop - Tame your Big Data!</h4>
+              <h5>96 lectures | 14.5 hours | All Levels</h5>
+              <p>Curabitur tristique risus vel purus consequat molestie. Maecenas cursus interdum enim, in tincidunt
+                lorem mollis eget. Phasellus lacinia justo non nisl tincidunt</p>
+            </div>
+            <div class="businessLisRating justify-content-center align-self-center">
+              <h3>$450.00</h3>
+              <img src="assets/images/ratings3.png" alt="">
+              <h4>3.0 <span>(7,1118)</span></h4>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="businessListMain clearfix">
+            <div class="businessListImg">
+              <img src="assets/images/business-img.jpg" alt="">
+              <div class="carouselImgTag">Best seller</div>
+            </div>
+            <div class="businessListCont">
+              <h4>The Ultimate Hands-On Hadoop - Tame your Big Data!</h4>
+              <h5>96 lectures | 14.5 hours | All Levels</h5>
+              <p>Curabitur tristique risus vel purus consequat molestie. Maecenas cursus interdum enim, in tincidunt
+                lorem mollis eget. Phasellus lacinia justo non nisl tincidunt</p>
+            </div>
+            <div class="businessLisRating justify-content-center align-self-center">
+              <h3>$450.00</h3>
+              <img src="assets/images/ratings3.png" alt="">
+              <h4>3.0 <span>(7,1118)</span></h4>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+    <!-- <div class="siteBreadcrumb">
+      <ul>
+        <li><a href="#"></a></li>
+        <li><a class="active" href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#"></a></li>
+      </ul>
+    </div> -->
+  </div>
+</section>

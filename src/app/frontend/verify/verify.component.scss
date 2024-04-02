@@ -1,0 +1,23 @@
+.pageHeading{ background: url(../../../assets/images/page-heading.jpg) top center no-repeat; background-size: cover; min-height: 145px;
+    h2{ color: #FFF; font-size: 36px; font-weight: 300;}
+    h3{ color: #FFF; font-size: 16px; font-weight: 300;}
+  }
+
+  .cmsWrap{ padding: 50px 0;
+    p{ padding: 15px 0 0 0; line-height: 24px;}
+    .cmsUl{ padding: 15px 0 10px 20px;
+      li{ margin: 10px 0 0 20px; color: #003440; position: relative;
+        &:before{content: "\f061"; font-family: FontAwesome; position: absolute; left: -20px; top: 0;}
+      }
+    }
+  }
+
+  .modalInp{ position: relative; margin-bottom: 13px;
+   .fa{ position: absolute; left: 15px; top: 20px; color: #969696; font-size: 16px;}
+   input[type="text"], input[type="email"], input[type="password"]{ border: 1px solid #bcbcbc; font-size: 16px; color: #595959; border-radius: 5px; padding: 15px 15px 15px 40px; width: 100%;}
+   input[type="submit"]{ background: #3eb7aa; border: none; color: #FFF; text-align: center; font-size: 16px; font-weight: 600; border-radius: 5px; padding: 15px; cursor: pointer; width: 100%;}
+  }
+
+  .ePass{ padding: 0 0 30px 0;}
+
+  .blockquoteTheme{ background-color: #e6f2f5; border-color: #e6f2f5; color: #003440; padding: 20px; margin: 15px 0 0 0; line-height: 24px; border-radius: 3px;}

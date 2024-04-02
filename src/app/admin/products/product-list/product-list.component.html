@@ -1,0 +1,67 @@
+<div class="rightPanel alt">
+  <breadcrumb>
+    <li class="active"><span>Products</span></li>
+  </breadcrumb>
+  
+  <div class="row">
+   <div class="col-md-6"><h2 class="headTitle">All Products</h2></div>
+   <div class="col-md-6">
+    
+   </div>
+  </div>
+  
+  
+    <div class="">
+      
+      <!-- <notification-message [messages]="error_messages"></notification-message> -->
+  
+      <table class="table table-striped" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Created By</th>
+            <th>Status</th>
+            <th>Feature</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <tr *ngFor="let item of mf.data; let i = index">
+            <td>{{item.title |titlecase }}</td>
+            <td>{{item.categories[0].name |titlecase }}</td>
+            <td *ngIf="item.price">{{item.price| number:'1.2-2' }} USD</td>
+            <td *ngIf="!item.price">0.00 USD</td>
+            <td >{{item.user.user_name | titlecase}}</td>
+            <td ><button [swal]="{text:'Do you want to continue',type:'question'}"
+              (confirm)="changeStatus(item.status,item.id,i)" class="btn btn-sm btn-success linkBg" [innerHtml]="item.status=='publish'?'Published' : 'Draft'" ></button></td>
+            <td >
+              <button [swal]="{text:'Do you want to continue',type:'question'}" (confirm)="changeFeatureStatus(item.is_featured,item.id,i)" [innerHtml]="item.is_featured==1? featureYes : featureNo"  *ngIf="item.status=='publish'" class="btn btn-sm btn-success linkBg"></button>
+            </td>
+            <td>{{item.created_at | date: 'dd-MM-yyyy'}}</td>
+            <td>
+              <!-- <button >Edit</button> -->              
+              <a routerLink="/product-details/{{item.slug}}" class="btn btn-sm btn-success linkBg" ><i class="fa fa-eye"></i></a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="tabPagination">
+          <tr>
+            <td colspan="6">
+              <mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+  
+      
+      <h3 class="text-center" *ngIf="data.length === 0">
+          No record found.
+      </h3>
+    </div>
+  </div>
+  

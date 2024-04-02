@@ -1,0 +1,175 @@
+.invite_box_container{
+    display: flex;
+    position: relative;
+    background-position: center center;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+
+    
+
+    .invite_box{
+        padding: 64px 24px 24px 24px;
+        width: 580px;
+        background: #eee;
+        display: flex;
+        border-radius: 10px;
+        position: relative;
+
+        .invite-box_icon{
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            background-color: #eee;
+            border-radius: 50%;
+            height: 106px;
+            justify-content: center;
+            position: absolute;
+            top: -44px;
+            width: 106px;
+            left:0;
+            right:0;
+        }
+    }
+
+    
+    .invite_box_cont{
+        margin: 0;
+        padding: 0;
+
+        h1{
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color:#151840;
+        }
+
+        .share_link{
+            margin-top: 15px;
+
+            h2{
+                font-size: 18px;
+                font-weight: 600;
+                margin-top: 16px;
+                margin-bottom: 10px;
+            }
+            .social_area{
+                margin:0;
+                padding: 0;
+                .social_area_link_ara{
+                    display: inline;
+                    width: calc(100% - 260px);
+                    float: left;
+
+                    .fld_group{
+                        margin: 0;
+                        padding: 0;
+
+                        input[type="text"]{
+                            width: calc(100% - 59px);
+                            padding: 15px 15px 15px 15px !important;
+                            border-top-right-radius:0; 
+                            border-bottom-right-radius:0; 
+                        }
+
+                        button{
+                            background: #38a5b9;
+                            border: none;
+                            padding: 16px 10px;
+                            color: #fff;
+                            border-top-left-radius:0; 
+                            border-bottom-left-radius:0; 
+                        }
+                    }
+
+                    
+                }
+
+                .social_area_link_icon{
+                    margin: 5px 0 0 0 ;
+                    padding: 0;
+                    float: left;
+                    width:auto;
+                    margin-left:19px;
+
+                    .social_link{
+                        padding: 16px 20px;
+                        margin: 0;
+                        border:1px solid #38a5b9;
+                        cursor: pointer;
+                        font-size: 16px;
+                        color:#38a5b9;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .invite_box_container{
+        height: auto;
+    }
+    .invite_box{
+        margin-top:20px;
+    }
+    .social_area_link_ara {
+        float: none !important;
+        display: block !important;
+        width:100% !important;
+        input[type="text"]{
+            width:76% !important;
+        }
+        
+    }
+    .social_area_link_icon{
+        float: left !important;
+        display: block !important;
+        margin-left: 19px !important;
+        margin-top: 15px !important;
+    }
+}
+
+.input-sm, .form-group-sm .form-control, .input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn .form-control{ font-size: 12px;}
+                .tooltip.bottom {
+                    margin-top: 3px;
+                    padding: 5px 0;
+                }
+                .tooltip.in {
+                    opacity: .9;
+                }
+                .tooltip-blue {
+                    color: #FFF;
+                }
+                .tooltip-blue.bottom .tooltip-arrow {
+                    border-bottom-color: #007791;
+                }
+                .tooltip.bottom .tooltip-arrow {
+                    top: 0;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 0 5px 5px;
+                    border-bottom-color: #29303B;
+                }
+                .tooltip-arrow {
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-color: transparent;
+                    border-style: solid;
+                }
+                .tooltip-blue .tooltip-inner {
+                    background-color: #007791;
+                    color: inherit;
+                }
+                .tooltip-inner {
+                    max-width: 500px;
+                    padding: 16px;
+                    color: #FFF;
+                    text-align: left;
+                    background-color: #29303B;
+                    border-radius: 0;                    
+                    box-shadow: 0 4px 16px rgba(20,23,28,0.25);
+                }

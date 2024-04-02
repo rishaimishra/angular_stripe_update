@@ -1,0 +1,58 @@
+.modal-body{
+    padding:0;
+}
+.control-label{
+    font-size: 18px;
+    width:100%;
+    border-bottom:1px solid #e9ecef;
+    padding: 20px;
+
+    span{
+        float: right;
+    }
+    
+}
+.btn-file{
+    background: #17a2b8;
+    color:#fff;
+}
+.crop_bg{
+    background: #000;
+}
+.imageField .img-preview { 
+
+    margin-right: 20px;
+    font-size:18px;
+
+}
+.preview_Img{
+    margin: 15px 0;
+    padding: 0;
+}
+.imageField{
+    text-align: center;
+    float: none;
+    margin: 0;
+}
+.save_btn{
+    text-align: center;
+    .btn-file {
+        padding:8px 25px;
+    }
+}
+
+@media (max-width: 767px) {
+    .control-label{
+        text-align: center;
+        span{ float: none; display: block; text-align: center;}
+    }
+}
+
+.display_hide{
+    display: none;
+}
+
+.fileFormatInfo{
+    font-size: 12px;
+    padding: 3px;
+}

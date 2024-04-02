@@ -1,0 +1,96 @@
+
+<div class="rightPanel">
+  <div class="centerHeading">
+    <h1>Replies  
+      <div class="back" >
+        <a [routerLink]="['/admin'+'/support-ticket']"> <input class="backBtn" type="button" name="" value="Back" ></a>
+      </div>
+    </h1>
+   
+  </div>
+  
+    <div class="subject">
+        <div class="row">
+          <div class="col-sm-12">
+              <span [innerHtml]="ticketDetails?.subject" class="content_heading"></span>
+              <p [innerHtml]="ticketDetails?.description" class="small_description"></p>
+              <ng-container *ngIf="ticketDetails?.attachments?.length>0">
+                  <a href="{{ticketDetails?.attachments[0]?.attachment_url}}"  target="_blank" download  style="display: block;">Attachments: 
+                      <span><i class="fa fa-file" aria-hidden="true"></i></span>
+                  </a>
+               </ng-container>
+               
+          </div>
+        </div>
+        
+    </div>
+    <div class="main-panel" id="chatElement" infiniteScroll
+    [infiniteScrollDistance]="3"
+    [infiniteScrollThrottle]="50"
+    [infiniteScrollContainer]="selector"
+    [fromRoot]="true"
+    (scrolled)="onScroll()" *ngIf="conversations.length">
+
+          <!-- <div class="container" *ngFor="let reply of replies; index as i; "  [ngClass]="{'darker': reply.user_id == curUser.id }">
+             <img src="/w3images/bandmember.jpg" alt="Avatar"> 
+            <h3 class="user " [ngClass]="{'right': reply.user_id == curUser.id }">{{reply.user_id == curUser.id ? 'Me' :'Admin' }}</h3>
+            <p [innerHtml]="reply.body" ></p>
+            <span class="time-right">11:00</span> 
+          </div> -->
+
+          <div class="textbox " *ngFor="let conversation of conversations; index as i; " >
+            <!-- <img src="/w3images/bandmember.jpg" alt="Avatar"> 
+           <h3 class="user " [ngClass]="{'right': reply.user_id == curUser.id }">{{reply.user_id == curUser.id ? 'Me' :'Admin' }}</h3> -->
+           <p [innerHtml]="conversation.body" ></p>
+           <p class="right">{{ conversation?.created_at |  amTimeAgo : true}} ago</p>
+           <ng-container *ngIf="conversation.attachments.length>0">
+              <a href="{{conversation.attachments[0].attachment_url}}"  target="_blank" download >Attachments: 
+                  <span><i class="fa fa-file" aria-hidden="true"></i></span>
+               </a>
+           </ng-container>
+           
+           
+           <!-- <span class="time-right">11:00</span>  -->
+         </div>
+    </div>
+
+    <button class="reply_btn" (click)="replyShow()" [ngClass]="{ description: !replyShowStatus}" ><i class="fa fa-reply" aria-hidden="true"  ></i> Reply</button>
+
+
+    
+  <form [formGroup]="replyForm" (ngSubmit)="replySubmit()" [ngClass]="{ description: replyShowStatus}" >
+    <div class="row">
+        <div class="col-sm-12">
+            <label for="">Description: <span class="required">*</span></label>
+            <div class="replyBox" *ngVar="replyForm.get('description') as description">
+                <ckeditor [config]="ckConfig"   name="reply"  [editor]="Editor" required formControlName="description" (change)="getCkeditorText()"></ckeditor>
+                <form-validation-message [fromInstance]="description"></form-validation-message>
+            </div>
+          </div>
+          <div class="col-sm-12">
+              <label for="">Attachments: </label>
+              <div class="secDefault">
+                  <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="" class="form-control" (change)="uploadAttachmentFile($event)" id="file1" style="width: 124px;" required ></span>
+                  <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="fileInstance"  (click)="uploadToS3()">Upload Resource</a>
+                  <br>
+                  <span hidden="true" [innerHtml]="resource" class="path"></span>
+                  <span *ngIf="resource">
+                      <a href="{{resource}}" download>Uploded Resource: 
+                          <span><i class="fa fa-file" aria-hidden="true"></i></span>
+                      </a>
+                  </span>
+                  <h6 class="fileFormatInfo">*Only docx, pdf,csv,xlsx,zip, rar,mp4, mkv, 3gp,ppt format are supported.</h6>
+              </div>
+          </div>
+          <div class="col-sm-12">
+              <div class="submit" >
+                  <input class="submitBtn" type="submit" name="" value="Submit" >
+              </div>
+          </div>
+          
+    </div>
+  </form>
+
+  
+
+</div>

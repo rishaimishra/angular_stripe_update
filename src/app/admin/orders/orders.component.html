@@ -1,0 +1,269 @@
+<div class="rightPanel alt">
+    <breadcrumb>
+      <li class="active"><span>Sales Report</span></li>
+    </breadcrumb>
+  
+    <div class="row">
+      <div class="col-8 col-md-8"><h2 class="headTitle"> Sales Report </h2></div>
+      <div class="col-4 col-md-4">
+          <h2 class="backLink">
+            <a routerLink="/admin/dashboard" >Back </a> 
+          </h2>  
+      </div>
+    </div>
+    <div class="centerHeading">
+      <!-- <h1>Sales Report</h1>	 -->
+      <div class="row">
+          <div class="col-lg-10">	 
+              <div class="search_sec">
+                <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+                <div class="row">
+                  <!-- <div class=" col-sm-4">
+                    <label style="width:100%;">&nbsp;</label>
+                    <div class="topSearchCont acTive">
+                      <input autocomplete="off" formControlName="string" name="string" placeholder="Search" type="search" >
+                    </div>
+                  </div> -->
+                  <!-- <div class="col-sm-4">
+                    <label>Status</label>
+                    <ng-select [items]="statusOptions" bindLabel="label"
+                    [closeOnSelect]="false" bindValue="value"  formControlName="order_status" >
+                    <ng-template ng-option-tmp let-item="item" >{{item.label}}
+                    </ng-template>
+                    </ng-select>
+                  </div> -->
+
+                  <div class="col-sm-6 col-md-4">
+                    <label class="label labelClass">From</label>
+                      <input class="inpFld form-control" placeholder="yyyy-mm-dd" name="startDp"
+                      formControlName="start_date_show" ngbDatepicker #startDp="ngbDatepicker"
+                      (click)="startDp.open()" [minDate]="minStartDate" [maxDate]="maxStartDate"
+                      (dateSelect)="onStartDateSelection($event, startDp)" autoClose="outside">
+                  </div>
+                  
+                  <div class="col-sm-6 col-md-4">
+                    <label class="label labelClass">To</label>
+                    <input class="inpFld form-control" placeholder="yyyy-mm-dd" name="endDp" formControlName="end_date_show"
+                    ngbDatepicker #endDp="ngbDatepicker" (click)="endDp.toggle()" [minDate]="minEndDate"
+                    [maxDate]="maxEndDate" (dateSelect)="onEndDateSelection($event, endDp)"
+                    autoClose="outside">
+                  </div>
+
+                  <!-- <div class="col-sm-2">
+                    <label>Duration</label>
+                    <ng-select  [items]="rangeOptions"
+                    bindLabel="label"
+                    bindValue="value"						
+                    placeholder="Duration"
+                    formControlName="date_range"												 
+                    >
+                  </ng-select>
+                  </div> -->
+                  <div class="col-sm-6 col-md-2">
+                    <button type="submit" class="btn btn-primary btn-sm searchBtn">Search</button>
+                  </div>
+                  <div class="col-sm-6 col-md-2">
+                    <button (click)="exportAsXLSX()" class="btn btn-primary btn-sm titleLink02 pull-right" *ngIf="records.length > 0" ><i class="fa fa-download" aria-hidden="true"></i> Export</button>
+                  </div>
+                </div>	
+                <div class="clearfix"></div>
+                
+                </form>
+              </div>
+              
+          </div>
+          
+          
+        </div>	
+    </div>
+    
+    <div class="table-responsive table_cont" *ngIf="records.length > 0" >
+      <table class="table table-striped custom_table" >
+
+        <!-- Old Code  -->
+        <!-- <thead>
+          <tr>
+            <th width="20%">Order ID</th>
+            <th>Purches date</th>
+            <th>First Name</th>
+            <th>Last  Name</th>
+            <th>Customer email ID</th>
+            <th>Mobile</th>
+            <th class="text-center">Order Status</th>	
+            <th>Payment Method</th>
+            <th>Discount Amount</th>
+            <th>Net Amount</th>
+            <th>Total Amount</th>			
+          </tr>
+        </thead> 
+
+      
+        <tbody *ngIf="records.length > 0">
+          <tr *ngFor="let rs of records">
+            <td>							
+              <a *ngIf="rs?.id" [routerLink]="['/admin', 'orders', 'detail', rs?.id]">
+                {{getOrderID(rs.id)}}
+              </a>
+            </td>
+            <td>{{rs?.ordered_on | date : 'dd-MM-yyyy'}}</td>
+            <td>{{ rs?.user?.profile?.first_name | titlecase}}</td>
+            <td>{{ rs?.user?.profile?.last_name | titlecase}}</td>
+            <td>{{ rs?.user?.user_name }}</td>
+            <td *ngIf="rs?.user?.mobile_no">+{{ rs?.user?.phone_code}}-{{rs?.user?.mobile_no}}</td>
+            <td *ngIf="!rs?.user?.mobile_no"></td>
+            <td class="text-center">
+              <span [ngClass]="getOrderStatusClass(rs)">{{getOrderStatusTest(rs)}}</span>
+            </td>	
+            <td>{{ rs?.order_details[0]?.payment_type?.title}}</td>				
+            
+            <td>{{rs?.total_discount_price}} USD</td>
+            <td *ngIf="rs?.total_order_price_usd >0 || rs?.total_order_price_sxl >0">
+              <ng-container *ngIf="rs?.total_order_price_usd > 0">
+                {{rs?.total_order_price_usd | number:'1.2-2'}} USD
+              </ng-container> 
+              <ng-container *ngIf="rs?.total_order_price_usd > 0 && rs?.total_order_price_sxl > 0">
+                +
+              </ng-container>
+              <ng-container *ngIf="rs?.total_order_price_sxl > 0">
+                  {{rs?.total_order_price_sxl | currency:'SXL' }}
+              </ng-container> 
+            </td>
+            <td *ngIf="rs?.total_order_price_usd ==0 && rs?.total_order_price_sxl ==0">
+                Free
+            </td>
+
+            <td *ngIf="rs?.total_order_price_usd >0 || rs?.total_order_price_sxl >0">
+              <ng-container *ngIf="rs?.total_order_price_usd > 0">
+                {{rs?.total_order_price_usd | number:'1.2-2'}} USD
+              </ng-container> 
+              <ng-container *ngIf="rs?.total_order_price_usd > 0 && rs?.total_order_price_sxl > 0">
+                +
+              </ng-container>
+              <ng-container *ngIf="rs?.total_order_price_sxl > 0">
+                  {{rs?.total_order_price_sxl | currency:'SXL' }}
+              </ng-container> 
+            </td>
+            <td *ngIf="rs?.total_order_price_usd ==0 && rs?.total_order_price_sxl ==0">
+              Free
+            </td>
+          </tr>
+  
+        </tbody> -->
+
+
+        <!-- New code -->
+        <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Purches date</th>
+              <th>Product</th>
+              <th>Event Date</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <!-- <th>First Name</th>
+              <th>Last  Name</th> -->
+              <th> Name</th>
+              <th>Customer email ID</th>
+              <th>Mobile</th>
+              <th class="text-center">Order Status</th>	
+              <th>Payment Method</th>
+              <th>Discount Amount</th>
+              <th>Net Amount</th>
+              <th>Total Amount</th>			
+            </tr>
+        </thead> 
+        <tbody *ngIf="modifiedData.length > 0">
+          <tr *ngFor="let rs of modifiedData">
+            <td>							
+              <a *ngIf="rs?.order_id" [routerLink]="['/admin', 'orders', 'detail', rs?.order_id]">
+                {{getOrderID(rs.order_id)}}
+              </a>
+            </td>
+            <td>{{rs?.created_at | date : 'dd-MM-yyyy'}}</td>
+           
+            <td>{{ rs?.productable_type=='courses' ? rs?.ctitle : rs?.ptitle | titlecase }}</td>
+            <td>
+              <ng-container *ngIf="rs?.productable_type=='products'">
+              {{rs?.event_date }} </ng-container>
+            </td>
+            <td>{{ rs?.category_name }}</td>
+            <td>{{rs?.quantity }}</td>
+            <!-- <td>{{ rs?.user_name | titlecase}}</td>
+            <td>{{ rs?.user?.profile?.last_name | titlecase}}</td> -->
+            <td>{{ rs?.user_name | titlecase}}</td>
+            <td>{{ rs?.email }}</td>
+            <td *ngIf="rs?.id!=0">+{{ rs?.phone_code}}-{{rs?.mobile_no}}</td>
+            <td *ngIf="rs?.id==0">&nbsp;</td>
+            <td class="text-center">
+             {{rs?.order_status}}
+            </td>	
+            <td  *ngIf="rs?.id!=0">{{ rs?.payment_type}}</td>
+            <td *ngIf="rs?.id==0">&nbsp;</td>				  
+            <td  *ngIf="rs?.id!=0">{{rs?.discount_usd}} USD</td>
+            <td *ngIf="rs?.id==0">&nbsp;</td>
+
+            <ng-container *ngIf="rs?.id!=0">
+                <td *ngIf="rs?.sub_total_usd >0 || rs?.sub_total_sxl >0">
+                  <ng-container *ngIf="rs?.sub_total_usd > 0">
+                    {{rs?.sub_total_usd | number:'1.2-2'}} USD
+                  </ng-container> 
+                  <ng-container *ngIf="rs?.sub_total_usd > 0 && rs?.sub_total_sxl > 0">
+                    +
+                  </ng-container>
+                  <ng-container *ngIf="rs?.sub_total_sxl > 0">
+                    SXL  {{rs?.sub_total_sxl | number:'1.2-2' }} 
+                  </ng-container> 
+                </td>
+                <td *ngIf="rs?.sub_total_usd ==0 && rs?.sub_total_sxl ==0">
+                    Free
+                </td>
+            </ng-container>
+            <ng-container *ngIf="rs?.id==0">
+                <td >&nbsp;</td>
+            </ng-container>
+            
+            <td *ngIf="rs?.total_usd >0 || rs?.total_sxl >0" [ngClass]="{'sum':rs?.id==0}">
+              <ng-container *ngIf="rs?.total_usd > 0">
+                {{rs?.total_usd | number:'1.2-2'}} USD
+              </ng-container> 
+              <ng-container *ngIf="rs?.total_usd > 0 && rs?.total_sxl > 0">
+                +
+              </ng-container>
+              <ng-container *ngIf="rs?.total_sxl > 0">
+                SXL  {{rs?.total_sxl | number:'1.2-2' }} 
+              </ng-container> 
+            </td>
+            <td *ngIf="rs?.total_usd ==0 && rs?.total_sxl ==0">
+              Free
+            </td>
+          </tr>
+  
+        </tbody>
+
+
+        <tbody *ngIf="modifiedData.length === 0">
+          <tr>
+            <td colspan="13" class="text-center">
+              No product is added yet.
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="tabPagination">
+          <tr>
+            <td colspan="13">
+              <app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    
+    <div class="row mt30" *ngIf="records.length === 0">
+      <div class="col-12">
+        <div class="alert alert-warning text-center">
+          <strong>Oops!</strong>
+          No record found.
+        </div>
+      </div>
+    </div>
+  </div>

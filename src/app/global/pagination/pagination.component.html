@@ -1,0 +1,18 @@
+<!-- <ul class="pagination" *ngIf="pagination.pageCount > 1">
+	<li *ngIf="pagination.page > 1" (click)="previousPage()" class="pointer"><span>«</span></li>
+	<li *ngIf="pagination.page == 1" class="disabled"><span>«</span></li>
+	<li *ngFor="let page of pagination.pageCount|toArray" [class.active]="page == getCurrentPage()">
+		<a *ngIf="page != getCurrentPage()" class="pointer" (click)="pageChange(page)">{{page}}</a>
+		<span *ngIf="page == getCurrentPage()">{{page}}</span>
+	</li>
+	<li *ngIf="pagination.page !== pagination.pageCount" (click)="nextPage()" class="pointer"><span>»</span></li><li>
+	<li *ngIf="pagination.page == pagination.pageCount" class="disabled"><span>»</span></li><li>
+</ul> -->
+<ul class="pagination">
+	<li class="page-item" [ngClass]="getPreviousDisableClass()"><a class="page-link" href="javascript:void(0);" (click)="previousPage($event)"><span>«</span></a></li>
+	<!-- <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li> -->
+	<li *ngFor="let item of firstPaginationArr" class="page-item" [ngClass]="getActiveClass(item?.value)"><a class="page-link" href="javascript:void(0);" (click)="listPage($event, item)">{{item?.page}}</a></li>
+	<li class="page-item dot-blank" *ngIf="lastPaginationArr.length > 0"><i class="fa fa-ellipsis-h"></i></li>
+	<li *ngFor="let item of lastPaginationArr" class="page-item" [ngClass]="getActiveClass(item?.value)"><a class="page-link" href="javascript:void(0);" (click)="listPage($event, item)">{{item?.page}}</a></li>
+	<li class="page-item" [ngClass]="getNextDisableClass()"><a class="page-link" href="javascript:void(0);" (click)="nextPage($event)"><span>»</span></a></li>
+</ul>

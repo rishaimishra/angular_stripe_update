@@ -1,0 +1,159 @@
+<div class="row">
+	<div class="col-sm-4 search_area">
+		<!-- <div class="input-group">
+			<input type="text" class="form-control">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id=""><i class="fa fa-search" aria-hidden="true"></i></span>
+			</div>
+		</div> -->
+	</div>
+	<div class="col-sm-8 current_link">
+		<div class="float-right">
+			<span class="buttonLink" [ngClass]="{'active': cliclableTab == 'c'}" (click)="openCurrent()">Current Section</span>
+			<span class="buttonLink" [ngClass]="{'active': cliclableTab == 'a'}" (click)="openAll()">All Sections</span>
+			<span class="buttonLink" [ngClass]="{'active': cliclableTab == 'r'}" (click)="openResourses()">All Resources</span>
+		</div>
+	</div>
+</div>
+<div class="accordian_cont" *ngFor="let courseModule of courseDetail?.course_modules; let i= index">
+	<ngb-accordion #acc="ngbAccordion" [activeIds]="activeIds">
+		<ngb-panel id="panel-{{i}}">
+			<ng-template ngbPanelTitle>
+				<span>{{courseModule?.title}}</span>
+				<span class="count">{{courseModule?.course_lectures?.length}} / {{courseModule?.course_lectures?.length}}</span>
+				<div>{{courseModule?.short_description}}</div>
+			</ng-template>
+			<ng-template ngbPanelContent *ngIf="courseModule?.course_lectures?.length > 0">
+				<div class="acc_cont">
+					<ul>
+						<li *ngFor="let lectures of courseModule?.course_lectures; let i = index">
+							<a href="/tutorial/{{courseDetail.slug}}/{{lectures.id}}">
+								<span class="play_btn" *ngIf="lectures?.lecture_mode == 'video'">
+									<i class="fa fa-play-circle" aria-hidden="true"></i>
+								</span>
+								<span class="play_btn" *ngIf="lectures?.lecture_mode == 'pdf'">
+									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+								</span>
+								<span class="description">{{i+1}}. {{lectures?.title}}</span>
+								
+								<span class="lectures_right">
+									<span *ngIf="lectures?.duration !== '' && lectures?.duration != '0'">{{ lectures?.duration }}</span>
+
+									<span *ngIf="lectures?.user_course_progresses?.is_complete === 1">
+										<button><i class="fa fa-check-circle" aria-hidden="true"></i></button>
+									</span>									
+									<span *ngIf="(lectures?.user_course_progresses | json) == '{}' || lectures?.user_course_progresses?.is_complete === 0">
+										<button><i class="fa fa-circle-o" aria-hidden="true"></i></button>
+									</span>
+									<span *ngIf="lectures?.lecture_mode == 'video' || lectures?.lecture_mode == 'pdf'"><a href="{{lectures.lecture_link}}" style="font-size: 20px;"><i class="fa fa-download" aria-hidden="true"></i></a></span>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</ng-template>
+		</ngb-panel>
+	</ngb-accordion>
+</div>
+
+<!-- <div class="accordian_cont">
+	<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+		<ngb-panel>
+			<ng-template ngbPanelTitle>
+				<span>Section: 2</span>
+				<span class="count">18 / 18</span>
+				<h3>TypeScript Fundamentals</h3>
+			</ng-template>
+			<ng-template ngbPanelContent>
+				<div class="acc_cont">
+					<ul>
+						<li class="active">
+							<a href="#">
+								<span class="play_btn"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+								<span class="description">1.Introduction</span>
+								<span>02:51</span>
+								<span><button><i class="fa fa-check-circle-o" aria-hidden="true"></i></button></span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="play_btn"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+								<span class="description">1.Introduction</span>
+								<span>02:51</span>
+								<span><button><i class="fa fa-check-circle-o" aria-hidden="true"></i></button></span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="play_btn"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+								<span class="description">1.Introduction</span>
+								<span>02:51</span>
+								<span><button><i class="fa fa-check-circle-o" aria-hidden="true"></i></button></span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="play_btn"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+								<span class="description">1.Introduction</span>
+								<span>02:51</span>
+								<span><button><i class="fa fa-check-circle-o" aria-hidden="true"></i></button></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+			</ng-template>
+		</ngb-panel>
+	</ngb-accordion>
+</div>
+
+<div class="accordian_cont">
+	<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+		<ngb-panel>
+			<ng-template ngbPanelTitle>
+				<span>Section: 3</span>
+				<span class="count">18 / 18</span>
+				<h3>Angular Fundamentals</h3>
+			</ng-template>
+			<ng-template ngbPanelContent>
+				<div class="acc_cont">
+					<ul>
+						<li class="active">
+							<a href="#">
+								<span class="play_btn"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+								<span class="description">1.Introduction</span>
+								<span>02:51</span>
+								<span><button><i class="fa fa-check-circle-o" aria-hidden="true"></i></button></span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="play_btn"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+								<span class="description">1.Introduction</span>
+								<span>02:51</span>
+								<span><button><i class="fa fa-check-circle-o" aria-hidden="true"></i></button></span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="play_btn"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+								<span class="description">1.Introduction</span>
+								<span>02:51</span>
+								<span><button><i class="fa fa-check-circle-o" aria-hidden="true"></i></button></span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="play_btn"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+								<span class="description">1.Introduction</span>
+								<span>02:51</span>
+								<span><button><i class="fa fa-check-circle-o" aria-hidden="true"></i></button></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+			</ng-template>
+		</ngb-panel>
+	</ngb-accordion>
+</div> -->

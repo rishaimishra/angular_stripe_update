@@ -1,0 +1,54 @@
+<div class="rightPanel alt">
+<breadcrumb>
+	<li><a routerLink="/role">Role</a></li>
+	<li class="active"><span>{{formData.display_name}}</span></li>
+</breadcrumb>
+
+
+	<notification-message [messages]="error_messages"></notification-message>
+	<div class="panel panel-default">
+		<form class="form-horizontal" #roleForm="ngForm" (ngSubmit)="saveRole(roleForm)">
+			<div class="panel-body">
+				<div class="box-body">
+					<div class="form-group">
+						<h2 class="headTitle">Display name</h2>
+						<div class="">
+							<input type="text" [(ngModel)]="formData.display_name" #display_name="ngModel" name="display_name" class="form-control" id="display_name" required>
+							<form-validation-message [fromInstance]="display_name"></form-validation-message>
+							<span class="help-block">
+								<i>{{formData.display_name}}</i>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<h2 class="headTitle">Permissions</h2>
+				<ngb-accordion class="accAdmin" #acc="ngbAccordion" >
+						<ngb-panel title="{{permission.name}}" *ngFor="let permission of permissions; let i = index">
+						  <ng-template ngbPanelContent>
+								<div class="panel-body">
+										<div class="col-md-12">
+											<div class="form-group">
+												<div class="checkbox" *ngFor="let perm of permission.permissions">
+													<label>
+														<input type="checkbox" name="input_permission" [value]="perm.id" [checked]="input_permissions.indexOf(perm.id) >= 0" (change)="changePermission($event)">
+														{{perm.display_name}}
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+						  </ng-template>
+						</ngb-panel>
+				</ngb-accordion>
+
+			</div>
+			<div class="panel-footer withGap">
+				<a [routerLink]="['/admin/role']" class="btn btn-danger">Cancel</a>
+				<button type="submit" class="btn btn-info pull-right" [disabled]="roleForm.invalid">
+						Save
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

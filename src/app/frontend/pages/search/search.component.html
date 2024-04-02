@@ -1,0 +1,191 @@
+<!-- <div class="eventBanner d-flex">
+  <div class="container align-self-center">
+    <h2>{{this.searchKey }}</h2>
+    
+  </div>
+</div> -->
+
+<div class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h2> Search for {{this.searchKey }}</h2>
+    <h3>{{totalDataCount}} results found </h3>
+  </div>
+</div>
+
+
+
+<section class="forBusiness">
+  <div class="container">
+    <!-- <h3>{{totalDataCount}} results </h3> -->
+    <div class="businessFilter clearfix">
+      <ul class="clearfix">
+        <li *ngIf="selectedTopicCount" (click)="filter_showhide(true)" ><span class="green">Topic <small>{{selectedTopicCount}}</small></span></li>
+        <li *ngIf="selectedLavelCount" (click)="filter_showhide(true)" ><span> Level <small>{{selectedLavelCount}}</small></span></li>
+        <li *ngIf="selectedVendorCount" (click)="filter_showhide(true)"><span class="violet">Vendor <small>{{selectedVendorCount}}</small></span></li>
+        <!-- <li>
+          <select class="" name="">
+            <option>Ratings</option>
+          </select>
+        </li>
+        <li>
+          <select class="greenSelect" name="">
+            <option>Duration</option>
+          </select>
+        </li> -->
+        <!-- <li class="filtRight" *ngIf="totalPage>0"> -->
+        <li class="filtRight" >
+          <div class="btnFilter" (click)="filter_showhide(true)"><img src="assets/images/filter-icon.png" alt=""> Filters</div>
+        </li>
+      </ul>
+     <!-- Filter Section Start -->
+         <app-filter 
+         [btnFilter]="btnFilter" 
+         [selectedCategory]="selectedCategory"
+         [selectedStanderd]="selectedStanderd"
+         [selectedVendor]="selectedVendor"
+         [selectedDuration]="selectedDuration"
+         [selectedRating]="selectedRating"
+         [selectedPriceValue]="selectedPriceValue"
+         [selectedprice]="selectedprice"
+         (filterShowStaus)="filter_showhide($event)"
+         (changeSelectedParam)="updateSelectedParam($event)"></app-filter>
+     <!-- Filter Section End -->
+    </div>
+
+    <!-- <div class="eventSort clearfix">
+      <ul>
+        <li class="sortIcon"><img src="assets/images/event-view1.png" alt=""></li>
+        <li class="sortIcon"><img src="assets/images/event-view2.png" alt=""></li>
+      </ul>
+    </div> -->
+
+    <div class="businessList">
+      <ul  infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      (scrolled)="onScroll()" >
+
+       
+
+        <li *ngFor="let data of searchData;  let i = index" class="cartListTransform" >
+            <div class="businessListMain clearfix ">
+              <div class="businessListImg">
+                <!-- <img src="assets/images/business-img.jpg" alt=""> -->
+                <!-- <div class="carouselImgTag">Best seller</div> -->
+                <!-- <a *ngIf="data.enitity_type =='courses'" routerLink="/course-details/{{data?.slug}}">
+                  <img [src]="data?.image || 'assets/images/noimg-356x221.png'" alt=""> 
+                </a>
+                <a *ngIf="data.enitity_type =='products'" routerLink="/product-details/{{data?.slug}}">
+                  <img [src]="data?.image || 'assets/images/noimg-356x221.png'" alt=""> 
+                </a> -->
+
+                <!-- <a *ngIf="data.enitity_type =='courses'" routerLink="/course-details/{{data?.slug}}"> -->
+                  <img [src]="data?.image || 'assets/images/noimg-356x221.png'" alt="" style="cursor: pointer;"> 
+                  <ng-container  *ngIf="http.isLoggednIn() && this.http.getUserRole()[0]=='customer'">
+                    <a href="javascript:void(0);" (click)="addToWishList(data?.id)" *ngIf="!isAddedWishList(data?.id)" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0);" (click)="removeFromWishList(data?.id)" *ngIf="isAddedWishList(data?.id)" class="imgOverStar"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                  </ng-container>
+                  <ng-container  *ngIf="!http.isLoggednIn()">
+                      <a href="javascript:void(0);" (click)="openModal()" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                  </ng-container>
+                <!-- </a>
+                <a *ngIf="data.enitity_type =='products'" href="javascript:void(0);">
+                  <img [src]="data?.image || 'assets/images/noimg-356x221.png'" alt=""> 
+                </a>  -->
+              </div>
+              <div class="businessListCont">
+                <a *ngIf="data.enitity_type =='courses'" routerLink="/course-details/{{data?.slug}}"><h4>{{data?.title}}</h4></a>
+                <a *ngIf="data.enitity_type !='courses'" routerLink="/event-details/{{data?.slug}}" >
+                  <h4>{{data?.title}}</h4> 
+                </a> 
+                <!-- <h6 *ngIf="data?.category_name"> {{data?.category_name}}</h6> -->
+                <h5 *ngIf="data.enitity_type =='courses'">{{data?.lecture_count}} lectures | {{data?.duration}} hours | {{data?.stander_name}}</h5>
+
+                <p>{{data?.sub_title}} | <ng-container *ngIf="data?.user_full_name"> by <a [routerLink]="['/', getSlug(data)]" >{{data?.user_full_name}} </a></ng-container></p>
+              
+              </div>
+              <div class="businessLisRating justify-content-center align-self-center">
+                <!-- <h3 *ngIf="data?.price>0">{{data?.price | currency}}</h3> -->
+                <!-- <h3 *ngIf="data?.price>0">
+                  <span class="originalPrc" *ngIf="data.discount!=null">
+                    {{data?.price | currency }}
+                  </span>
+                  <span class="actualPrc">
+                    {{getPrice(data) | currency }}
+                  </span>
+                </h3>
+                
+                <h3 *ngIf="data?.price==0">Free</h3> -->
+
+                <h3 *ngIf="data.product_type=='courses'">
+                    <ng-container *ngIf="data.usd_price>0">{{data.usd_price | number:'1.2-2' }} USD</ng-container>
+                    <ng-container *ngIf="data.usd_price > 0 && data.sxl_price > 0">
+                      + 
+                    </ng-container>
+                     
+                    <ng-container *ngIf="data.sxl_price>0"> SXL {{data.sxl_price | number:'1.2-2'}}</ng-container>
+                    <ng-container *ngIf="data.usd_price == 0 && data.sxl_price == 0">
+                       Free 
+                    </ng-container>
+
+                </h3>
+                    
+                
+                <!-- <img src="assets/images/ratings3.png" alt=""> -->
+
+                
+                <!-- <span class="star_area">
+                    <ngb-rating [rate]="Math.round(data.rating)"></ngb-rating>
+                </span> -->
+
+                <!-- <h4>{{Math.round(data.rating) }} </h4> -->
+                  <div style = " float:right; text-align: right;">
+                    <div class="ratingsDiv" *ngIf="data?.rating > 0">
+                        <div class="ratingsDivLeft" >
+                          <span class="star_area">
+                            <ngb-rating [rate]="Math.round(data?.rating)| number:'1.0-0'"></ngb-rating>
+                          </span>
+                        </div>
+                        <div class="ratingsDivRight">{{Math.round(data.rating) | number:'1.0-0'}}
+                          <!-- <span>({{data?.avg_reviews}})</span> -->
+                        </div>
+                    </div>
+                    <div class="ratingsDiv" *ngIf="data?.rating === 0">
+                      <div class="ratings Right noreview">No review yet</div>
+                    </div>
+                  </div>
+
+                 
+                
+              </div>
+            </div>
+        </li>
+
+
+
+       
+      </ul>
+    </div>
+
+    <!-- <div class="row" >
+      <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+        <i class="fa fa-spinner fa-3 fa-spin"></i>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="(searchData.length === 0) && (!loader)">
+      <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+        <div class="alert alert-warning"> No Item found </div>
+      </div>
+    </div> -->
+    <!-- <div class="loding_bg" *ngIf="loader">
+      <i class="fa fa-spinner fa-3 fa-spin"></i>
+    </div> -->
+    <div class="row" *ngIf="(searchData.length === 0) && (!loader)">
+      <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+        <div class="alert alert-warning"> Sorry, we couldn't find any results </div>
+      </div>
+    </div>
+
+  </div>
+</section>

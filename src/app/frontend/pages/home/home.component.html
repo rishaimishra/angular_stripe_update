@@ -1,0 +1,240 @@
+<section class="siteBanner" *ngIf="slides.length > 0">
+	<owl-carousel [options]="topSlider" [items]="slides" [carouselClasses]="['owl-theme', 'sliding']">
+
+		<div class="item" *ngFor="let slide of slides">
+			<img src="{{slide.thumbnail}}" alt="">
+
+			<div class="bannerCont d-flex">
+				<div class="container align-self-center">
+					<div class="row">
+						<div class="col-xl-5 col-lg-8 col-md-8">
+							<h2>{{slide.title}}</h2>
+							<h3>{{slide.content}}</h3>
+							<a class="linkSlide" *ngIf="slide.button_1_title" routerLink="{{slide.button_1_link}}">{{slide.button_1_title}}</a>
+							<br>
+							<a class="linkSlide dark" *ngIf="slide.button_2_title" routerLink="{{slide.button_2_link}}">{{slide.button_2_title}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</owl-carousel>
+</section>
+
+<!--<section class="topOffer clearfix">
+  <div class="topAdd"><img src="assets/images/add-left.jpg" alt=""></div>
+  <div class="topAdd rIght"><img src="assets/images/add-right.jpg" alt=""></div>
+  <div class="container">
+    <ul>
+      <li><img src="assets/images/add1.jpg" alt=""></li>
+      <li><img src="assets/images/add2.jpg" alt=""></li>
+      <li><img src="assets/images/add3.jpg" alt=""></li>
+    </ul>
+    <ul>
+      <li><img src="assets/images/add4.jpg" alt=""></li>
+      <li><img src="assets/images/add5.jpg" alt=""></li>
+      <li><img src="assets/images/add6.jpg" alt=""></li>
+    </ul>
+  </div>
+</section> -->
+
+
+<!-- Promoted Course Start-->
+<section class="featuredCourse homefeaturedcourse" *ngIf="promotedCourses.length > 0">
+	<div class="container">
+		<h2>You May Like</h2>
+		<owl-carousel *ngIf="promotedCourses.length > 0" [options]="promotedCourseCarousel" [carouselClasses]="['owl-theme', 'sliding']">
+			
+			<ng-container *ngFor="let rs of promotedCourses">
+				<app-carousal-course-card [data]="rs"></app-carousal-course-card>
+			</ng-container>
+
+		</owl-carousel>
+	</div>
+</section>
+<!-- Promoted Course End-->
+
+<!-- Featured Course start -->
+<section class="featuredCourse homefeaturedcourse" *ngIf="featuredCourseCategory.length > 0">
+	<div class="container">
+		<h2>FEATURED COURSES </h2>
+		<ngb-tabset class="tabFeatured">
+			<ngb-tab *ngFor="let rs of featuredCourseCategory">
+				<ng-template ngbTabTitle>
+					<div class="tab_name_area" (click)="getFeatureCourses(rs?.id)">{{rs?.name}}</div>
+				</ng-template>
+				<ng-template ngbTabContent>
+					<div class="row" *ngIf="loader">
+						<div class="col-xl-12 col-lg-12 col-md-12 text-center">
+							<i class="fa fa-spinner fa-3 fa-spin"></i>
+						</div>
+					</div>
+					<owl-carousel *ngIf="featuredCourses.length > 0" [options]="featuredCourse" [carouselClasses]="['owl-theme', 'sliding']">
+						<ng-container *ngFor="let rs of featuredCourses">
+							<app-carousal-course-card [data]="rs"></app-carousal-course-card>
+						</ng-container>
+					</owl-carousel>
+				</ng-template>
+			</ngb-tab>
+		</ngb-tabset>
+	</div>
+</section>
+<!-- Featured Course end -->
+
+<!-- Featured event start -->
+<section class="featuredEvent" *ngIf="featuredEventListing.length > 0">
+	<div class="container">
+		<div class="browseBy alt">
+			<h2>FEATURED EVENTS</h2>
+			<div class="featuredSide">
+				<owl-carousel [options]="featuredEvents" [carouselClasses]="['owl-theme', 'sliding']">
+					<div class="item" *ngFor="let item of featuredEventListing"> 				
+						<app-carousal-event-card [item]="item" [cardType]="'feature'"></app-carousal-event-card>
+					</div>
+					
+				</owl-carousel>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Featured event end -->
+
+<!-- Upcomming event start -->
+<section class="featuredEvent" *ngIf="upcommingEvents.length > 0">
+	<div class="container">
+		<div class="browseBy alt">
+			<h2>UPCOMING EVENTS</h2>
+			<div class="featuredSide">
+				<owl-carousel [options]="featuredEvents" [carouselClasses]="['owl-theme', 'sliding']">
+					<div class="item" *ngFor="let item of upcommingEvents"> 				
+						<app-carousal-event-card [item]="item" [cardType]="'upcomming'"></app-carousal-event-card>
+					</div>
+					
+				</owl-carousel>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Upcomming event end -->
+
+<!-- Past event start -->
+<section class="featuredEvent" *ngIf="pastEvents.length > 0">
+	<div class="container">
+		<div class="browseBy alt">
+			<h2>PAST EVENTS</h2>
+			<div class="featuredSide">
+				<owl-carousel [options]="featuredEvents" [carouselClasses]="['owl-theme', 'sliding']">
+					<div class="item" *ngFor="let item of pastEvents"> 				
+						<app-carousal-event-card [item]="item" [cardType]="'past'"></app-carousal-event-card>
+					</div>
+					
+				</owl-carousel>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Past event end -->
+
+
+
+
+	
+
+<!-- <section class="howItWorks">
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-lg-12" *ngIf="topCategories.length > 0">
+				<h2>Top Categories</h2>
+				<div class="topCategory">
+					<ul>
+						<li *ngFor="let category of topCategories">
+							<a href="javascript:void(0)" routerLink="/courses/{{category.slug}}">
+								<i class="fa {{category.icon}}" aria-hidden="true"></i>
+								{{category.name}}
+							</a>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+
+<section class="testimonial" *ngIf="testimonialListing.length > 0">
+	<div class="container">
+		<h2>Testimonials</h2>
+		<owl-carousel [options]="testimonial" [carouselClasses]="['owl-theme', 'sliding']">
+			<div class="item" *ngFor="let rs of testimonialListing">
+				<div class="testiSingle">
+					<div class="testiQuote">
+						<img src="assets/images/quote.png" alt="">
+					</div>
+					<div class="testiSingleTop">
+						<div class="testiImg">
+							<img src="{{( rs?.avatar !=undefined )? rs?.avatar :'assets/images/noimg-222x150.jpg'}}" alt="">
+						</div>
+						<h3>{{rs?.name}}</h3>
+						<h4>{{rs?.education}}</h4>
+					</div>
+					<p>
+						{{(rs?.description?.length > 300) ? (rs?.description | slice: 0:300) + '...' : (rs?.description)}}
+					</p>
+				</div>
+			</div>
+		</owl-carousel>
+	</div>
+</section>
+
+<section class="vendor" *ngIf="brands.length > 0">
+	<div class="container">
+		<!-- <h2>Our top rated vendors</h2>-->
+		<owl-carousel [options]="vendors" [carouselClasses]="['owl-theme', 'sliding']">
+				<div class="item" *ngFor="let brand of brands">
+					<div class="vendorSingle">
+						<img src="{{brand.icon}}" alt="">
+					</div>
+				</div>
+			<!-- <div class="item">
+				<div class="vendorSingle">
+					<img src="assets/images/vendor-1.png" alt="">
+				</div>
+			</div>
+
+			<div class="item">
+				<div class="vendorSingle">
+					<img src="assets/images/vendor-2.png" alt="">
+				</div>
+			</div>
+
+			<div class="item">
+				<div class="vendorSingle">
+					<img src="assets/images/vendor-3.png" alt="">
+				</div>
+			</div>
+
+			<div class="item">
+				<div class="vendorSingle">
+					<img src="assets/images/vendor-4.png" alt="">
+				</div>
+			</div>
+
+			<div class="item">
+				<div class="vendorSingle">
+					<img src="assets/images/vendor-5.png" alt="">
+				</div>
+			</div> -->
+
+		</owl-carousel>
+	</div>
+
+</section>
+
+<section class="sxlBancor">
+	<div class="container">
+		<div class="bancor-wc" id="bancor-wc-id-1"></div>
+	</div>
+</section>
+

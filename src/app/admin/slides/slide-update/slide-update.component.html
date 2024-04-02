@@ -1,0 +1,125 @@
+<div class="rightPanel alt">
+    <breadcrumb>
+      <li><a routerLink="/admin/slides">Banners</a></li>
+      <li class="active"><span >{{ pageTitle }}</span></li>
+    </breadcrumb>
+      <div Class= "alert-success"   *ngIf="successMsg">
+          {{successMsg}}
+      </div>
+
+      <form class="form-horizontal" [formGroup]="slideUpdateForm" (ngSubmit)="updateSlide()" >
+          <div *ngIf="errorMsg">
+              <notification-message [messages]="messages"></notification-message>
+          </div>
+        <div class="panel-body">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="title" class="control-label">Page</label>
+              <div class="" *ngVar="slideUpdateForm.get('page') as page">
+                <select class="form-control" formControlName="page">
+                  <option [value]="page" *ngFor="let page of pages">{{page|titlecase}}</option>
+                </select>
+                <form-validation-message [fromInstance]="page"></form-validation-message>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="title" class="control-label">Title</label>
+              <div class="" *ngVar="slideUpdateForm.get('title') as title">
+                <input type="text"   name="title" class="form-control" id="title" formControlName="title" required>
+                <form-validation-message [fromInstance]="title"></form-validation-message>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="content" class="control-label">Content</label>
+              <div class="" *ngVar="slideUpdateForm.get('content') as content">
+                <textarea   name="content"   class="form-control" id="content" formControlName="content" required ></textarea>
+                <form-validation-message [fromInstance]="content"></form-validation-message>
+              </div>
+            </div>
+
+            <div class="form-group clearfix">
+                <label for="content" class="control-label">Image</label>
+
+                <br>
+                <!-- <img id="blah" [src]="imageSrc || 'assets/images/demo.png'" alt="your image" style="width:150px;"/> -->
+                <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="4 / 1"
+                [resizeToWidth]="2000"
+                format="png, jpeg,jpg"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (loadImageFailed)="loadImageFailed()"
+                ></image-cropper>
+                <div class="clearfix"></div>
+                <div class="imageField">
+                  <img id="blah" [src]="croppedImage || 'assets/images/demo.png'" alt="your image" style="width:150px;"/>
+                </div>
+
+                <div class="">
+                  <span class="btn btn-primary btn-file"> Upload File <input  type="file" name="file" class="form-control" (change)="uploadFile($event)" id="file" style="width: 124px;" required ></span>
+                  <br>
+                   <span [innerHtml]="thumbnail"></span>
+                   <br>
+                  <a class="btn btn-sm btn-primary" *ngIf="!!fileInstance"  (click)="uploadToS3()">upload To S3
+                  </a>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="keywords" class="control-label">Button1 Title:</label>
+              <div class="" *ngVar="slideUpdateForm.get('button_1_title') as button_1_title">
+                <input type="text"  name="button_1_title" class="form-control" id="button_1_title" formControlName="button_1_title" >
+                <!-- <form-validation-message [fromInstance]="button_1_title"></form-validation-message> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="css_class" class="control-label">Button2 Title</label>
+              <div class=""  *ngVar="slideUpdateForm.get('button_2_title') as button_2_title">
+                <input type="text"   name="css_class" class="form-control" id="button_2_title" formControlName="button_2_title" >
+                <!-- <form-validation-message [fromInstance]="button_2_title"></form-validation-message> -->
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="keywords" class="control-label">Button1 Link:</label>
+              <div class="" *ngVar="slideUpdateForm.get('button_1_link') as button_1_link">
+                <input type="text"  name="keywords" class="form-control"  id="button_1_link" formControlName="button_1_link" >
+                <!-- <form-validation-message [fromInstance]="button_1_link"></form-validation-message> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="css_class" class="control-label">Button2 Link</label>
+              <div class="" *ngVar="slideUpdateForm.get('button_2_link') as button_2_link">
+                <input type="text"  name="keywords" class="form-control"  id="button_2_link" formControlName="button_2_link" >
+                <!-- <form-validation-message [fromInstance]="button_2_link"></form-validation-message> -->
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="icon" class="control-label"><b>Is active:</b> </label>
+
+                <span class="sideRadio">
+                <input class="" type="radio" name="is_active" formControlName="is_active"  [value]="1">
+                <label class="form-check-label" for="is_active">
+                  Yes
+                </label>
+                </span>
+
+                <span class="sideRadio">
+                <input class=""  type="radio" name="is_active" formControlName="is_active"  [value]="0">
+                <label class="form-check-label" for="is_active_0">
+                  NO
+                </label>
+                </span>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <a [routerLink]="['/admin/slides']" class="btn btn-danger">Cancel</a>
+          <button type="submit" class="btn btn-info pull-right" [disabled]="slideUpdateForm.invalid">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>

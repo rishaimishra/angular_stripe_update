@@ -1,0 +1,27 @@
+<div class="announcement_block" *ngFor="let announcements of courseDetail?.user?.user_announcements">
+	<div class="announcement_heading">
+		<img height="48" width="48" src="{{courseDetail?.user?.avatar || 'assets/images/profile-image.png'}}" class="user-avatar">
+		<div class="writer_area">
+			<span>
+				<a [routerLink]="['/user', getSlug(courseDetail.user)]" target="_blank">{{courseDetail?.user?.profile?.first_name}}</a>
+				posted an announcement
+				<time>{{announcements?.created_at | amTimeAgo : true}} ago</time>
+				<span><i class="fa fa-flag" aria-hidden="true"></i></span>
+			</span>
+		</div>
+		<div class="write_cont">
+			<h2>{{announcements.title}}</h2>
+			<p [innerHtml]="announcements?.description"></p>
+		</div>
+		<!-- <div class="commnt_area">
+			<div class="user_avtar">
+				<div class="user-avatar__inner fx-c"><span class="user-initials">GS</span></div>
+			</div>
+			<div class="commnt_fld"><input placeholder="Comment" type="text" value=""></div>
+		</div>
+		<div class="seemore" (click)="seeMore()">+ See more</div> -->
+	</div>
+</div>
+<div class="announcement_block" *ngIf="courseDetail?.user?.user_announcements?.length == 0">
+	No record found
+</div>

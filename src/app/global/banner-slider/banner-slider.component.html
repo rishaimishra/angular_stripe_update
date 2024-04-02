@@ -1,0 +1,197 @@
+
+<ng-container *ngIf="promotedCourses.length<1">
+<div *ngIf="records.length > 0">
+	<section class="siteBanner" *ngIf="records.length > 1">
+		<owl-carousel [options]="topSlider" [items]="slides" [carouselClasses]="['owl-theme', 'sliding']">
+
+			<div class="item" *ngFor="let rs of records">
+				<img src="{{rs.thumbnail}}" alt="">
+
+				<div class="bannerCont d-flex">
+					<div class="container align-self-center">
+						<div class="row">
+							<div class="col-xl-5 col-lg-8 col-md-8">
+								<h2>{{rs.title}}</h2>
+								<h3>{{rs.content}}</h3>
+								<a class="linkSlide" *ngIf="rs.button_1_title" [routerLink]="rs.button_1_link">{{rs.button_1_title}}</a>
+								<br>
+								<a class="linkSlide dark" *ngIf="rs.button_2_title" [routerLink]="rs.button_2_link">{{rs.button_2_title}}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</owl-carousel>
+	</section>
+
+
+	<!-- <div class="eventBanner  respCourseBanner d-flex" *ngIf="records.length === 1" [ngStyle]="{'background-image': 'url('+records[0]?.thumbnail+')'}"> -->
+	<div class="courseDtlBanner eventBanner newEventbanner">
+		<img [src]="records[0]?.thumbnail" alt="background image">
+		<div class="container align-self-center banner_new_txt">
+			<h2>{{records[0]?.title}}</h2>
+			<h3>{{records[0]?.content}}</h3>
+		</div>
+	</div>
+</div>
+</ng-container>
+
+<ng-container *ngIf="promotedCourses.length>0">
+	<section class="siteBanner forCarousal" *ngIf="promotedCourses.length > 0">
+		<div class="container">
+			<!-- <h2>Development</h2> -->
+			<owl-carousel [options]="topSlider" [items]="promotedCourses" [carouselClasses]="['owl-theme', 'sliding']">
+
+				<!-- <div class="item" *ngFor="let promotedCourse of promotedCourses">
+					<img src="{{promotedCourse?.images?.large}}" alt="">
+
+					<div class="bannerCont d-flex">
+						<div class="container align-self-center">
+							<div class="row">
+								<div class="col-xl-5 col-lg-8 col-md-8">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+				<ng-container *ngFor="let promotedCourse of promotedCourses">
+					<div class="feaTuredBanner">
+
+						<div class="row align-items-center">
+							<div class="col-sm-4">
+								<div class="feaTuredBanner-img">
+									<!-- <a  routerLink="/course-details/{{promotedCourse?.course?.slug}}"> -->
+										<img [src]="promotedCourse?.course?.images?.thumbnail || 'assets/images/noimg-356x221.png'" alt="" style="cursor: pointer;" routerLink="/course-details/{{promotedCourse?.course?.slug}}">
+									<!-- </a> -->
+
+									<ng-container  *ngIf="httpService.isLoggednIn() && httpService.getUserRole()[0]=='customer'">
+											<a href="javascript:void(0);" (click)="addToWishList(promotedCourse?.course.id)" *ngIf="!isAddedWishList(promotedCourse?.course.id)" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+											<a href="javascript:void(0);" (click)="removeFromWishList(promotedCourse?.course.id)" *ngIf="isAddedWishList(promotedCourse?.course.id)" class="imgOverStar"><i class="fa fa-heart" aria-hidden="true"></i></a>
+									</ng-container>
+									<ng-container  *ngIf="!httpService.isLoggednIn()">
+											<a href="javascript:void(0);" (click)="openModal()"  class="imgOverStar" ><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+									</ng-container>
+								</div>
+							</div>
+
+							<div class="col-sm-8">
+								<div class="feaTuredBanner-cont">
+									<h4>
+										<a routerLink="/course-details/{{promotedCourse?.course?.slug}}">{{promotedCourse?.course?.title | titlecase }}</a>
+									</h4>
+									
+									<p>{{promotedCourse?.course?.sub_title}} |
+										<ng-container *ngIf="promotedCourse?.course?.user?.profile?.full_name"> by - <a [routerLink]="['/', getSlug(promotedCourse?.course)]" >
+											{{promotedCourse?.course?.user?.profile?.full_name}}
+										</a>
+										</ng-container>
+									</p>
+
+									<div class="">
+										<!-- <div class="bnPrice" *ngIf="promotedCourse?.course?.price>0">{{promotedCourse?.course?.price | currency}}
+										</div> -->
+
+										<ng-container *ngIf="promotedCourse?.course?.price>0">
+											<span class="originalPrc" *ngIf="hasOffer(promotedCourse)">
+												{{promotedCourse?.course?.price | currency }}
+											</span>
+											<span class="bnPrice">
+												{{getPrice(promotedCourse) | currency }}
+											</span>
+										</ng-container>
+
+										<div class="bnPrice" *ngIf="promotedCourse?.course?.price==0">Free
+										</div>
+										<div>
+											<div class="ratingsDiv" *ngIf="promotedCourse?.course?.rating > 0">
+												<div class="ratingsDivLeft" >
+													<span class="star_area">
+														<ngb-rating [rate]="Math.round(promotedCourse?.course?.rating)| number:'1.0-0'"></ngb-rating>
+													</span>
+												</div>
+												<div class="ratingsDivRight">
+														{{Math.round(promotedCourse?.course?.rating) | number:'1.0-0'}}
+												</div>
+											</div>
+											<div class="ratingsDiv" *ngIf="promotedCourse?.course?.rating === 0">
+												<div class="ratings Right noreview">No review yet</div>
+											</div>
+										</div>
+									</div>
+
+									<a class="expCourse" routerLink="/course-details/{{promotedCourse?.course?.slug}}">Explore Course</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+			</owl-carousel>
+			</div>
+	</section>
+</ng-container>
+
+<ng-container *ngIf="currentSlug=='events'">
+	
+<div class="eventBanner d-flex"  [ngStyle]="{'background-image': 'url(assets/images/event-banner.jpg)'}"  *ngIf="featuredEvents.length == 0">
+	<div class="container align-self-center">
+		<h2>Events</h2>
+		<h3></h3>
+	</div>
+</div>
+
+
+
+<section class="siteBanner respEventBanner" *ngIf="featuredEvents.length > 0">
+	<owl-carousel [options]="topSlider" [items]="featuredEvents" [carouselClasses]="['owl-theme', 'sliding']">
+
+		<div class="item" *ngFor="let featuredEvent of featuredEvents">
+			<a routerLink="/event-details/{{featuredEvent?.slug}}">
+				<img src="{{featuredEvent?.event?.banner_image}}" alt="">
+			</a>
+		</div>
+
+	</owl-carousel>
+</section>
+
+<!-- <section class="siteBanner forCarousal" *ngIf="featuredEvents.length > 0">
+	<div class="container">
+	
+		<owl-carousel [options]="topSlider" [items]="featuredEvents" [carouselClasses]="['owl-theme', 'sliding']">
+
+			<ng-container *ngFor="let featuredEvent of featuredEvents">
+				<div class="feaTuredBanner">
+
+					<div class="row align-items-center">
+						<div class="col-sm-4">
+							<div class="feaTuredBanner-img">
+							
+									<img [src]="featuredEvent?.images[0]?.thumbnail || 'assets/images/noimg-356x221.png'" alt="" style="cursor: pointer;" routerLink="/event-details/{{featuredEvent?.slug}}">
+							
+							</div>
+						</div>
+
+						<div class="col-sm-8">
+							<div class="feaTuredBanner-cont">
+								<h4>
+									<a routerLink="/event-details/{{featuredEvent?.slug}}">{{featuredEvent?.title}}</a>
+								</h4>
+								
+								<p>{{featuredEvent?.short_description}} |
+									<ng-container *ngIf="featuredEvent?.user?.profile?.full_name"> by - <a [routerLink]="['/', getSlug(featuredEvent)]" >
+										{{featuredEvent?.user?.profile?.full_name}}
+									</a>
+									</ng-container>
+								</p>
+
+								<a class="expCourse" routerLink="/event-details/{{featuredEvent?.slug}}">Explore Event</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</owl-carousel>
+		</div>
+</section> -->
+</ng-container>

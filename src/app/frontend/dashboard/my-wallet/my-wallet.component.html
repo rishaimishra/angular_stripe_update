@@ -1,0 +1,66 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>My Wallet</h2>
+		<button (click)="exportAsXLSX()" class="btn btn-primary btn-sm titleLink02 pull-right" style="margin-left:14px;"  *ngIf="records.length > 0"><i class="fa fa-download" aria-hidden="true"></i> Export</button>
+	</div>
+	<div class="balance_payout">
+		<!-- <span>Balance: </span> {{ data?.amount}} -->
+		<!-- <ng-container *ngIf="data?.amount>0" >
+			<button  *ngIf='checkVendor' class="btn btn-primary btn-sm pull-right titleLink02" (click)="payOutModal()"> PayOut</button>	
+		</ng-container> -->
+		<div class="balance_box" >
+			<span >Balance </span> <span class="balance">{{ data?.amount | number:'1.2-2'}} USD</span>
+			
+		</div>
+		<!-- <a routerLink="/dashboard/my-payouts" *ngIf='checkVendor' class="btn btn-primary btn-sm pull-right titleLink02 payout_link" > My PayOut</a>	 -->
+		<div class="clearfix"></div>
+		
+	</div>
+	
+	<div class="table-responsive table_cont" *ngIf="records.length > 0">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Particulars</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th class="text-right">Amount</th>
+				</tr>
+			</thead>
+			<tbody *ngIf="records.length > 0">
+				<tr *ngFor="let rs of records">
+					<td><a href="javascript:void(0)" (click)="transactionDetaisModal(rs?.id)">{{ rs?.description }}</a></td>
+					<td>{{ rs?.created_at | date: 'dd-MM-yyyy'}}</td>
+					<td [ngStyle]="{'color': rs?.type=='credit' ? 'green' : 'red'}">{{ rs?.type }}</td>
+					<td class="text-right">{{ rs?.amount | number:'1.2-2'}} USD</td>
+				</tr>
+
+			</tbody>
+			<tbody *ngIf="records.length === 0">
+				<tr>
+					<td colspan="4" class="text-center">
+						No record found
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination">
+				<tr>
+					<td colspan="4">
+						<app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)"
+						 (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="row mt30" *ngIf="records.length === 0">
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                <strong>Oops!</strong>
+                No record found.
+            </div>
+        </div>
+    </div>
+
+</div>

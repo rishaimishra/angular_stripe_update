@@ -1,0 +1,148 @@
+<div class="courseOverview_banner d-flex">
+	<div class="container align-self-center">
+		<div class="row">
+			<div class="col-sm-4">
+				<video id="video_player" class="video-js vjs-big-play-centered" controls="true" preload="auto" data-setup="{}" webkit-playsinline="true">
+					<source src="{{currentVideo}}">
+				</video>
+			</div>
+			<div class="col-sm-8">
+				<div class="courseOver_cont">
+					<h1>{{data.title}}</h1>
+					<div class="action_btn_area">
+						<a href="/tutorial/{{slug}}/{{continueLectureId}}" type="button" class="continue_btn">Continue to Lecture</a>
+						<p class="star_area">
+							<!-- <img _ngcontent-c7="" alt="" src="assets/images/ratings3.png"> -->
+							<ngb-rating [rate]=data?.rating></ngb-rating>
+							<span *ngIf="!hasMyReview"><a  routerLink="/review/course/{{slug}}">Edit Your Rating</a></span>
+							<span *ngIf="hasMyReview"><a [routerLink]="['/review', 'course',slug, reviewId]">Edit Your Rating</a></span>
+							
+						</p>
+					</div>
+					<div class="progress_bar_area">
+						<div>
+							<span><strong>{{ completedLecture > 0 ? completedLecture : 0 }}</strong> of <strong>{{totalLecture > 0 ? totalLecture : 0}}</strong> items complete</span>
+							<span *ngIf="isCompleteCourse === 'completed' && resetButton"><a href="javascript: void(0);" (click)="reset()">Reset progress</a></span>
+						</div>
+						<div class="onlybararea">
+							<div class="progress_bar">
+								<p>
+									<ngb-progressbar showValue="true" type="success" [value]="math.round(courseProgress)"></ngb-progressbar>
+								</p>
+							</div>
+							<!-- <div class="cirtificate_bar">
+								<p class="trophy">
+									<a title="Download Certificate" href="{{certificateLink != '' ? certificateLink : 'javascript:void(0);'}}">
+											<i class="fa fa-trophy" aria-hidden="true" [ngStyle]="{ 'color' : isCertified ? '#28a745' : '#fff' }"></i>
+									</a>
+								</p>
+								<p>
+									<ngb-progressbar showValue="true" type="success" [value]="isCertified ? 100 : 0"></ngb-progressbar>
+								</p>
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="cmsWrap tutrIndex">
+		<!-- <div class="tabBorder"></div> -->
+	<div class="container relative_position">
+		
+		<ngb-tabset class="tabFeatured " (tabChange)="onChangeTab($event)">
+			<ngb-tab *ngFor="let tab of tabs">
+				<ng-template ngbTabTitle>
+					{{tab?.name}}
+				</ng-template>
+				<ng-template ngbTabContent>
+					<app-overview *ngIf="isActiveTab('overview')" (browseqa_output)="browseqa_output_parent($event)" [courseDetail]="data"></app-overview>
+					<app-course-content *ngIf="isActiveTab('course-content')" [courseDetail]="data"></app-course-content>
+					<app-question-answer *ngIf="isActiveTab('question-answer')" (notify)="onNotifyQuestion($event)" [courseDetail]="data"></app-question-answer>					
+					<app-tutor-response *ngIf="isActiveTab('tutor-response')" (quEvent)="quEvent()"[question]="questionData"></app-tutor-response>
+					<!-- <app-bookmark *ngIf="isActiveTab('bookmark')"></app-bookmark> -->
+					<app-announcements *ngIf="isActiveTab('annoucements')" [courseDetail]="data"></app-announcements>
+				</ng-template>
+			</ngb-tab>
+		</ngb-tabset>
+		<div class="option_menu">
+			<div ngbDropdown placement="bottom-right" class="d-inline-block">
+				<!-- <button class="option_nav" id="dropdownBasic1" ngbDropdownToggle>Option</button>
+				<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+					<button class="dropdown-item share" (click)="shareModelOpen()">Share</button>
+				</div> -->
+				<button (click)="shareModelOpen()" class="share">
+						<span>
+							<i class="fa fa-share"></i>
+						</span>
+						Share
+				</button>
+			</div>
+		</div>
+		
+
+	</div>
+</div>
+
+<!-- modal -->
+<div class="modal course-share" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+	<!-- modal-dialog -->
+	<div class="modal-dialog" role="document">
+		<!-- modal-content -->
+		<div class="modal-content">
+			<!-- modal-header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Share this course</h4>
+				<button type="button" class="close" aria-label="Close" (click)="shareModalClose()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal-body -->
+			<div class="modal-body">
+				
+				<div class="share_link">
+						<h2>Share your link</h2>
+						<div class="social_area">
+						  <div class="social_area_link_ara ">
+							  <div class="search-container">
+								<div class="fld_group input-group">
+									<input type="text" name="" value="{{shareUrl}}" #userinput/>
+									<span class="input-group-btn">
+									  <button type="button" class="btn btn-default"  (click)="copyInputMessage(userinput)">Copy</button></span>
+								</div>
+							  </div>
+						  </div>
+			
+						  <div *ngIf="copeidTooltip == 1" id="tooltip-top" data-purpose="base-tooltip" role="tooltip" class="in with-chevron tooltip tooltip-blue bottom">
+							  <div class="tooltip-arrow"></div>
+							  <div class="tooltip-inner">
+								<div class="">Link Copied!</div>
+							  </div>
+						  </div>
+			
+						  <div class="social_area_link_icon">
+							<!-- <button class="social_link"><i class="fa fa-facebook" aria-hidden="true"></i></button> -->
+							<!-- <share-button class="social_link" button="facebook" text="Share" [showText]="false" [url]="shareUrl" ></share-button> -->
+							<!-- <share-button button="facebook" text="Share" [showText]="false" [url]="shareUrl" ></share-button> -->
+						  </div>
+						  <div class="social_area_link_icon">
+							<!-- <a href="https://twitter.com/share?text={{courseData?.title}}&url={{shareUrl}}" target="_blank">
+							<button class="social_link"><i class="fa fa-twitter" aria-hidden="true"></i></button>
+							</a> -->
+							<share-button button="twitter" text="Tweet" [showText]="false" [url]="shareUrl" ></share-button>
+						  </div>
+						  <div class="social_area_link_icon">
+							<a href="mailto:someone@example.com" target="_top" style="display:inline-block; padding:3px;">
+								<img src="assets/images/mail.png" alt="" width="57" height="35" />
+							</a>
+							  <!-- <share-button button="email" text="Email" [showText]="false" [url]="shareUrl" ></share-button> -->
+						  </div>
+						</div>
+					  </div>
+			</div>
+		</div> 
+	</div>
+</div>

@@ -1,0 +1,191 @@
+// reset css
+* {padding:0px; margin:0px;}
+*:focus {outline: 0;}
+body{margin:0; padding:0; font-size:14px; color:#231f20; font-family: 'Open Sans', sans-serif; overflow-x:hidden;}
+ol, ul {list-style: none; margin:0; padding:0;}
+:focus {outline: 0;}
+a, a:link {text-decoration: none; outline:none;}
+p { padding:2px 0; margin:0;}
+.clear {clear:both;}
+a {color:#3899c1; text-decoration:none;}
+a:hover {text-decoration:none !important; color:#147298 !important;}
+a:focus{outline:none !important;}
+:hover{transition: all 0.5s ease; -webkit-transition: all 0.5s ease; -moz-transition: all 0.5s ease;}
+h1, h1 a, h2, h2 a, h3, h4, h5, h6 { margin:0; padding:0; font-weight:normal;}
+img {border:0; max-width:100%; height:auto;}
+::-webkit-input-placeholder {opacity:1; color: #000;}
+:-moz-placeholder{opacity:1; color: #000;}
+::-moz-placeholder{opacity:1; color: #000;}
+:-ms-input-placeholder{opacity:1; color: #000;}
+// reset css
+
+//.container{ max-width: 1280px;}
+
+h2{ font-size: 30px; color: #000;}
+
+.headerTop{ /*border-bottom: 1px solid #ebebeb;*/}
+.logo{ /*border-right: 1px solid #ebebeb;*/ padding: 18px 20px 0 0; float: left;}
+.headerTopRight{ float: right;}
+.cartIcon{ background: #3eb7aa; color: #FFF; float: left; height: 60px; padding: 16px 20px 0 20px; font-size: 17px; position: relative;}
+.cartnum{ width: 20px; height: 20px; background: #FFF; border-radius: 50%; text-align: center; position: absolute; left: 27px; top: 3px; color: #3eb7aa; font-size: 13px; font-weight: 600;}
+.signUp{ float: left; height: 60px; /*border-left: 1px solid #ebebeb;*/ font-size: 14px; color: #000; text-transform: uppercase; padding: 12px 20px 0 20px; position: relative;}
+.signUp a{ color: #000; cursor: pointer; display: inline-block;}
+.signUp a:hover{ color: #3899c1;}
+.topSearch{ float: left; margin: 26px 26px 0 0; cursor: pointer;}
+
+.siteNav{ float: left;
+ ul{ margin: 0; padding: 0;
+  li{ float: left; margin: 0 30px 0 0;
+    a{ font-size: 14px; color: #595959; padding: 15px 0; display: inline-block;
+     &:hover{ color: #3899c1;}
+    }
+    a.active-link{ color: #3899c1;}
+  }
+ }
+}
+
+.topSocial{ float: right; /*border-left: 1px solid #ebebeb;*/ /*border-right: 1px solid #ebebeb;*/ padding: 7px 0 12px 14px;
+ ul{ margin: 0; padding: 0;
+  li{ float: left; margin: 0 0 0 15px;
+    a{ font-size: 24px; color: #1b1d48;}
+  }
+ }
+ .linkTop{ display: inline-block; background: #151840; color: #FFF; padding: 7px 10px; border-radius: 3px; margin-right:0;
+   &.alt{ background: #3393c6;}
+ }
+}
+
+.mobNavOpen{ float: left; font-size: 28px; line-height: 28px; padding: 16px; display: none;}
+.siteNavClose{ color: #FFF; text-align: right; padding: 10px; font-size: 22px; line-height: 22px; display: none;}
+
+.topSearchCont{ float: left; width: 0; overflow: hidden; margin: 18px 0 0 0; @include transition(margin 0.3s ease);
+  input[type="search"]{ width: 100%; border: 1px solid #ebebeb; padding: 6px 12px; color: #949494; font-size: 13px;}
+}
+.topSearchCont.acTive{ width: 200px; margin-right: 20px;}
+
+
+
+.loginModal{
+  input[type="text"], input[type="email"], input[type="password"]{ border: 1px solid #bcbcbc; font-size: 16px; color: #595959; border-radius: 5px; padding: 15px 15px 15px 40px; width: 100%;}
+  input[type="submit"]{ background: #3eb7aa; border: none; color: #FFF; text-align: center; font-size: 16px; font-weight: 600; border-radius: 5px; padding: 15px; cursor: pointer; width: 100%;}
+  .modalInp{ position: relative; margin-bottom: 13px;
+   .fa{ position: absolute; left: 15px; top: 20px; color: #969696; font-size: 16px;}
+  }
+  .fgPass{ text-align: center; border-bottom: 1px solid #cacaca; padding: 4px 0 20px 0;
+    h5{ font-size: 15px; color: #1d7db7;}
+    h6{ font-size: 11px; color: #4f4f4f; } /*padding: 15px 0 0 0; } */
+    a{ color: #1d7db7;}
+    &.alt{ padding: 0; border: none;}
+  }
+  .modal-body{ padding-left: 40px; padding-right: 40px;}
+  .or{ text-align: center; padding: 14px 0;
+    span{ display: inline-block; font-size: 20px; color: #1d7db7; background: #e9e9e9; width: 42px; height: 42px; border-radius: 50%; line-height: 40px;}
+  }
+  .loginSocial{ display: block; background: #1a538a; color: #FFF; font-size: 16px; font-weight: 600; padding: 12px; border-radius: 4px; margin-bottom: 8px; @include box-shadow(0, 0px, 8px, rgba(0, 0, 0, 0.3));
+    span{ display: inline-block; width: 2px; height: 26px; background: #7f9fbe; vertical-align: middle; margin: 0 7px 0 10px;}
+    &.googleLogin{ background: #FFF; color: #29303b;}
+  }
+  .modal-header{
+    h4{ font-size: 16px; color: #000000;}
+    .close{ background: #dadada; color: #000; border-radius: 5px; position: absolute; right: 12px; top: 12px; margin: 0; padding: 5px 12px; opacity: 1; text-shadow: none;
+      &:focus{ outline: none !important;}
+    }
+  }
+  .popSign{ text-align: center; border-top: 1px solid #cacaca; margin: 25px 0 0 0; padding: 20px 0 8px 0;
+    h5{ font-size: 15px; color: #464747;}
+  }
+
+  .inpSignup{ padding: 0 0 10px 0;}
+  
+  // .ng-select .ng-select-container .ng-value-container{ padding-top: 8px;}
+  // .ng-select .ng-clear-wrapper{ padding-top: 12px;}
+  // .ng-select .ng-arrow-wrapper{ padding-top: 9px;}
+  .ng-select.ng-select-single .ng-select-container{ height: 56px;}
+  .ng-dropdown-panel.ng-select-top{ bottom: inherit; top: 100% !important;}
+  .ng-select .ng-select-container .ng-value-container .ng-input>input{ padding: 0 !important;}
+}
+
+.user_avatar{ width: 40px; height: 40px; border: 1px solid #ccc; border-radius: 50%; margin:0 0 0 0; text-align: center; line-height: 38px;}
+// .signUp.active_user:hover .userAvDrop{ display: block;}
+.userAvDrop{ position: absolute; width: 300px; background: #FFF; right: 0; top: 63px; z-index: 99; padding: 15px;  border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0, 0, 5px, rgba(0, 0, 0, 0.3);
+  &:after{ content: ''; position: absolute; right: 39px; top: -10px; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid #e6e6e6;}
+  ul{ margin: 0; padding: 0;
+    li{ border-top: 1px solid #e8e8e8;
+      &:first-child{ border-top: 0;}
+      a{ display: block; padding: 8px; font-size: 14px; text-transform: none;}
+    }
+  }
+  .avatarDetails{ position: relative; padding: 0 0 20px 65px; min-height: 50px; border-bottom: 1px solid #e8e8e8;
+    h2{ font-size: 16px; padding: 5px 0 0 0; text-transform: none;}
+    h3{ font-size: 13px; text-transform: none;}
+  }
+  .avatarDetailsImg{ width: 50px; height: 50px; position: absolute; left: 0; top: 0;
+    img{ width: 50px; height: 50px; border-radius: 50%;}
+  }
+}
+
+.disableSubmit{ background: #c7c7c7 !important; cursor: not-allowed !important;}
+.textMain {text-align: left; padding-bottom: 10px !important; color: #ff0000 !important}
+.sb-errors-list{font-size: 11px;color: #ff0000 !important;}
+
+
+tr {
+  &.selectedRow {
+    background-color: rgba(150, 190, 230, 0.50) !important;
+  }
+}
+
+
+/***3.1.2019****/
+  .logIn{
+    border:1px solid #38a5b9;
+    padding: 12px 8px;
+    border-radius: 3px;
+  }
+
+  .siUp{
+    border:1px solid #38a5b9;
+    padding:12px 8px;
+    border-radius: 3px;
+    background: #38a5b9;
+    color:#fff !important;
+    margin-left: 5px;
+  }
+
+  select.selectCommon{ border: 1px solid #bcbcbc;
+    font-size: 16px;
+    color: #595959;
+    background: none;
+    text-align: left;
+    border-radius: 5px;
+    padding: 15px 15px 15px 15px;
+    width: 100%;}
+
+   .modalInp-inner{ position: relative;} 
+
+
+
+.topNotificAlt{ float: left; position: relative; margin: 22px 0px 0 17px; position: relative; z-index: 2; min-height: 30px;}
+.notoficCountAlt{ background: #ff0000; color: #FFF; position: absolute; right: -10px; top: -13px; padding: 2px 4px; border-radius: 50%; font-size: 11px; font-weight: 600; min-width: 20px;
+  text-align: center}
+.topNotificAlt .fa{ color: #000; font-size: 22px; position: relative; z-index: 9999;}
+
+.topNotificDropAlt{ position: absolute; top: 16px; right: -15px; z-index: 99; padding: 35px 0 0 0; }
+// .topNotificAlt:hover .topNotificDropAlt{ display: block;}
+.topNotificDropAlt:before{ border-style: solid; border-width: 0 10px 13px; content: ""; height: 0; position: absolute; right: 14px; top: 23px; width: 0; border-color: transparent transparent #e8e9eb;}
+.topNotificDropAlt:after{ border-style: solid; border-width: 0 10px 13px; content: ""; height: 0; position: absolute; right: 14px; top: 23px; width: 0; border-color: transparent transparent #fff;}
+.topNotificDropInnerAlt{ background: #FFF; padding: 15px; width: 290px; border-radius: 2px; border-top: 1px solid #e8e9eb; box-shadow: 0 4px 16px rgba(20,23,28,.25); color: #505763; font-size: 14px;}
+.NotificDropSingleAlt{ position: relative; min-height: 40px; padding: 5px 0 5px 50px; border-top: 1px solid #ececec;}
+.NotificDropSingleAlt:first-child{ border-top: 0;}
+.NotificDropSingleAlt p{ font-size: 13px; line-height: 16px; padding: 0 0 0 0;}
+.NotificDropSingleAlt p span{ display: inline-block; padding: 4px 0 0 0; font-style: italic;}
+.NotificDropSingleNameAlt{ width: 30px; height: 30px; border: 1px solid #a2a2a2; border-radius: 50%; text-align: center; position: absolute; left: 0; top: 5px; color: #333; font-size: 15px; line-height: 38px;}
+.notificSeeAllAlt{ text-align: left; padding: 12px; background: #f3f3f3; text-align: right; margin: 15px -15px -15px -15px;}
+.notificSeeAllAlt .fa{ color: #337ab8; font-size: 16px;}
+.notificSeeAllAlt a{ color: #337ab8;}
+
+
+
+.topWish{ float: left; position: relative; margin: 28px 0px 0 17px;}
+.topWish .fa{ color: #000; font-size: 22px;}
+.topWish:hover .topNotificDrop{ display: block;}

@@ -1,0 +1,27 @@
+<div class="rightPanel">
+
+  <div class="centerHeading">
+    <h2>{{(isCreateMode) ? 'Add Event Video' : 'Edit Event Video'}}</h2>
+  </div>
+  <div>
+    <a href="javascript:void(0);" routerLink="/admin/videos" class="btn btn-primary btn-sm titleLink02 pull-right">Back</a>
+  </div>
+ 
+  <div class="formWrap">
+    <form [formGroup]="formObj" (submit)="saveForm()">
+      <div class="row">
+          <div class="col-sm-12"><label for="">Youtube Id:</label>
+            <div class="inputWrap">
+              <input type="text" class="inpField" formControlName="youtube_id" name="youtube_id" placeholder="Name" type="text">
+              <div class="form-validation-error" *ngIf="formError?.youtube_id">
+                <span *ngFor="let err of formError?.youtube_id">{{err?.message}}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+      <button type="submit" class="submitBtn" [ngClass]="{'disableSubmit': formLoading}" [disabled]="formLoading">{{(formLoading) ? 'Saving' : 'Save'}} <i *ngIf="formLoading" class="fa fa-spinner fa-spin"></i></button>
+    </form>
+
+  </div>
+
+</div>

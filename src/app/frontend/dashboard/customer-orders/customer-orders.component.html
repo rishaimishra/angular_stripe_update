@@ -1,0 +1,122 @@
+<div class="rightPanel">
+
+	<div class="centerHeading" *ngIf="records.length > 0">
+		<h2>My Orders</h2>
+		<!-- <button (click)="exportAsXLSX()" class="btn btn-primary btn-sm titleLink02 pull-right"><i class="fa fa-download" aria-hidden="true"></i> Export</button> -->
+	</div>
+
+	<div class="table-responsive table_cont" *ngIf="records.length > 0">
+		<table class="table table-striped" >
+			<thead>
+				<tr>
+					<th width="10%">Order ID</th>
+					<th>Purches date</th>
+					<th class="text-center">SXL Address</th>
+					<th class="text-center">Order Status</th>
+					<th>Payment Method</th>
+					<th>Discount Amount</th>
+					<th>Net Amount</th>
+					<th>Total Amount</th>	
+					
+					<!-- <th class="text-center">Action</th> -->
+				</tr>
+			</thead>
+			<tbody *ngIf="records.length > 0">
+				<tr *ngFor="let rs of records">
+					<td>							
+						<a *ngIf="rs?.id" [routerLink]="['/dashboard', 'transactions', 'details', rs?.id]">							
+							{{getUserID(rs?.id)}}
+						</a>
+					</td>
+					<td>{{rs?.ordered_on | date : 'dd-MM-yyyy'}}</td>
+
+					<td class="text-center">
+						<span *ngIf="rs?.sxl_address">{{rs?.sxl_address}}</span>
+						<span *ngIf="rs?.sxl_address == '' || rs?.sxl_address == null">N / A</span>
+					</td>
+					<td class="text-center">
+						<span [ngClass]="getOrderStatusClass(rs)">{{getOrderStatusTest(rs)}}</span>
+					</td>
+					<td>{{ rs?.order_details[0]?.payment_type?.title}}</td>		
+					<!-- <td *ngIf="rs.total_order_price_usd>0 || rs.total_order_price_sxl>0">
+						
+							<ng-container *ngIf="rs?.total_order_price_usd>0">
+								{{rs?.total_order_price_usd | number:'1.2-2' }}USD
+							</ng-container>
+							<ng-container *ngIf="rs.total_order_price_sxl>0">
+								{{rs.total_order_price_sxl |currency:'SXL' }}
+							</ng-container>
+  
+					</td>
+					<td *ngIf="rs.total_order_price_usd==0 && rs.total_order_price_sxl==0">Free</td>
+
+					<td>{{rs?.total_discount_price | number:'1.2-2'}} USD</td>					
+					<td *ngIf="rs.total_order_price_usd>0 || rs.total_order_price_sxl>0">
+						
+							<ng-container *ngIf="rs?.total_order_price_usd>0">
+								{{rs?.total_order_price_usd -rs?.total_discount_price | number:'1.2-2'}} USD
+							</ng-container>
+							<ng-container *ngIf="rs.total_order_price_sxl>0">
+								{{rs.total_order_price_sxl |currency:'SXL' }}
+							</ng-container>
+  
+					</td>
+					<td *ngIf="rs.total_order_price_usd==0 && rs.total_order_price_sxl==0">Free</td> -->
+										
+					
+					<!-- <td class="text-center">
+						<button class="btn btn-sm btn-success" type="button" *ngIf="rs?.id" [routerLink]="['/dashboard', 'transactions', 'details', rs?.id]"><i class="fa fa-eye"></i></button>
+					</td> -->
+					<td>{{rs?.total_discount_price}} USD</td>
+					<td *ngIf="rs?.total_order_price_usd >0 || rs?.total_order_price_sxl >0">
+						<ng-container *ngIf="rs?.total_order_price_usd > 0">
+							{{rs?.total_order_price_usd | number:'1.2-2'}} USD
+						</ng-container> 
+						<ng-container *ngIf="rs?.total_order_price_usd > 0 && rs?.total_order_price_sxl > 0">
+							+
+						</ng-container>
+						<ng-container *ngIf="rs?.total_order_price_sxl > 0">
+						   SXL	{{rs?.total_order_price_sxl | number:'1.2-2' }}
+						</ng-container> 
+					</td>
+				
+					<td *ngIf="rs?.total_order_price_usd >0 || rs?.total_order_price_sxl >0">
+						<ng-container *ngIf="rs?.total_order_price_usd > 0">
+							{{rs?.total_order_price_usd | number:'1.2-2'}} USD
+						</ng-container> 
+						<ng-container *ngIf="rs?.total_order_price_usd > 0 && rs?.total_order_price_sxl > 0">
+							+
+						</ng-container>
+						<ng-container *ngIf="rs?.total_order_price_sxl > 0">
+						   SXL	{{rs?.total_order_price_sxl | number:'1.2-2' }}
+						</ng-container> 
+					</td>	
+				</tr>
+
+			</tbody>
+			<tbody *ngIf="records.length === 0">
+				<tr>
+					<td colspan="7" class="text-center">
+						No transaction yet.
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination">
+				<tr>
+					<td colspan="8">
+						<app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="row mt30" *ngIf="records.length === 0">
+		<div class="col-12">
+			<div class="alert alert-warning text-center">
+				<strong>Oops!</strong>
+				No record found.
+			</div>
+		</div>
+	</div>
+
+</div>

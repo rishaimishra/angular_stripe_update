@@ -1,0 +1,181 @@
+<section class="pageHeading d-flex">
+	<div class="container align-self-center">
+		<h3><i class="fa fa-home" aria-hidden="true"></i> / Shopping Cart / Order Address</h3>
+		<h2>Order Address</h2>
+	</div>
+</section>
+
+<section class="checkoutMain">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-12 text-right">
+				<button class="add_address btn btn-primary" type="button" (click)="opemNewAddress(addAddress)">Add your address</button>
+			</div>
+		</div>
+
+		<div class="row" *ngIf="addresses.length > 0">
+			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngFor="let rs of addresses">
+				<div class="panel">
+					<div class="panel-heading">
+
+						<div class="tabsRadio">
+							<div class="tabsRadioWrap">
+								
+								<label for="address-{{rs?.id}}" class="label">
+									<input name="address" [checked]="isAddressDefault(rs)" type="radio" (change)="onChangeDefaultAddress(rs)" class="input" id="address-{{rs?.id}}" />
+									<span class="checkmark"><span class="checkmark_round"></span></span>
+									{{getAddressType(rs)}}
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="tabsContentWrap">
+							<p>{{rs?.address}},</p>
+							<p>{{rs?.city?.name}} ,{{rs?.state?.name}}, {{rs?.country?.name}}, {{' - ' + rs.postcode}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" *ngIf="addresses.length === 0">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRecord">
+				<div class="alert alert-warning"> You have not added any shipping address yet </div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+				<button type="button" [disabled]="!defaultAddress" class="btn btnCheckout" (click)="redirectToCheckout()">Proceed to checkout</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<ng-template #addAddress>
+	<form [formGroup]="formObj" (submit)="saveNewAddress()">
+		<div class="modal-header">
+			<h4 class="modal-title" id="modal-basic-title">Add New Address</h4>
+			<button type="button" class="close" (click)="closeAddressForm()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-md-12">
+					<label for="">Address Type:</label>
+					<div class="inputWrap">
+						<div class="tabsRadio" *ngIf="typeAddress.length > 0">
+							<div class="tabsRadioWrap" *ngFor="let rs of typeAddress">
+								
+								<label for="address-type-{{rs?.code}}" class="label">
+									<input name="type" formControlName="type" type="radio" class="input" id="address-type-{{rs?.code}}" [value]="rs?.code" />
+									<span class="checkmark"><span class="checkmark_round"></span></span>
+									{{rs?.name}}
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col-sm-12">
+					<label for="">Address:</label>
+					<div class="inputWrap">
+						<input class="form-control" formControlName="address" name="address"
+							placeholder="Address" type="text">
+
+						<div class="form-validation-error" *ngIf="formError?.address">
+							<span *ngFor="let err of formError?.address">{{err?.message}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col-sm-6">
+					<label for="">Country:</label>
+					<div class="inputWrap">
+						<ng-select *ngIf="countries.length > 0"
+							[items]="countries"
+							bindLabel="name"
+							bindValue="id"
+							placeholder="Select Country"
+							(change)="onCountryChange($event)"
+							formControlName="country_id">
+						</ng-select>
+						<div class="form-validation-error" *ngIf="formError?.country_id">
+							<span *ngFor="let err of formError?.country_id">{{err?.message}}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<label for="">State:</label>
+					<div class="inputWrap">
+						<ng-select
+							[items]="states"
+							bindLabel="name"
+							bindValue="id"
+							placeholder="Select State"
+							(change)="onStateChange($event)"
+							formControlName="state_id">
+						</ng-select>
+						<div class="form-validation-error" *ngIf="formError?.state_id">
+							<span *ngFor="let err of formError?.state_id">{{err?.message}}</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<label for="">City:</label>
+					<div class="inputWrap">
+						<ng-select
+							[items]="cities"
+							bindLabel="name"
+							bindValue="id"
+							placeholder="Select City"
+							formControlName="city_id">
+						</ng-select>
+						<div class="form-validation-error" *ngIf="formError?.city_id">
+							<span *ngFor="let err of formError?.city_id">{{err?.message}}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<label for="">Postcode:</label>
+					<div class="inputWrap">
+						<input type="text" formControlName="postcode" class="form-control">
+						<div class="form-validation-error" *ngIf="formError?.postcode">
+							<span *ngFor="let err of formError?.postcode">{{err?.message}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="tabsRadioWrap">
+						<label class="checkBoxCustom">
+							<input name="is_default" type="checkbox" [checked]="isAddressDefaultCheckbox()" (change)="onChangeDefault($event)"> Make Default 
+							<span  class="checkBoxMark"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-success">Save</button>
+		</div>
+	</form>
+</ng-template>

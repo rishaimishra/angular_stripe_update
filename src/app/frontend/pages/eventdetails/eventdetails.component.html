@@ -1,0 +1,217 @@
+
+
+<!-- <div class="eventBanner d-flex" [style.background-image]="'url(' + image + ')'"> -->
+<div class="eventBanner newEventbanner">
+  <img [src]="image" alt="background image">
+    <!-- <div class="container align-self-center banner_new_txt">
+    <h2>{{eventData?.title}}</h2>
+    <h3>{{eventData?.short_description | slice:0:30}}</h3>
+  </div> -->
+</div>
+
+<!-- <section class="eventMap">
+  <div class="container">
+    <div class="eventMapContainer">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.268266311951!2d88.43354301543901!3d22.56906773878692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275ab8b31fd9d%3A0x42804e7cbbd02806!2sStesalit+Tower!5e0!3m2!1sen!2sin!4v1543396700464" width="100%" height="270" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+      <agm-map [latitude]="lat" [longitude]="lng"  style="border:0;height: 297px;width: 100%;">
+          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+  </div>
+</section> -->
+
+<section class="eventDetails margin-20" >
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 col-lg-8">
+       <div class="row">
+         <div class="col-lg-7">
+           <div class="eventDetailsGallery">
+             <ngx-gallery [options]="galleryOptions" [images]="galleryImages" *ngIf="eventData?.images?.length>1" ></ngx-gallery>
+             <!-- <img [src]="eventData?.images[0].original || 'assets/images/noimg-530x345.jpg'" *ngIf="eventData?.images.length < 2" style="height:345px;"> -->
+             <img [src]="eventData?.images[0]?.banner" *ngIf="eventData?.images?.length ==1 " >
+
+
+             <img [src]=" 'assets/images/noimg-530x345.jpg'" *ngIf="eventData?.images?.length == 0" >
+
+           </div>
+         </div>
+         <div class="col-lg-5">
+           <div class="eventDetailsGalleryCont alt">
+             <h3>{{eventData?.title | titlecase}}</h3>
+             <!-- <h5 style="text-transform:uppercase;" *ngIf="eventData?.categories?.length > 0"> <strong>{{eventData?.categories[0]?.name}}</strong> </h5> -->
+             <!-- <ngb-rating [rate]="0"></ngb-rating>
+             <span> 0.0 </span> -->
+             <!-- <h4>Thursday at 12 pm</h4> -->
+             <!-- <h4>{{eventData?.event.start_on |date}} {{eventData?.event.start_on |date:'EEEE'}} at {{eventData?.event.start_on |date:'hh aa'}} </h4> -->
+             <h5>
+                <strong>Created By :</strong> {{eventData?.user?.profile?.full_name}} , {{ eventData?.user?.profile?.head_line}}
+            </h5>
+              <h5>
+             <ng-container *ngIf="eventData?.event?.type == 1">
+                <strong>Venue: </strong>{{eventData?.event.address}},{{eventData?.event.city.name}},{{eventData?.event.state.name}},{{eventData?.event.country.name}} From {{eventData?.event.start_date |date}} To {{eventData?.event.end_date |date}}
+             </ng-container>
+             <ng-container *ngIf="eventData?.event?.type == 2">
+               <strong>Venue : </strong> Online 
+             </ng-container>
+             <ng-container *ngIf="eventData?.event?.type == 3">
+                <strong>Venue : </strong> TBC 
+              </ng-container>
+            </h5>
+             <!-- <h5>
+                <strong>Event Time :</strong>{{eventData?.event?.start_time}} - {{eventData?.event?.end_time}}
+             </h5> -->
+             <h5>
+                <strong>Speakers :</strong>
+                {{speakers}}
+             </h5>
+             <ng-container *ngIf="ticketBookingStatus=='open'">
+                <h5 class="price">
+                    <strong>Price :</strong>
+                    <!-- ${{eventData?.price}} -->
+                    <ng-container *ngIf="price.total_price>0">
+                      <ng-container *ngIf="price.usd_price>0">
+                        {{price?.usd_price| number:'1.2-2'}} USD
+                      </ng-container>
+                      <ng-container *ngIf="price.usd_price>0 && price.sxl_price>0">
+                        +
+                      </ng-container>
+                      <ng-container *ngIf="price.sxl_price>0">
+                       SXL {{price?.sxl_price | number:'1.2-2'}}
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="price.total_price == 0">
+                      0.00
+                    </ng-container>
+
+                </h5>
+
+                <form [formGroup]="cartForm" (submit)="saveToCart()">
+                <div class="row">
+                  <div class="col-lg-6">
+
+                    <h5 class="heading_txt"><strong>Ticket Category:</strong></h5>
+                    <h5>
+                            <!-- <ng-select class="inpClass" *ngIf="ticketCategories.length > 0" [items]="ticketCategories" [multiple]="false" [closeOnSelect]="true" [clearOnBackspace]="false" placeholder="Selected Category" bindLabel="payment_category.title" bindValue=""  class="inpClass multiselect" (change)="ticketCategoryChange($event)" >
+                                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm" >
+                                    <span>{{item?.payment_category?.title}}</span>
+                                </ng-template>
+                            </ng-select> -->
+                            <select  (change)="ticketCategoryChange($event)" class="inpClass customSelect" >
+                              <option value="-1">Select Category</option>
+                              <option  *ngFor="let item of ticketCategories;let i = index " [value]="i" > <span>{{item?.payment_category?.title}}</span> </option>
+                            </select>
+                           
+                    </h5>
+
+                  </div>
+                  <div class="col-lg-6">
+                    <h5 class="heading_txt"><strong>Availability : {{availableQuantity}}</strong></h5>
+                    <h5>
+
+                      <!-- {{eventData?.quantity}} tickets <br>  -->
+                      <!-- <span>Organization :</span> Health club -->
+                    </h5>
+
+                    <div class="quantity_area">
+
+                      <div class="input-group">
+                        <span class="input-group-btn plus-icon">
+                          <button type="button" class="btn btn-default btn-number" (click)="minusQuantity($event)">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                        <input type="number" formControlName="quantity" name="quant[1]" class="input-number" value="1" style="padding:5px 15px; width:80px;"
+                        readonly>
+                        <span class="input-group-btn minus-icon">
+                          <button type="button" class="btn btn-default btn-number" (click)="plusQuantity($event)">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                    <!-- <input type="number" formControlName="quantity"> <br> -->
+
+                    <div class="button_area">
+                      <!-- <a href="javascript:void(0);" class="btnSeemore text-center col-md-12">Add to cart</a> -->
+                      <button type="submit" class="buyTick fullBtn">Buy</button>
+                    </div>
+                </form>
+            </ng-container>
+
+            <button *ngIf="ticketBookingStatus=='past'" class="btnClose" >Past Event</button>
+            <button *ngIf="ticketBookingStatus=='ongoing'" class="btnClose" >Opps, you’re late</button>
+            <button *ngIf="ticketBookingStatus=='close'" class="btnClose" >Tickets sale closed!</button>
+            <button *ngIf="ticketBookingStatus=='full'" class="btnClose" >Sold out</button>
+
+           </div>
+         </div>
+       </div>
+      <ngb-tabset class="eventDetailsTabs">
+
+          <!-- <ngb-tab>
+            <ng-template ngbTabTitle>General features</ng-template>
+            <ng-template ngbTabContent>
+                {{eventData?.short_description}}
+            </ng-template>
+          </ngb-tab> -->
+
+          <ngb-tab>
+            <ng-template ngbTabTitle>Description </ng-template>
+            <ng-template ngbTabContent >
+                <div  [innerHTML]="eventData?.description"></div>
+            </ng-template>
+          </ngb-tab>
+
+          <!-- <ngb-tab>
+            <ng-template ngbTabTitle>Reviews</ng-template>
+            <ng-template ngbTabContent>
+              <h3>Coming soon</h3>
+            </ng-template>
+          </ngb-tab> -->
+
+      </ngb-tabset>
+      </div>
+      <div class="col-xl-3 col-lg-4">
+        <!-- <div class="sideAdd">
+          <img src="assets/images/nothing-290x507.jpg" alt="">
+        </div> -->
+
+        <div class="browseBy alt">
+          <h2>Upcomming Events</h2>
+          <!-- <h2> Coming Soon</h2> -->
+          <div class="featuredSide">
+            <owl-carousel [options]="featureSide"  [carouselClasses]="['owl-theme', 'sliding']"  >
+            <div class="item">
+              <ng-container *ngFor="let item of upcommingEvents; ">
+                  <app-event-small-card [item]="item"></app-event-small-card>
+              </ng-container>
+            </div>
+            </owl-carousel>
+          </div>
+        </div>
+
+        <div class="browseBy alt" *ngIf="fetureEvents?.length">
+          <h2>Featured Events</h2>
+          <!-- <h2> Coming Soon</h2> -->
+          <div class="featuredSide">
+            <owl-carousel [options]="featureSide"  [carouselClasses]="['owl-theme', 'sliding']"  >
+            <div class="item">
+              <ng-container *ngFor="let item of fetureEvents; ">
+                  <app-event-small-card [item]="item"></app-event-small-card>
+              </ng-container>
+            </div>
+
+            </owl-carousel>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

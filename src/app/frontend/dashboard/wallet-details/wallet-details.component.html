@@ -1,0 +1,66 @@
+
+    <div class="loginModal">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Transaction Details!</h4>
+          <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       
+        <div class="modal-body">
+            <!-- <div class="form-group clearfix">
+                <label for="content" class="control-label"> Particulars:</label> {{transactionDetails?.description}}
+            </div>
+            <div class="form-group clearfix">
+                <label for="content" class="control-label"> Transactionable Type:</label> {{transactionDetails?.transactionable_type}}
+            </div>
+            <div class="form-group clearfix">
+                <label for="content" class="control-label"> Amount:</label> {{transactionDetails?.amount}}
+            </div>
+            <div class="form-group clearfix">
+                <label for="content" class="control-label"> Type:</label> {{transactionDetails?.type}}
+            </div>
+            <div class="form-group clearfix">
+                <label for="content" class="control-label"> Status:</label> {{transactionDetails?.status}}
+            </div>
+            <div class="form-group clearfix">
+                <label for="content" class="control-label"> Date:</label> {{transactionDetails?.created_at}}
+            </div> -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Particulars</td>
+                            <td>{{transactionDetails?.description}}</td>
+                        </tr>
+                        <tr>
+                            <td>Transactionable Type</td>
+                            <td *ngIf="transactionDetails?.transactionable_type == 'user_courses'">Refund</td>
+                            <td *ngIf="transactionDetails?.transactionable_type != 'user_courses'">{{transactionDetails?.transactionable_type}}</td>
+                        </tr>
+                        <tr>
+                            <td>Amount</td>
+                            <td>{{transactionDetails?.amount | number:'1.2-2'}} USD</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>{{transactionDetails?.type}}</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>{{transactionDetails?.status}}</td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>{{transactionDetails?.created_at | date: 'dd-MM-yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    

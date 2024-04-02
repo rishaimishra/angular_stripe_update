@@ -1,0 +1,40 @@
+<div class="rightPanel">
+
+  <div class="centerHeading">
+    <h2>{{(isCreateMode) ? 'Add Ticket Category' : 'Edit Ticket Category'}}</h2>
+  </div>
+  <div>
+    <a href="javascript:void(0);" routerLink="/admin/payment-category" class="btn btn-primary btn-sm titleLink02 pull-right">Back</a>
+  </div>
+ 
+  <div class="formWrap">
+    <form [formGroup]="formObj" (submit)="saveForm()">
+      <div class="row">
+          <div class="col-sm-12"><label for="">Title:*</label>
+            <div class="inputWrap">
+              <input type="text" class="inpField" formControlName="title" name="title" placeholder="Title" type="text">
+              <div class="form-validation-error" *ngIf="formError?.title">
+                <span *ngFor="let err of formError?.title">{{err?.message}}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12"><label for="">Description:*</label>
+          <div class="inputWrap">
+            <input type="text" class="inpField" formControlName="description" name="description" placeholder="Description" type="text">
+            <div class="form-validation-error" *ngIf="formError?.description">
+              <span *ngFor="let err of formError?.description">{{err?.message}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- disableSubmit -->
+      <!-- <input type="submit" value="Save" class="submitBtn m-t-20"> -->
+      <button type="submit" class="submitBtn" [ngClass]="{'disableSubmit': formLoading}" [disabled]="formLoading">{{(formLoading) ? 'Saving' : 'Save'}} <i *ngIf="formLoading" class="fa fa-spinner fa-spin"></i></button>
+    </form>
+
+  </div>
+
+</div>

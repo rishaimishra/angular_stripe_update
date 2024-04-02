@@ -1,0 +1,198 @@
+<section class="mainContainer">
+  <div class="row" >
+      <div class="col-sm-4 logo">
+          <a href="/">
+						<img src="assets/images/logo.png" alt="">
+					</a>
+      </div>
+      <!-- <div class="col-sm-8">
+          <div class="row">
+            <div class="col">
+                <span class="title">Your Order Summary</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <span class="title">Order Value</span>
+            </div>
+            <div class="col">
+              <p class="titleVal">$50.00</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <span class="title">So Num</span>
+            </div>
+            <div class="col">
+              <p class="titleVal">OR/SL048400</p>
+            </div>
+          </div> 
+      </div> -->
+  </div>
+<ng-container *ngIf="updateAttendeeStatus">
+
+    <div class="row" >
+        <div class="col-md-12">
+      <p class="attendeeText">Kindly verify and fill up the details on all tickets purchased for you and any guest in the form below.</p>
+      </div>
+    </div>
+  
+    <div class="row" >
+        <div class="col-md-12">
+        <label class="attendeeHeading">Attendee Information</label>
+      </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-12">
+        <p class="warrningMsg">Note: There must be a unique email address for every person who recive a ticket.</p>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-12">
+        <form [formGroup]="attendeeForm"  >
+            <div class="alert alert-danger" *ngIf="attendeeForm.controls.items.errors?.duplicateEmail">
+              Please enter unique Email.
+            </div>
+            <!-- <div class="alert alert-danger" *ngIf="attendeeForm.controls.items.errors?.duplicateName">
+              Please enter unique Name.
+            </div> -->
+            <div class="row"> 
+
+          <div formArrayName="items" class="col-sm-12  col-md-4"
+            *ngFor="let item of attendeeForm.get('items')['controls']; let i = index;" >
+            <div [formGroupName]="i" class="attendeeInfoContainer" >
+                <div class="row">
+                    <div class="col">
+                        <p class="attendeeTitle">Attendee {{i+1}}</p>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col">
+                      <label for="" class="ticketCategory">Ticket Category:</label>
+                      <span class="badge badge-warning ticketCat"> {{ ticketCategory | titlecase }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                      <label for="" class="eventName">Event:</label>
+                      <span>&nbsp; {{attendeeInfo[0]?.events?.title}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <label for="">First Name <span class="requiredFiled">*</span>:</label>
+                    <div class="form-group" *ngVar="item.get('first_name') as first_name">
+                      <input class="form-control" formControlName="first_name" name="first_name" placeholder="First Name" type="text" [hidden]="attendeeInfo[0]?.attendee_details[i]?.first_name!=''">
+
+                      <input class="form-control" value="{{attendeeInfo[0]?.attendee_details[i]?.first_name}}" [disabled]='true' [hidden]="attendeeInfo[0]?.attendee_details[i]?.first_name==''">
+
+                      <form-validation-message [fromInstance]="first_name"></form-validation-message>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                      <label for="">Last Name <span class="requiredFiled">*</span>:</label>
+                      <div class="form-group" *ngVar="item.get('last_name') as last_name">
+                        <input class="form-control" formControlName="last_name" name="last_name" placeholder="Last Name" type="text" [hidden]="attendeeInfo[0]?.attendee_details[i]?.last_name!=''">
+
+                        <input class="form-control" value="{{attendeeInfo[0]?.attendee_details[i]?.last_name}}" [disabled]='true' [hidden]="attendeeInfo[0]?.attendee_details[i]?.last_name==''">
+
+                        <form-validation-message [fromInstance]="last_name"></form-validation-message>
+                      </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                      <label for="">Email <span class="requiredFiled">*</span>:</label>
+                      <div class="form-group" *ngVar="item.get('email') as email">
+                        <input class="form-control" formControlName="email" name="email" placeholder="Email" type="text" [hidden]="attendeeInfo[0]?.attendee_details[i]?.email!=''">
+                        
+                        <input class="form-control" value="{{attendeeInfo[0]?.attendee_details[i]?.email}}" [disabled]='true' [hidden]="attendeeInfo[0]?.attendee_details[i]?.email==''">  
+                        <form-validation-message [fromInstance]="email"></form-validation-message>
+                        
+                      </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                      <label for="">Country <span class="requiredFiled">*</span>:</label>
+                      <div class="form-group" *ngVar="item.get('country_id') as country_id">
+                          <!-- <select class="form-control" id="" formControlName="country_id" name="country" placeholder="Country">
+
+                              <option *ngFor="let country of countries" value="country.value">{{ country.name}}</option>
+                            
+                          </select> -->
+                          <ng-select class="inpClass " [items]="countries"
+                              bindLabel="name" bindValue="id" placeholder="Select Country"
+                              formControlName="country_id" (change)="onCountrySelect($event,i)" [hidden]="country_id!=''" [hidden]="attendeeInfo[0]?.attendee_details[i]?.phone_number!=''" >
+                          </ng-select>
+                          <ng-container *ngIf="attendeeInfo[0]?.attendee_details[i]?.phone_number!=''">
+                              <input class="form-control" value="{{attendeeInfo[0].attendee_details[i].country.name}}" [disabled]='true' [hidden]="attendeeInfo[0]?.attendee_details[i]?.phone_number==''"> 
+                          </ng-container>
+                        <form-validation-message [fromInstance]="country_id"></form-validation-message>
+                      </div>
+                    </div>
+                </div>
+                <div class="row" >
+                      <div class="col">
+                        <label for="">Phone No <span class="requiredFiled">*</span>:</label>
+                        <ng-select [items]="countries"  bindLabel="label" bindValue="phone_code" formControlName="phone_code" class="inpClass" [hidden]="attendeeInfo[0]?.attendee_details[i]?.phone_number!=''" >
+                            <!-- <ng-template ng-label-tmp let-item="item">
+                                {{item.label}}
+                            </ng-template> -->
+                            <ng-template ng-label-tmp let-item="item">
+                              <img height="15" width="15" [src]="item.image ? item.image: ''"/>
+                              {{item.label}}
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                                <img height="15" width="15" [src]="item.image ? item.image: ''"/>  <b>{{item.label}}</b>
+                            </ng-template>
+                        </ng-select>
+                        <ng-container *ngIf="attendeeInfo[0]?.attendee_details[i]?.phone_number!=''">
+                        <input class="form-control" value="+{{attendeeInfo[0]?.attendee_details[i]?.phone_code}}({{attendeeInfo[0]?.attendee_details[i]?.country.code}})" [disabled]='true' [hidden]="attendeeInfo[0]?.attendee_details[i]?.phone_number==''" > 
+                        </ng-container>
+                       
+                      </div>
+                      <div class="col">
+                          <label for="">&nbsp;</label>
+                        <div class="form-group" >
+                          <input class="form-control" formControlName="phone_number" name="phone_number" placeholder="Phone No" minlength=10 maxlength=10
+                            type="text" (keypress)="keyPress($event)" [hidden]="attendeeInfo[0]?.attendee_details[i]?.phone_number!=''">
+                          
+                          <ng-container *ngIf="attendeeInfo[0]?.attendee_details[i]?.phone_number!=''">  
+                          <input class="form-control" value="{{attendeeInfo[0]?.attendee_details[i]?.phone_number}}" [disabled]='true' [hidden]="attendeeInfo[0]?.attendee_details[i]?.phone_number==''"> 
+                          </ng-container> 
+                          
+                        </div>
+                      </div>
+                     
+                </div>
+                <div class= "row" *ngVar="item.get('phone_number') as phone_number">
+                  <form-validation-message [fromInstance]="phone_number"></form-validation-message>
+                </div>
+
+              <!-- <input formControlName="first_name" placeholder="First Name">
+              <input formControlName="last_name" placeholder="Last Name">
+              <input formControlName="email" placeholder="Email">
+              <input formControlName="country_id" placeholder="Country">
+              <input formControlName="phoneNo" placeholder="Phone No"> -->
+            </div>
+          </div>
+
+        </div>
+
+          <div class="clearfix"></div>
+          <input class="submitBtn" type="submit" name="" value="Submit" [swal]="{text:'Are you sure?',type:'question'}" (confirm)="saveInfo()"   [ngClass]="{'disableSubmit': !attendeeForm.valid}" [disabled]="!attendeeForm.valid"  [hidden]="attendeeInfo[0]?.attendee_details[ticket_quantity-1]?.first_name!=''">
+        </form>
+      </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="!updateAttendeeStatus">
+    <div class="alert alert-danger blankInfo">
+      Sorry, update attendee date Expire..
+    </div>
+</ng-container>
+</section>

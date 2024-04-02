@@ -1,0 +1,96 @@
+<section class="mainContainer">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-xl-2 col-lg-3 leftPanel">
+            <app-dashboard-left-panel></app-dashboard-left-panel>
+          </div>
+          
+        
+          <div class="col-xl-10 col-lg-9">
+              <div class="rightPanel">
+
+                  <div class="centerHeading">
+                    <h2>Create Coupon</h2>
+                  </div>
+                  <div>
+                    <a href="javascript:void(0);" [routerLink]="['/dashboard','coupons', courseId]" class="btn btn-primary btn-sm titleLink02 pull-right">Back</a>
+                  </div>
+                 
+                  <div class="formWrap">
+                      <form class="form-horizontal"[formGroup]="couponAddForm" (ngSubmit)="addCoupon()" >
+                          <div class="panel-body">
+                            <div class="box-body">
+                              <div class="form-group">
+                                <label for="name" class="control-label">Coupon code*</label>
+                                <div class=""  *ngVar="couponAddForm.get('coupon_code') as coupon_code">
+                                    <input type="text" class="inpClass" formControlName="coupon_code"  style="text-transform:uppercase" minlength="6">
+                                    <form-validation-message [fromInstance]="coupon_code" ></form-validation-message>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                  <label for="">Discount Mode*</label>
+                                <div class="" *ngVar="couponAddForm.get('discount_mode') as discount_mode" (change)="resetDiscountValue()">
+                                    <input type="text" class="inpClass" formControlName="discount_mode" value="fixed" readonly>
+                                    <form-validation-message [fromInstance]="discount_mode"></form-validation-message>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <label for="">Discount Value*</label>
+                                <div class="" *ngVar="couponAddForm.get('discount_value') as discount_value" >
+                                    <input type="text" class="inpClass"  formControlName="discount_value"  (keypress)="checkDiscountValue($event)" > 
+                                    <form-validation-message [fromInstance]="discount_value"></form-validation-message>
+                                </div>
+                                <h6 class="fileFormatInfo"> *Max Discount value is {{coursePrice * courseUsdSxlRatio}} USD. </h6>
+                              </div>
+
+                              <div class="form-group">
+                                  <label for="">Use Per Code*</label>
+                                  <div class=""  *ngVar="couponAddForm.get('use_per_user') as use_per_user" >
+                                      <input type="text" class="inpClass" formControlName="use_per_user"  (keypress)="usePerCode($event)" >
+                                      <form-validation-message [fromInstance]="use_per_user"></form-validation-message>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <label for="">Max Use*</label>
+                                  <div class=""  *ngVar="couponAddForm.get('max_use') as max_use" >
+                                      <input type="text" class="inpClass" formControlName="max_use"  (keypress)="maxUseCheck($event)">
+                                      <form-validation-message [fromInstance]="max_use"></form-validation-message>
+                                    </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <label for="">Date Range*</label>
+                                  <div>
+                                    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [minDate]="minStartDate">
+                                    </ngb-datepicker>
+                                    
+                                    <ng-template #t let-date let-focused="focused">
+                                      <span class="custom-day"
+                                            [class.focused]="focused"
+                                            [class.range]="isRange(date)"
+                                            [class.faded]="isHovered(date) || isInside(date)"
+                                            (mouseenter)="hoveredDate = date"
+                                            (mouseleave)="hoveredDate = null">
+                                        {{ date.day }}
+                                      </span>
+                                    </ng-template>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel-footer">
+                            <button type="submit" class="submitBtn" [ngClass]="{'disableSubmit': couponAddForm.invalid}"
+                            [disabled]="couponAddForm.invalid">Save </button>
+                          </div>
+                      </form>
+                
+                  </div>
+                
+                </div>
+          </div>
+  
+      </div>
+    </div>
+  </section>

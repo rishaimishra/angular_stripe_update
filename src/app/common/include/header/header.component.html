@@ -1,0 +1,523 @@
+<header>
+		<div class="headerTop clearfix">
+			<div class="container">
+				<div class="logo">
+					<a href="/">
+						<img src="assets/images/logo.png" alt="">
+					</a>
+				</div>
+				
+				<div class="headerTopRight">
+					<!--<div class="topSearchCont" [ngClass]="status2 ? 'acTive' : ''" >-->
+					<!-- <div class="topSearchCont acTive">
+	
+							<input type="search" placeholder="Search" #search [value]="searchKey">
+					</div>
+					<div class="topSearch" >
+						<a href="javascript:void(0);" (click)="clickEventTopSearch(search)">    
+							<img src="assets/images/search-icon.png" alt="">
+						</a>
+	
+					</div> -->
+	
+					<!-- <form [formGroup]="searchFrom" (ngSubmit)="searchSubmit()">
+						<div class="topSearchCont acTive">
+							<input type="search" placeholder="Search" formControlName="searchKey"  >
+						</div>
+						
+						<div class="topSearch" >
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</div>
+					</form>  -->
+	
+						<div class="signUp" *ngIf="!http.isLoggednIn()">
+							<a (click)="loginFormModal()" class="logIn">LOG IN</a>
+							<a (click)="registerFormModal()" class="siUp">SIGN UP</a>
+						</div>
+					
+					<div class="topNotificAlt" *ngIf="(innerWidth > 359  && !http.isLoggednIn()) || http.isLoggednIn()">
+						<ng-container  *ngIf="http.isLoggednIn()">
+							<div style="width:24px; height:32px;" (click)="notificationClickEvent()">
+							<i class="fa fa-bell-o" aria-hidden="true" ></i>
+							<div class="notoficCountAlt"  *ngIf="notificationCount > 0" >{{ notificationCount}}</div>
+					       </div>
+
+							<div class="topNotificDropAlt" *ngIf="notificationCount > 0 && notificationShowstatus">
+								<div class="topNotificDropInnerAlt" *ngIf="notificationRecordInHeader">
+									<div class="NotificDropSingleAlt" *ngFor="let notifications of notificationRecords;">
+											<img class="NotificDropSingleNameAlt" src="{{notifications?.user?.avatar ? notifications?.user?.avatar:'assets/images/no-image.png'}}"   alt="..." /> 
+											<p>{{ notifications.data.length > 50 ? (notifications.data | slice: 0:50) + '...' : (notifications.data)}}</p>
+											<p><span>{{notifications.created_at | amTimeAgo : true}}</span></p>
+									</div>
+								
+									<div class="notificSeeAllAlt"><a [routerLink]="['/dashboard', 'notifications']">See All <i aria-hidden="true" class="fa fa-angle-right"></i></a></div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+	
+					<div class="topNotificAlt" *ngIf="(innerWidth > 359 && !http.isLoggednIn()) || http.isLoggednIn() ">
+						<ng-container *ngIf="http.isLoggednIn() && checkUser">
+							<i class="fa fa-heart-o" aria-hidden="true" (click)="wishlistClickEvent()" ></i>
+							<div class="notoficCountAlt"  *ngIf="wishlistCount > 0 ">{{ wishlistCount}}</div>
+							<div class="topNotificDropAlt" *ngIf="wishlistCount > 0 && wishlistShowstatus">
+								<div class="topNotificDropInnerAlt" *ngIf="wishlistRecordInHeader">
+									<div class="NotificDropSingleAlt" *ngFor="let item of wishListRecords;">
+											<img class="NotificDropSingleNameAlt" src="{{item?.product_details.images.thumbnail ? item?.product_details.images.thumbnail : 'assets/images/no-image.png'}}"     alt="..." /> 
+										<h6>{{item?.product_details?.title}}</h6>
+										<!-- <p>{{ item?.product_details?.sub_title.length > 50 ? (item?.product_details?.sub_title | slice: 0:50) + '...' : (item?.product_details?.sub_title)}}</p> -->
+									</div>
+									
+									<div class="notificSeeAllAlt"><a [routerLink]="['/dashboard', 'wishlist']">See All <i aria-hidden="true" class="fa fa-angle-right"></i></a></div>
+								</div>
+							</div>
+						</ng-container>	
+					</div>
+	
+					<div class="signUp" *ngIf="http.isLoggednIn()" [className]="http.isLoggednIn() ? 'signUp active_user' : ''">
+						<!-- <a routerLink="/" >DASHBOARD</a> /
+				<a routerLink="" (click)="logOut()">LOG OUT</a> -->
+						<!-- <div class="user_avatar">{{shortName}}</div> -->
+						<div class="user_avatar" *ngIf="userDetails?.profile?.first_name" (click)="dashboardClickEvent()">{{(userDetails?.profile?.first_name | slice: 0:1) + (userDetails?.profile?.last_name | slice: 0:1)}}</div>
+						<div class="user_avatar" *ngIf="!userDetails?.profile?.first_name" (click)="dashboardClickEvent()">DB</div>
+						<div class="userAvDrop" *ngIf="dashboardShowstatus">
+							<div class="avatarDetails">
+								<div class="avatarDetailsImg">
+									<img src="{{userProfileImage}}" onError="this.src='assets/images/no-image.png';" alt="..." />
+								</div>
+								<h2>{{userName}}</h2>
+								<h3 >{{getUserID(userDetails.id ,userRole )}}</h3>
+								<h3 *ngIf="userRole === 'vendor'">tutor</h3>
+								<h3 *ngIf="userRole !== 'vendor'">{{userRole}}</h3>
+							</div>
+							<ul>
+								<li>
+									<a *ngIf='checkAdmin' routerLink="/admin/dashboard">Dashboard</a>
+								</li>
+								<li>
+									<a *ngIf='!checkAdmin' routerLink="/dashboard">Dashboard</a>
+								</li>
+								<!-- <li>
+					<a href="#">Help</a>
+				  </li>-->
+								<li>
+									<a (click)="logOut()">Sign Out</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+	
+					<a id="mini-cart" routerLink="/cart" (click)="cartClickEvent()">
+						<div class="cartIcon">
+							<img src="assets/images/cart-icon.png" alt="">
+							<span>Cart</span>
+							<div class="cartnum" *ngIf="cartObj?.items?.length > 0">{{cartObj?.items?.length || 0}}</div>
+						</div>
+					</a>
+					<!-- <a id="mini-cart" *ngIf="!cartObj" href="javascript:void(0);">
+						<div class="cartIcon">
+							<img src="assets/images/cart-icon.png" alt="">
+							<span>Cart</span>
+							<div class="cartnum">0</div>
+						</div>
+					</a> -->
+				</div>
+				<div class="search_sec">
+					<form [formGroup]="searchFrom" (ngSubmit)="searchSubmit()"  >
+						<div class="topSearchCont acTive">
+							<input type="search" placeholder="Search"  name="searchKey" formControlName="searchKey" (input)="newChange()" autocomplete="off">
+							
+						</div>
+						
+					
+						<div class="topSearch" >
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</div>
+						<div *ngIf="submitted && searchFrom.controls.searchKey.errors ">
+							<div  class="sb-errors-list" *ngIf="searchFrom.controls.searchKey.errors.required">Please enter something..</div>
+						
+						</div>
+						<div class="clearfix"></div>
+						<div class="listing_area">
+							<ul *ngIf="autoCompleteData.length>0 ">
+								<li *ngFor="let item of autoCompleteData" >
+									<!-- <i class="fa fa-search" aria-hidden="true"></i> {{item}} -->
+	
+									
+								<!-- <a [routerLink]="['/search']" [queryParams]="{string: item }"  ><i class="fa fa-search" aria-hidden="true"></i> {{item}}
+									</a> -->
+	
+									<a href="javascript:void(0);" (click)="listElementSelect(item)" ><i class="fa fa-search" aria-hidden="true"></i> {{item}}
+									</a>
+	
+								 </li>
+								
+							</ul>
+						</div> 
+					</form> 
+				</div>
+				<!-- headersub-menu static -->
+				<!-- <div class="categories_menu">
+					<a href="#"><i class="fa fa-th" aria-hidden="true"></i> Categories</a>
+					<ul class="course_sub_menu">
+						<li class="active">
+							<a href="#"><i class="fa fa-file-code-o" aria-hidden="true"></i> <span>Developement</span></a>
+							<ul class="course_sub_menu course_sublebel1">
+								<li class="menu_link"><a href="#">All Development</a></li>
+								<li class="menu_link"><a href="#">Web Development</a></li>
+								<li class="menu_link"><a href="#">Mobile Apps</a></li>
+								<li class="menu_link"><a href="#">Game Development</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i> <span>Business</span></a>
+							<ul class="course_sub_menu course_sublebel1">
+								<li class="menu_link"><a href="#">All Development</a></li>
+								<li class="menu_link"><a href="#">Web Development</a></li>
+								<li class="menu_link"><a href="#">Mobile Apps</a></li>
+								<li class="menu_link"><a href="#">Game Development</a></li>
+							</ul>
+						</li>
+						<li><a href="#"><i class="fa fa-desktop" aria-hidden="true"></i> <span>IT & Software</span></a></li>
+						<li><a href="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> <span>Office Productivity</span></a></li>
+						<li><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Design</span></a></li>
+						<li><a href="#"><i class="fa fa-bullseye" aria-hidden="true"></i> <span>Marketing</span></a></li>
+						<li><a href="#"><i class="fa fa-asterisk" aria-hidden="true"></i> <span>Lifestyle</span></a></li>
+						<li><a href="#"><i class="fa fa-camera" aria-hidden="true"></i> <span>Photography</span></a></li>
+						<li><a href="#"><i class="fa fa-heartbeat" aria-hidden="true"></i> <span>Health & Fitness</span></a></li>
+						<li><a href="#"><i class="fa fa-music" aria-hidden="true"></i> <span>Music</span></a></li>
+						<li><a href="#"><i class="fa fa-life-ring" aria-hidden="true"></i> <span>Teaching & Academics</span></a></li>
+					</ul>
+					
+				</div> -->
+	
+				<!-- headersub-menu dynamic -->
+				<!-- <div class="categories_menu">
+					<a routerLink="/courses"><i class="fa fa-th" aria-hidden="true"></i> Categories</a>
+					<ul class="course_sub_menu">
+						<ng-template #recursiveList let-list>
+							<li *ngFor="let item of list">
+							<a routerLink="/courses/{{item.slug}}">{{item.name}}</a>
+							<ul *ngIf="item.children.length > 0" class="course_sub_menu  course_sublebel{{item.label+1}}" >
+								<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }"></ng-container>
+							</ul>
+							</li>
+						</ng-template>
+						<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list }"></ng-container>
+					</ul>
+				</div> -->
+	
+	
+				
+			</div>
+		</div>
+		<div class="headerBottom clearfix">
+			<div class="container">
+				<div class="mobNavOpen" (click)="clickEvent()">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</div>
+				<div class="siteNav" [ngClass]="status ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickEvent()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul >
+						<li>
+							<a href="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="clickEvent()">Home</a>
+						</li>
+						<li >
+							<!-- <a routerLink="/courses" routerLinkActive="active-link" (click)="clickEvent()" >Courses</a> -->
+							<div class="categories_menu">
+								<!-- <a routerLink="/courses" routerLinkActive="active-link" (click)="clickEvent()" >Courses</a> -->
+								<a routerLink="/courses" routerLinkActive="active-link" (click)="clickEvent()" >Courses <i class="fa fa-angle-down downArrow" aria-hidden="true"></i> </a> 
+								<span class="arrowfornav" (click)="clickCourseCategoryEvent()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+								<ul class="course_sub_menu">
+									<ng-template #recursiveListCategory let-list>
+										<li *ngFor="let item of list"  [ngClass]="{'forsubmenu':	item.children.length, 'forsublebel1': item.children.length}"  >
+										<ng-container *ngIf="item.icon && item.label==0">	
+											<i class="fa {{item.icon}} menuIcon" aria-hidden="true" ></i>
+										</ng-container>
+										<ng-container *ngIf="!item.icon && item.label==0">
+												<i class="fa fa-caret-right menuIcon" aria-hidden="true"></i>
+										</ng-container>
+										<a routerLink="/courses/{{item.slug}}">{{item.name}}</a>
+										<div class="clearfix"></div>
+										<ul *ngIf="item.children.length > 0" class="course_sub_menu  course_sublebel{{item.label+1}}" >
+											<ng-container *ngTemplateOutlet="recursiveListCategory; context:{ $implicit: item.children }"></ng-container>
+										</ul>
+										</li>
+									</ng-template>
+									<ng-container *ngTemplateOutlet="recursiveListCategory; context:{ $implicit: list }"></ng-container>
+								</ul>
+							</div>
+						</li>
+						<!-- <li class="categoriesLi">
+							<a routerLinkActive="active-link" (click)="clickCourseCategoryEvent()">Categories</a>
+						</li> -->
+						<li>
+							<!-- <a routerLink="/events" routerLinkActive="active-link" (click)="clickEvent()" >Events</a> -->
+							<div class="categories_menu">
+								<a routerLink="/live-events" routerLinkActive="active-link" (click)="clickEvent()" >Live Events  <i class="fa fa-angle-down downArrow" aria-hidden="true" ></i> </a> 
+								<span class="arrowfornav" (click)="clickEventMenu()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+								<ul class="course_sub_menu">
+									<li class="forsubmenu">
+										<i class="fa fa-calendar-check-o menuIcon" aria-hidden="true"></i> <a routerLink="/events">Events</a>
+										<div class="clearfix"></div>
+										<ul class="course_sub_menu  course_sublebel1">
+											<ng-template #recursiveList let-allEventCategorylist>
+												<li *ngFor="let item of allEventCategorylist"  [ngClass]="{'forsubmenu':	item.children.length , 'forsublebel1': item.children.length}">
+												<ng-container *ngIf="item.icon">	
+													<i class="fa {{item.icon}} menuIcon" aria-hidden="true" ></i>
+												</ng-container>
+												<ng-container *ngIf="!item.icon">
+													<i class="fa fa-caret-right menuIcon" aria-hidden="true"></i>
+												</ng-container>
+												<a routerLink="/events/{{item.slug}}">{{item.name}}</a>
+												<div class="clearfix"></div>
+												<ul *ngIf="item.children.length > 0" class="course_sub_menu course_sublebel{{item.label+1}} course_sublebel{{item.label+2}}" >
+													<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }"></ng-container>
+												</ul>
+												</li>
+											</ng-template>
+											<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: allEventCategorylist }"></ng-container>
+										</ul>	
+									</li>
+									<li class="forsubmenu">
+										<i class="fa fa-map-marker menuIcon" aria-hidden="true"></i>
+										<a routerLink="/events">Countries</a>
+										<div class="clearfix"></div>
+										<ul *ngIf="eventCountries.length > 0" class="course_sub_menu  course_sublebel1 eventCountrySpeaker" >
+											<li *ngFor="let item of eventCountries">
+												<i class="fa fa-map-marker menuIcon" aria-hidden="true"></i>
+												<a [routerLink]="['/events']" [queryParams]="{country_id: item.id}" (click)="setCurrentCountry(item?.name)">{{item.name}}</a>
+												<div class="clearfix"></div>
+											</li>	
+										</ul>
+									</li>
+									<li class="forsubmenu">
+										<i class="fa fa-bullhorn menuIcon" aria-hidden="true"></i>
+										<a routerLink="/events">Speakers</a>
+										<div class="clearfix"></div>
+										<ul *ngIf="eventSpeakers.length > 0" class="course_sub_menu  course_sublebel1 eventCountrySpeaker" >
+											<li *ngFor="let item of eventSpeakers">
+												<i class="fa fa-bullhorn menuIcon" aria-hidden="true"></i>
+												<a [routerLink]="['/events']" [queryParams]="{speaker_id: item.id}" (click)="setCurrentSpeaker(item?.name)">{{item.name}}</a>
+												<div class="clearfix"></div>
+											</li>	
+										</ul>
+									</li>
+									
+								</ul>
+							</div>
+						</li>
+						
+						<!--<li>
+							<a routerLink="/products" routerLinkActive="active-link">Products</a>
+						</li> -->
+						<li>
+							<a routerLink="/about" routerLinkActive="active-link" (click)="clickEvent()" >About Us</a>
+						</li>
+						<!--<li>
+							<a routerLink="/about" routerLinkActive="active-link">About Us</a>
+						</li>
+						<li><a routerLink="/blog" routerLinkActive="active-link">Blog</a></li> -->
+						<li>
+							<a routerLink="/how-it-works" routerLinkActive="active-link" (click)="clickEvent()" >How it works</a>
+						</li>
+						<li>
+							<a routerLink="/contact" routerLinkActive="active-link" (click)="clickEvent()" >Contact</a>
+						</li>
+						<li>
+								<a routerLink="/help" routerLinkActive="active-link" (click)="clickEvent()" > Help</a>
+						</li>
+						<!-- <li>
+								<a href="https://successlife.freshdesk.com/support/solutions
+								" routerLinkActive="active-link" target="blank"> FAQs</a>
+						</li> -->
+						<!-- <li><a routerLink="/membership" routerLinkActive="active-link">Membership</a></li> 
+			  <li>
+				<a routerLink="/contact" routerLinkActive="active-link">Contact</a>
+			  </li>-->
+					</ul>
+				</div>
+				<!-- <div class="siteNav label01" [ngClass]="categoryStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickCourseCategoryEvent()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li><a routerLinkActive="active-link" (click)="clickSubCategoryEvent()"><i class="fa fa-file-code-o" aria-hidden="true"></i> <span>Developement</span></a></li>
+						<li><a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i> <span>Business</span></a></li>
+						<li><a href="#"><i class="fa fa-desktop" aria-hidden="true"></i> <span>IT & Software</span></a></li>
+						<li><a href="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> <span>Office Productivity</span></a></li>
+						<li><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Design</span></a></li>
+						<li><a href="#"><i class="fa fa-bullseye" aria-hidden="true"></i> <span>Marketing</span></a></li>
+						<li><a href="#"><i class="fa fa-asterisk" aria-hidden="true"></i> <span>Lifestyle</span></a></li>
+						<li><a href="#"><i class="fa fa-camera" aria-hidden="true"></i> <span>Photography</span></a></li>
+						<li><a href="#"><i class="fa fa-heartbeat" aria-hidden="true"></i> <span>Health & Fitness</span></a></li>
+						<li><a href="#"><i class="fa fa-music" aria-hidden="true"></i> <span>Music</span></a></li>
+						<li><a href="#"><i class="fa fa-life-ring" aria-hidden="true"></i> <span>Teaching & Academics</span></a></li>
+					</ul>
+				</div>
+	
+				<div class="siteNav label02" [ngClass]="subcategoryStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickSubCategoryEvent()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li class="menu_link"><a href="#">All Development</a></li>
+						<li class="menu_link"><a href="#">Web Development</a></li>
+						<li class="menu_link"><a href="#">Mobile Apps</a></li>
+						<li class="menu_link"><a href="#">Game Development</a></li>
+					</ul>
+				</div> -->
+
+				<!--******************************* Mobiile sub menu start**************************************** -->
+
+				<!--course category dynamic code for mobile Start -->
+				<div class="siteNav label01" [ngClass]="categoryStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickCourseCategoryEvent()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li *ngFor="let rs of courseParentCategory">
+							<a routerLinkActive="active-link"  routerLink="/courses/{{rs.slug}}" (click)="redirectFromParentCategoryCourseList()"> 
+								<ng-container *ngIf="rs.icon">
+									<i class="fa {{rs.icon}} menuIcon" aria-hidden="true" ></i>
+								</ng-container>
+								<ng-container *ngIf="!rs.icon">
+										<i class="fa fa-caret-right menuIcon" aria-hidden="true"></i>
+								</ng-container>
+								<span>{{rs.name}}</span></a> 
+							<ng-container *ngIf="rs.children > 0">
+								<span class="arrowfornav" (click)="clickSubCategoryEvent(rs.id)"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+							</ng-container>
+						</li>
+						
+					</ul>
+				</div>
+	
+				<div class="siteNav label02" [ngClass]="subcategoryStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickSubCategoryEvent()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li *ngFor="let rs of courseChildCategory">
+								<a routerLinkActive="active-link"  routerLink="/courses/{{rs.slug}}" (click)="redirectFromChildCategoryCourseList()">
+									<!-- <ng-container *ngIf="rs.icon">
+										<i class="fa {{rs.icon}} menuIcon" aria-hidden="true" ></i>
+									</ng-container>
+									<ng-container *ngIf="!rs.icon">
+										<i class="fa fa-caret-right menuIcon" aria-hidden="true"></i>
+									</ng-container> -->
+									<span>{{rs.name}}</span></a> 
+								
+						</li>
+					</ul>
+				</div>
+				<!--course category dynamic code for mobile end-->
+
+				<!--Events menu dynamic code start -->
+				<div class="siteNav label01" [ngClass]="eventMenuStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickEventMenu()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li>
+							
+							<a routerLinkActive="active-link"  routerLink="/events" (click)="redirectFromEventMainList()"><i class="fa fa-calendar-check-o menuIcon" aria-hidden="true"></i><span>Events</span></a>
+							<span class="arrowfornav"  (click)="clickEventParentCategory()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+						</li>
+						<li>
+							<a routerLinkActive="active-link"  routerLink="/events" (click)="redirectFromEventMainList()"><i class="fa fa-map-marker menuIcon" aria-hidden="true"></i><span>Country</span></a> <span class="arrowfornav"(click)="clickEventCountry()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+						</li>
+						<li>
+							<a routerLinkActive="active-link"  routerLink="/events" (click)="redirectFromEventMainList()"><i class="fa fa-user menuIcon" aria-hidden="true"></i>
+								<span>Speaker</span></a> <span class="arrowfornav"(click)="clickEventSpeaker()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+						</li>
+						
+						
+					</ul>
+				</div>
+				<!-- Country list -->
+				<div class="siteNav label02" [ngClass]="eventCountryStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickEventCountry()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li *ngFor="let rs of eventCountries">
+								<a routerLinkActive="active-link" [routerLink]="['/events']" [queryParams]="{country_id: rs.id}" (click)="setCurrentCountry(rs?.name)" (click)="redirectFromEventCountryList(rs?.name)"> 
+								<i class="fa fa-map-marker menuIcon" aria-hidden="true"></i> <span>{{rs.name}}</span></a> 
+						</li>
+					</ul>
+				</div>
+				<!-- Speaker list -->
+				<div class="siteNav label02" [ngClass]="eventSpeakerStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickEventSpeaker()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li *ngFor="let rs of eventSpeakers">
+								<a routerLinkActive="active-link" [routerLink]="['/events']" [queryParams]="{speaker_id: rs.id}" (click)="redirectFromEventSpeakerList(rs?.name)"> <i class="fa fa-user menuIcon" aria-hidden="true"></i> <span>{{rs.name}}</span></a> 
+						</li>
+					</ul>
+				</div>
+				<!-- Event parent category list -->
+				<div class="siteNav label02" [ngClass]="eventParentCategoryStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickEventParentCategory()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li *ngFor="let rs of eventParentCategory">
+							<a routerLinkActive="active-link" routerLink="/events/{{rs.slug}}"  (click)="redirectFromEventParentCategoryList(rs?.name)">
+								<ng-container *ngIf="rs.icon">
+									<i class="fa {{rs.icon}} menuIcon" aria-hidden="true" ></i>
+								</ng-container>
+								<ng-container *ngIf="!rs.icon">
+									<i class="fa fa-caret-right menuIcon" aria-hidden="true"></i>
+								</ng-container> 
+								<span>{{rs.name}}</span></a> 
+							<ng-container *ngIf="rs.children > 0">
+								<span class="arrowfornav"  (click)="clickEventChildCategory(rs.id)"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+							</ng-container>
+						</li>
+					</ul>
+				</div>
+
+				<!-- Event child category list -->
+				<div class="siteNav label03" [ngClass]="eventchildCategoryStatus ? 'acTive' : ''">
+					<div class="siteNavClose" (click)="clickEventChildCategory()">
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</div>
+					<ul>
+						<li *ngFor="let rs of eventChildCategory">
+							<a routerLinkActive="active-link" routerLink="/events/{{rs.slug}}"  (click)="redirectFromEventChildCategoryList(rs?.name)"> 
+								<ng-container *ngIf="rs.icon">
+									<i class="fa {{rs.icon}} menuIcon" aria-hidden="true" ></i>
+								</ng-container>
+								<ng-container *ngIf="!rs.icon">
+									<i class="fa fa-caret-right menuIcon" aria-hidden="true"></i>
+								</ng-container>
+								<span>{{rs.name}}</span></a> 
+							
+						</li>
+					</ul>
+				</div>
+
+				<!--Events menu dynamic code end -->
+
+				<!--******************************* Mobiile sub menu end**************************************** -->
+
+
+				<div class="topSocial">
+					<!--<ul>
+							<li><a target="_blank" href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+							<li><a target="_blank" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+							<li><a target="_blank" href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+							<li><a target="_blank" href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>tutor
+						</ul> -->
+					<a style="margin-right: 5px;" class="linkTop" *ngIf="checkVendorPage !== '/tutor'" routerLink="/tutor">Become a Tutor</a>
+					<!-- <a class="linkTop alt" routerLink="/reseller">Become a Reseller</a> -->
+				</div>
+			</div> 
+		</div>
+	</header>
+	

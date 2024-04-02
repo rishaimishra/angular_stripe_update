@@ -1,0 +1,90 @@
+<div class="rightPanel alt">
+    <breadcrumb>
+      <li class="active"><span>Payouts</span></li>
+    </breadcrumb>
+    
+    <div class="row">
+     <div class="col-md-4"><h2 class="headTitle">All Payouts</h2></div>
+     <div class="col-lg-6">	 
+        <div class="search_sec">
+          <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+            <div class="topSearchCont acTive">
+              <input autocomplete="off" formControlName="string" name="string"
+                  placeholder="Search" type="search" >
+            </div>
+            <div class="topSearch">
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    
+      <div class="table-responsive">
+        
+        <!-- <notification-message [messages]="error_messages"></notification-message> -->
+    
+        <table class="table table-striped" *ngIf="records.length > 0">
+            <thead>
+              <tr>
+                  <th>User</th>
+                  <th width="30%">Description</th>
+                  <th>Ethereum Address</th>
+                  <th>Virtual Combined Amount</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="records.length > 0">
+                <tr *ngFor=" let rs of records; let i = index">
+                    <td>{{ rs?.wallet?.user?.profile?.full_name}}</td>
+                    <td>{{ rs?.description}}</td>
+                    <td>{{ rs?.wallet?.user?.profile?.ethereum_address}}</td>
+                    <td>
+                      {{rs?.amount/2 | number:'1.2-2'}} USD 
+                      + 
+                      {{rs?.amount/2 | number:'1.2-2'}} SXL
+                    </td>
+                    <td>{{rs?.amount | number:'1.2-2'}} USD</td>
+                    <td>{{ rs?.generate_date | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{ rs?.status}}</td>
+                    <td *ngIf="rs?.status == 'complete'">&nbsp;</td>
+                    <td *ngIf="rs?.status == 'pending'">
+                        <button class="btn btn-sm btn-primary linkBg" (click)="payoutCommentModal(rs?.user_id, rs?.wallet_id, rs?.amount, rs?.id)">Comment</button>
+                    </td>
+                </tr>
+      
+            </tbody>
+            <tbody *ngIf="records.length === 0" >
+              <tr>
+                <td colspan="6" class="text-center">
+                  No record found
+                </td>
+              </tr>
+            </tbody>
+            <tfoot class="tabPagination" *ngIf="records.length > 0" >
+              <tr>
+                <td colspan="6">
+                  <app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)"
+                   (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+    
+        
+          <div class="row mt30" *ngIf="records.length === 0">
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <strong>Oops!</strong>
+                    No record found.
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    

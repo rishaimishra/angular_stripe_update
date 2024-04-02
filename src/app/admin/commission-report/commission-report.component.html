@@ -1,0 +1,110 @@
+<div class="rightPanel alt">
+  <!-- <div class="centerHeading">
+    <h2> {{userType|titlecase}} Commission Report</h2>
+  </div> -->
+  <breadcrumb>
+    <li class="active"><span>{{userType|titlecase}} Commission Report</span></li>
+  </breadcrumb>
+
+  <div class="row">
+    <div class="col-8 col-md-8"><h2 class="headTitle"> {{userType|titlecase}} Commission Report </h2></div>
+    <div class="col-4 col-md-4">
+        <h2 class="backLink">
+          <a routerLink="/admin/dashboard" >Back </a>
+        </h2>
+    </div>
+  </div>
+  <button  (click)="exportTutorAsXLSX()" class="btn btn-primary btn-sm titleLink02 pull-right" *ngIf="records.length > 0 && userType=='tutor'"><i class="fa fa-download" aria-hidden="true"></i> Export</button>
+
+  <button  (click)="exportResellerAsXLSX()" class="btn btn-primary btn-sm titleLink02 pull-right" *ngIf="records.length > 0 && userType=='reseller'"><i class="fa fa-download" aria-hidden="true"></i> Export</button>
+
+  <div class="col-lg-12 custom_form searchForm">
+      <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+        <div class="row">
+          <div class="col-sm-3">
+              <label>Month</label>
+              <ng-select [items]="months" bindLabel="label"
+                [closeOnSelect]="true" bindValue="value"   formControlName="month">
+                <ng-template ng-option-tmp let-item="item" >
+                  {{item.label}}
+                </ng-template>
+              </ng-select>
+          </div>
+
+          <div class="col-sm-3">
+              <label>Year</label>
+              <ng-select [items]="years" bindLabel="label"
+                [closeOnSelect]="true" bindValue="value"  formControlName="year" >
+                <ng-template ng-option-tmp let-item="item" >
+                  {{item.label}}
+                </ng-template>
+              </ng-select>
+          </div>
+
+          <div class="col-sm-2 search_btn">
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary btn-sm searchBtn">Search</button>
+              </div>
+          </div>
+        </div>
+      </form>
+  </div>
+  <div class="table-responsive table_cont" *ngIf="records.length > 0">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <!-- <th>{{userType|titlecase}} ID</th>
+          <th>{{userType|titlecase}} Name</th>
+          <th>Month</th>
+          <th>Commission Rate</th>
+          <th>Commission</th>			 -->
+          <th>{{userType|titlecase}} ID</th>
+          <th>{{userType|titlecase}} Name</th>
+          <th>Month</th>
+          <th>Number of order</th>
+          <th>Total order price</th>
+          <th>Commission</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="records.length > 0">
+        <tr *ngFor="let rs of records">
+          <td *ngIf="userType=='tutor'" >
+            {{getVendorID(rs.vendor_id)}}
+          </td>
+          <td *ngIf="userType=='reseller'" >
+            {{getResellerID(rs.reseller_id)}}
+          </td>
+          <td>{{ rs?.first_name|titlecase}} {{ rs?.last_name|titlecase}}</td>
+          <td>{{rs?.month}}</td>
+          <td>{{rs?.no_of_order}}</td>
+          <td>{{rs?.total_order_price}} USD</td>
+          <td>{{rs?.vendor_commission}} USD</td>
+        </tr>
+
+      </tbody>
+      <tbody *ngIf="records.length === 0">
+        <tr>
+          <td colspan="7" class="text-center">
+            No product is added yet.
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="tabPagination">
+        <tr>
+          <td colspan="7">
+            <app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="row mt30" *ngIf="records.length === 0">
+    <div class="col-12">
+      <div class="alert alert-warning text-center">
+        <strong>Oops!</strong>
+        No record found.
+      </div>
+    </div>
+  </div>
+</div>

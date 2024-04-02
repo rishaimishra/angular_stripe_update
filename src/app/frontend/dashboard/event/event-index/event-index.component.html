@@ -1,0 +1,173 @@
+<div class="rightPanel">
+
+	<div class="centerHeading clearfix">
+		<h2>Event List</h2>
+		<div class="row">
+		<div class="col-lg-8">	 
+				<div class="search_sec">
+				  <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+					<div class="topSearchCont acTive">
+					  <input autocomplete="off" formControlName="string" name="string"
+						  placeholder="Search" type="search" >
+					</div>
+					<div class="topSearch">
+					  <button type="submit"><i class="fa fa-search"></i></button>
+					</div>
+					<div class="clearfix"></div>
+				  </form>
+				</div>
+				
+		</div>
+		<div class="col-lg-4">
+			<a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/dashboard', 'ticket', 'create']">
+					<i  class="fa fa-plus"></i> Add Event 
+			</a>
+		</div>
+		
+		</div>
+
+		
+	</div>
+
+	<div class="table-responsive table_cont event_table" *ngIf="records.length > 0" >
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Event Id</th>
+					<th width="7%">Title</th>
+					<!-- <th width="30%">Short Description</th> -->
+					<th width="5%">Country</th>
+					<th>Start Date</th>
+					<th>End Date</th>
+					<th class="plan_d_none">Plan</th>
+					<th class="text-center">Status</th>
+					<th>Admin approval status </th>
+					<th>Is Active</th>
+					<th class="text-center" >Action</th>
+				</tr>
+			</thead>
+			<tbody *ngIf="records.length > 0">
+				<tr *ngFor="let rs of records">
+					<td>{{getEventID(rs.id)}}</td>
+					<td class="topProfile profileImg">
+						<span class="topProfileImg">
+							<img src="{{rs?.images[0]?.thumbnail}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    
+						</span>
+						<br>
+						{{rs?.title}}
+					</td>
+					<td>{{rs?.event?.country?.name}}</td>
+					<td>{{rs?.event?.start_date | date}}</td>
+					<td>{{rs?.event?.end_date | date}}</td>
+					<!-- <td style="width:36%;vertical-align: top;">{{rs?.short_description}}</td> -->
+					<td style="vertical-align: top;" class="plan_d_none">
+						<div class="d-block priceBlk" *ngFor="let rsp of rs?.pricable">
+							<div class="col-12">
+								<b>Plan: </b>
+								<span class="text-bold">{{rsp?.payment_category?.title}}</span>
+							</div>							
+							<div class="col-12" *ngIf="rsp?.payment_type?.id !== 4">
+								<b>Price: </b>
+								<ng-container *ngIf="rsp?.usd_price > 0">
+									<span class="text-bold">{{rsp?.usd_price | number: '1.2-2'}} USD</span>
+								</ng-container>
+								<ng-container *ngIf="rsp?.usd_price > 0 && rsp?.sxl_price>0">
+								&nbsp;+ 
+								</ng-container>
+								<ng-container *ngIf="rsp?.sxl_price > 0">
+								<span class="text-bold">{{rsp?.sxl_price | number: '1.2-2'}} SXL</span>
+								</ng-container>
+								<ng-container *ngIf="rsp?.usd_price == 0 && rsp?.sxl_price==0">
+									Free
+								</ng-container>
+							</div>
+							<div class="col-12" *ngIf="rsp?.payment_type?.id === 4">
+								<b>Price: </b>
+								<span class="text-bold">FREE</span>
+							</div>
+							<div class="col-12">
+								<b>Quantity: </b>
+								<span class="text-bold">{{rsp?.quantity}}</span>
+							</div>
+							<div class="col-12">
+								<b>Stock In Hand: </b>
+								<span class="text-bold">{{rsp?.quantity}}</span>
+								 - 
+								<span class="text-bold">{{rsp?.total_order}}</span>
+								 = 
+								<span class="text-bold">{{rsp?.quantity - rsp?.total_order}}</span>
+							</div>
+						</div>
+					</td>
+					<!-- <td class="text-center">{{rs?.price | currency:rs?.currency:'symbol':'2.2-2'}}</td> -->
+					<td class="text-center" style="vertical-align: top;" *ngIf="user.is_kyc">						
+						<!-- <span [ngClass]="getStatusClass(rs)" (click)="setEventStatus(rs)" style="cursor: pointer;" title="Click here to changes the status">{{getStatusTest(rs)}}</span> -->
+
+						<button [swal]="{text:'Do you want to continue',type:'question'}"
+							(confirm)="setEventStatus(rs)" [className]="getStatusTest(rs)=='Publish' ? 'btn btn-sm btn-success linkBg' : 'btn btn-sm btn-warning linkBg'" >
+							{{getStatusTest(rs)}}
+						</button>
+
+
+					</td>
+					<td>
+						<ng-container *ngIf="rs.status=='publish' && rs.approved_status ">
+							<label class="btn-sm btn-success linkBg">
+								Approved
+							</label>
+						</ng-container>
+						<ng-container *ngIf="rs.status=='publish' && !rs.approved_status ">
+							<label class="btn-sm btn-warning linkBg">
+								Waiting for approval
+							</label>
+						</ng-container>
+						<ng-container *ngIf="rs.status!='publish'">
+							--
+						</ng-container>
+					</td>
+					<!-- <td class="text-center" style="vertical-align: top;" *ngIf="!user.is_kyc">
+                        
+							<button class="btn btn-sm btn-warning linkBg" (click)="kycModal(item?.id)">Draft</button>
+					</td> -->
+
+
+					<td *ngIf="rs.is_active" style="text-align: center;"> <i class="fa fa-check" aria-hidden="true"></i> </td>
+					<td *ngIf="!rs.is_active" style="text-align: center;"> <i class="fa fa-times" aria-hidden="true"></i></td>
+						
+					<td class="text-center" style="vertical-align: top;">
+						<ng-container *ngIf="rs.is_active">
+							<a class="btn btn-sm btn-success linkBg" [routerLink]="['/dashboard', 'ticket', 'edit', rs?.id]"><i class="fa fa-pencil-square-o"></i></a>
+
+							<button class="btn btn-sm btn-danger linkBg" type="button" (click)="deleteRecord(rs?.id)"><i class="fa fa-trash-o"></i></button>
+						</ng-container>
+					</td>
+				</tr>
+
+			</tbody>
+			<tbody *ngIf="records.length === 0">
+				<tr>
+					<td colspan="8" class="text-center">
+						No event ticket is added yet.
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination">
+				<tr>
+					<td colspan="9">
+						<app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="row mt30" *ngIf="records.length === 0">
+		<div class="col-12">
+			<div class="alert alert-warning text-center">
+				<strong>Oops!</strong>
+				No record found.
+			</div>
+		</div>
+	</div>
+
+</div>
+				

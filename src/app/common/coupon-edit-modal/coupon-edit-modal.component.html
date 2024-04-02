@@ -1,0 +1,35 @@
+
+    <div class="loginModal">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Change Coupon End Date</h4>
+          <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       
+        <div class="modal-body">
+           
+              <form [formGroup]="couponEditForm" (ngSubmit)="update()" >
+                  <div class="row">
+                      <div class="col-sm-6">
+                          <label for="">End Date:</label>
+                          <div class="inputWrap" >
+                            <input class="inpField" placeholder="yyyy-mm-dd" name="endDp" formControlName="end_date" ngbDatepicker #endDp="ngbDatepicker" (click)="endDp.toggle()" [minDate]="minEndDate" (dateSelect)="onEndDateSelection($event, endDp)" autoClose="outside">
+                          </div>
+                      </div> 
+                  </div>
+  
+  
+                  <button type="submit"  data-purpose="post-question"  [className]="couponEditForm.valid ? 'btn btn-info ' : 'btn btn-info disableSubmit'">Save</button>
+                  <!-- <a routerLink="/dashboard/course-promote-checkout">pay</a> -->
+              </form>
+          
+          
+  
+      </div>
+    </div>
+    
+    
+    
+    
+    

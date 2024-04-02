@@ -1,0 +1,128 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>My Courses</h2>
+		<div class="row">
+			
+			<div class="col-lg-6" >	 
+					<div class="search_sec">
+						<form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+							<div class="topSearchCont acTive">
+								<input autocomplete="off" formControlName="string" name="string"
+										placeholder="Search" type="search" >
+							</div>
+							<div class="topSearch">
+								<button type="submit"><i class="fa fa-search"></i></button>
+							</div>
+							<div class="clearfix"></div>
+						</form>
+					</div>
+			</div>
+			<div class="col-lg-6" >	 
+			<a href="/courses" class="btn btn-primary btn-sm titleLink02 pull-right"> Browse more course</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="table-responsive table_cont" *ngIf="records.length > 0">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th style="width:20%;">Course</th>
+					<th>Rating</th>
+					<th>Progress</th>
+					<th style="width:10%;">
+						Total Lecture
+					</th>
+					<th style="width:10%;">
+						Completed Lecture
+					</th>
+					<th>Status</th>
+					<th>Certificate</th>
+					<!-- <th>Action</th> -->
+				</tr>
+			</thead>
+			<tbody *ngIf="records.length > 0">
+				<tr *ngFor="let rs of records">
+					<td *ngIf="rs?.status === 'cancelled'">
+						<div class="d-flex">
+							<div class="imageCourse">
+								<img class="img-fluid" style="width: 50px" [src]="getImage(rs?.course)" alt="">
+							</div>
+							<div class="titleCourse">
+								<p title="{{rs?.course?.title}}">{{rs?.course?.title | slice : 0:35}}</p>	 
+								<em>{{rs?.course?.sub_title | slice : 0:50}}</em>	 
+							</div>
+						</div>						
+					</td>
+					<td *ngIf="rs?.status !== 'cancelled'">
+						<a *ngIf="rs?.course?.slug " target="_blank" [routerLink]="['/tutorial/', rs?.course?.slug]">
+							<div class="d-flex">
+								<div class="imageCourse">
+									<img class="img-fluid" style="width: 50px" [src]="getImage(rs?.course)" alt="">
+								</div>
+								<div class="titleCourse">
+									<p title="{{rs?.course?.title}}">{{rs?.course?.title | slice : 0:35}}</p>	 
+									<em>{{rs?.course?.sub_title | slice : 0:50}}</em>	 
+								</div>
+							</div>
+						</a>
+					</td>
+					<td>
+						<ngb-rating [rate]="rs?.course?.rating">
+							<ng-template let-fill="fill">
+								<span class="star" [class.full]="fill === 100">&#9733;</span>
+							</ng-template>
+						</ngb-rating> ({{rs?.course?.rating}})
+					</td>
+					<td>
+						
+						<ngb-progressbar type="success" [value]="(rs?.completed_lecture / rs?.total_lecture) *100">{{(rs?.completed_lecture / rs?.total_lecture) *100 |  number:'1.0-0'}}%</ngb-progressbar>	
+					</td>
+			
+					<td align="middle">{{rs?.total_lecture}}</td>
+					<td align="middle">{{rs?.completed_lecture || 0}}</td>
+					<td>{{rs?.status}}</td>
+					<!-- <td *ngIf="isCancelShow(rs)">
+						<button  [swal]="{text:'Do you really want to cancel this course?',type:'question'}" class="btn btn-primary btn-sm pull-right titleLink02" (confirm)="courseRefund(rs?.id,rs?.course_id,rs?.order_id)"> Cancel</button>	
+					</td> -->
+					<!-- <td *ngIf="!isCancelShow(rs)">&nbsp;</td> -->
+
+					<td>
+						<ng-container *ngIf="rs?.certificate_link && rs?.status=='completed'">
+								<a class="btn btn-sm btn-success"  href="{{rs?.certificate_link}}" ><i class="fa fa-download " aria-hidden="true"></i> Download Certificate</a>
+						</ng-container>
+						<ng-container *ngIf="!rs?.certificate_link">
+							&nbsp;
+						</ng-container>
+						
+					</td>
+				</tr>
+
+			</tbody>
+			<tbody *ngIf="records.length === 0">
+				<tr>
+					<td colspan="7" class="text-center">
+						You have not any course to start. <a [routerLink]="['/courses']">Click here</a> to buy course.
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination">
+				<tr>
+					<td colspan="7">
+						<app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)"
+						 (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="row mt30" *ngIf="records.length === 0">
+		<div class="col-12">
+			<div class="alert alert-warning text-center">
+				<strong>Oops!</strong>
+				No record found.
+			</div>
+		</div>
+	</div>
+</div>

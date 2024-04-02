@@ -1,0 +1,330 @@
+<section class="pageHeading d-flex">
+	<div class="container align-self-center">
+		<h3><i class="fa fa-home" aria-hidden="true"></i> / Shopping Cart</h3>
+		<h2>Shopping Cart</h2>
+	</div>
+</section>
+
+<section class="cartMain">
+	<div class="container">
+		<div class="row" *ngIf="cartObj">
+			<div class="col-lg-8">
+				<div class="cartLeft" *ngIf="cartObj">
+					<h2>{{cartObj?.itemStatement}}</h2>
+					<ul *ngIf="cartObj?.items.length > 0">
+						<li *ngFor="let rs of cartObj?.items">
+							<div class="cartItemImg">
+								<a [routerLink]="['/'+rs?.type+'-details', rs?.details?.slug]"><img [src]="getImage(rs)" alt=""></a>
+							</div>
+							<div class="cartItemDetails">
+								<a [routerLink]="['/'+rs?.type+'-details', rs?.details?.slug]"><h3>{{(rs?.details?.title?.length > 50) ? (rs?.details?.title | slice: 0:50) + '...' : (rs?.details?.title)}}</h3></a>
+								<h4>By {{rs?.details?.user?.profile?.first_name}} {{rs?.details?.user?.profile?.last_name}}
+								{{ ((rs?.details?.user?.profile?.head_line?.length > 50) ? (', ' + (rs?.details?.user?.profile?.head_line|slice: 0:50) + '...') : rs?.details?.user?.profile?.head_line) }}</h4>
+
+								
+								<div class="codeCoupon" *ngIf="((rs?.type === 'course') && (rs?.coupon === null) && (rs.details.course_coupons.length > 0))">
+									<form [formGroup]="couponFormObj" (submit)="applyCoupon(rs)">
+										<input type="text" formControlName="coupon_code" placeholder="Apply coupon code" >
+										<input type="submit" value="Apply">
+
+										<div class="form-validation-error" *ngIf="couponFormError?.coupon_code">
+											<span *ngFor="let err of couponFormError?.coupon_code">{{err?.message}}</span>
+										</div>
+									</form>
+								</div>
+
+								<div class="appliedCoupon" *ngIf="((rs?.type === 'course') && (rs?.coupon !== null))">
+									<!-- <h5>Click on a coupon code to filter</h5> -->
+									<h6><i class="fa fa-check" aria-hidden="true"></i> {{rs?.coupon?.coupon_code}} <span>is applied</span></h6>
+								</div>
+							</div>
+							<div class="cartItemAction">
+								<a href="javascript:void(0)" (click)="removeItem(rs);"><i class="fa fa-trash" aria-hidden="true"></i></a>
+								<!-- <a href="#">Save for Later</a> -->
+								<a href="javascript:void(0);" (click)="addToWishList(rs)" *ngIf="!isAddedWishList(rs)" alt="Wishlist"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+								<a href="javascript:void(0);" (click)="removeFromWishList(rs)" *ngIf="isAddedWishList(rs)" alt="Remove"><i class="fa fa-heart" aria-hidden="true"></i></a>
+							</div>
+							<div class="cartItemPrice">
+								<!-- Old price code -->
+								<!-- <h3>{{getItemDiscountPrice(rs) | currency: 'USD' :'symbol':'1.2-2'}}</h3> -->
+
+								<!-- New price code -->
+								<h3 *ngIf="rs.details.pricable.length>0">
+								<ng-container *ngIf="rs.details.pricable[0].usd_price>0">{{rs.details.pricable[0].usd_price | number:'1.2-2'}} USD</ng-container>
+								<ng-container *ngIf="rs.details.pricable[0].usd_price > 0 && rs.details.pricable[0].sxl_price > 0">
+									+ 
+								</ng-container>
+								 
+								<ng-container *ngIf="rs.details.pricable[0].sxl_price>0">SXL {{rs.details.pricable[0].sxl_price |number:'1.2-2'}}</ng-container>
+								</h3>
+								
+								<h3 *ngIf="rs.details.pricable.length==0">Free</h3>
+
+								<div class="quantity_area">
+									<div class="input-group" *ngIf="(rs?.type !== 'course')">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default btn-number" (click)="minusQuantity(cartQuantity, rs)">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</span>
+										<input type="number" #cartQuantity class="input-number" name="quantity[i]" [value]="rs?.quantity" style="padding:5px 5px; width:31px;"
+										readonly>
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default btn-number" (click)="plusQuantity(cartQuantity, rs)">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+								
+								
+								<!-- <div class="cartQuantity" *ngIf="(rs?.type !== 'course')">
+									<input type="number" class="form-control">
+								</div> -->
+								<!-- Old price code -->
+								<!-- <h4 *ngIf="rs?.coupon"> <span>{{rs?.details?.price | currency: rs?.details?.currency :'symbol':'1.2-2'}}</span></h4> -->
+							</div>
+						</li>
+					</ul>
+
+					<!-- <h2 class="saveLater">Saved For Later</h2> -->
+
+					<!-- <ul>
+						<li>
+							<div class="cartItemImg"><img src="assets/images/cart-item.jpg" alt=""></div>
+							<div class="cartItemDetails">
+								<h3>Digital Art for Beginners</h3>
+								<h4>Created by Rich Graysonn, Illustrator Designer</h4>
+							</div>
+							<div class="cartItemAction">
+								<a href="#">Remove</a>
+								<a href="#">Save for Later</a>
+								<a href="#">Move to Wishlist</a>
+							</div>
+							<div class="cartItemPrice">
+								<h3>$ 640</h3>
+								<h4>$ <span>9,600</span></h4>
+							</div>
+						</li>
+						<li>
+							<div class="cartItemImg"><img src="assets/images/cart-item.jpg" alt=""></div>
+							<div class="cartItemDetails">
+								<h3>Digital Art for Beginners</h3>
+								<h4>Created by Rich Graysonn, Illustrator Designer</h4>
+							</div>
+							<div class="cartItemAction">
+								<a href="#">Remove</a>
+								<a href="#">Save for Later</a>
+								<a href="#">Move to Wishlist</a>
+							</div>
+							<div class="cartItemPrice">
+								<h3>$ 640</h3>
+								<h4>$ <span>9,600</span></h4>
+							</div>
+						</li>
+					</ul> -->
+
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="cartTotal">
+					<h2>Total:</h2>
+					<!-- Old price code -->
+					<!-- <h3>{{cartObj?.total_order_price | currency : 'USD' : 'symbol' : '1.2-2'}}</h3>
+					<h4 *ngIf="isShownOriginalAmount()"> <span>{{cartObj?.original_order_price | currency : 'USD' : 'symbol' : '1.2-2'}}</span> <br> {{getTotalDiscountPercentage()}}% off</h4> -->
+
+					<!-- New price code -->
+					<h3>
+						<ng-container *ngIf="cartObj?.total_order_price?.usd_price>0">
+							{{cartObj?.total_order_price?.usd_price | number:'1.2-2'}} USD
+						</ng-container>
+						<ng-container *ngIf="cartObj?.total_order_price?.usd_price>0 && cartObj?.total_order_price?.sxl_price>0">
+							+
+						</ng-container>
+						<ng-container *ngIf="cartObj?.total_order_price?.sxl_price>0">
+							SXL {{cartObj?.total_order_price?.sxl_price | number:'1.2-2'}}
+						</ng-container>
+						<ng-container *ngIf="cartObj?.total_order_price?.usd_price == 0 && cartObj?.total_order_price?.sxl_price == 0">
+								Free
+						</ng-container>
+
+					</h3>
+
+					<a class="btnCheckout" href="javascript:void(0);" (click)="redirectToCheckout()">Checkout</a>
+					<!-- <div class="codeCoupon">
+						<input type="text" placeholder="Apply coupon code">
+						<input type="submit" value="Apply">
+					</div>
+					<h5>Click on a coupon code to filter</h5>
+					<h6><i class="fa fa-check" aria-hidden="true"></i> 1811CYBERMONDAYEXTENSION <span>is applied</span></h6> -->
+				</div>
+			</div>
+		</div>
+
+		<div class="row" *ngIf="!cartObj">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="alert alert-warning text-center">No item added in your cart</div>
+
+				<div class="emptyCart">
+					<a class="btnShopping" [routerLink]="['/']">Continue Shopping</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="featuredCourse featuredCourseForCart">
+	<!-- <div class="container">
+		<h2>Featured Courses</h2>
+		<ngb-tabset class="tabFeatured">
+			<ngb-tab title="Development">
+				<ng-template ngbTabContent>
+					<owl-carousel [options]="featuredCourse" [items]="images" [carouselClasses]="['owl-theme', 'sliding']">
+
+						<div class="item">
+							<div class="carouselCont">
+								<div class="carouselImg">
+									<img src="assets/images/carousalbanner1.jpg" alt="">
+									<div class="carouselImgTag">Best seller</div>
+								</div>
+								<h3>Build Responsive Real Build Responsive Real</h3>
+								<h4>Phasellus eu pulvinar augue, eu...</h4>
+								<h5>Queen Mary University</h5>
+								<div class="ratingsDiv">
+									<div class="ratingsDivLeft"><img src="assets/images/ratings.png" alt=""></div>
+									<div class="ratingsDivRight">3.0 <span>(7,1118)</span></div>
+								</div>
+								<h6>$450.00</h6>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="carouselCont">
+								<div class="carouselImg">
+									<img src="assets/images/carousalbanner2.jpg" alt="">
+								</div>
+								<h3>Build Responsive Real Build Responsive Real</h3>
+								<h4>Phasellus eu pulvinar augue, eu...</h4>
+								<h5>Queen Mary University</h5>
+								<div class="ratingsDiv">
+									<div class="ratingsDivLeft"><img src="assets/images/ratings.png" alt=""></div>
+									<div class="ratingsDivRight">3.0 <span>(7,1118)</span></div>
+								</div>
+								<h6>$450.00</h6>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="carouselCont">
+								<div class="carouselImg">
+									<img src="assets/images/carousalbanner3.jpg" alt="">
+									<div class="carouselImgTag">Best seller</div>
+								</div>
+								<h3>Build Responsive Real Build Responsive Real</h3>
+								<h4>Phasellus eu pulvinar augue, eu...</h4>
+								<h5>Queen Mary University</h5>
+								<div class="ratingsDiv">
+									<div class="ratingsDivLeft"><img src="assets/images/ratings.png" alt=""></div>
+									<div class="ratingsDivRight">3.0 <span>(7,1118)</span></div>
+								</div>
+								<h6>$450.00</h6>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="carouselCont">
+								<div class="carouselImg">
+									<img src="assets/images/carousalbanner4.jpg" alt="">
+								</div>
+								<h3>Build Responsive Real Build Responsive Real</h3>
+								<h4>Phasellus eu pulvinar augue, eu...</h4>
+								<h5>Queen Mary University</h5>
+								<div class="ratingsDiv">
+									<div class="ratingsDivLeft"><img src="assets/images/ratings.png" alt=""></div>
+									<div class="ratingsDivRight">3.0 <span>(7,1118)</span></div>
+								</div>
+								<h6>$450.00</h6>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="carouselCont">
+								<div class="carouselImg">
+									<img src="assets/images/carousalbanner5.jpg" alt="">
+									<div class="carouselImgTag">Best seller</div>
+								</div>
+								<h3>Build Responsive Real Build Responsive Real</h3>
+								<h4>Phasellus eu pulvinar augue, eu...</h4>
+								<h5>Queen Mary University</h5>
+								<div class="ratingsDiv">
+									<div class="ratingsDivLeft"><img src="assets/images/ratings.png" alt=""></div>
+									<div class="ratingsDivRight">3.0 <span>(7,1118)</span></div>
+								</div>
+								<h6>$450.00</h6>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="carouselCont">
+								<div class="carouselImg">
+									<img src="assets/images/carousalbanner1.jpg" alt="">
+									<div class="carouselImgTag">Best seller</div>
+								</div>
+								<h3>Build Responsive Real Build Responsive Real</h3>
+								<h4>Phasellus eu pulvinar augue, eu...</h4>
+								<h5>Queen Mary University</h5>
+								<div class="ratingsDiv">
+									<div class="ratingsDivLeft"><img src="assets/images/ratings.png" alt=""></div>
+									<div class="ratingsDivRight">3.0 <span>(7,1118)</span></div>
+								</div>
+								<h6>$450.00</h6>
+							</div>
+						</div>
+
+					</owl-carousel>
+				</ng-template>
+			</ngb-tab>
+			<ngb-tab>
+				<ng-template ngbTabTitle>Design</ng-template>
+				<ng-template ngbTabContent>
+					<owl-carousel [options]="featuredCourse" [items]="images" [carouselClasses]="['owl-theme', 'sliding']">
+
+						<div class="item">
+							<div class="carouselCont">
+								<div class="carouselImg">
+									<img src="assets/images/carousalbanner5.jpg" alt="">
+									<div class="carouselImgTag">Best seller</div>
+								</div>
+								<h3>Build Responsive Real Build Responsive Real</h3>
+								<h4>Phasellus eu pulvinar augue, eu...</h4>
+								<h5>Queen Mary University</h5>
+								<div class="ratingsDiv">
+									<div class="ratingsDivLeft"><img src="assets/images/ratings.png" alt=""></div>
+									<div class="ratingsDivRight">3.0 <span>(7,1118)</span></div>
+								</div>
+								<h6>$450.00</h6>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="carouselCont">
+								<div class="carouselImg">
+									<img src="assets/images/carousalbanner4.jpg" alt="">
+								</div>
+								<h3>Build Responsive Real Build Responsive Real</h3>
+								<h4>Phasellus eu pulvinar augue, eu...</h4>
+								<h5>Queen Mary University</h5>
+								<div class="ratingsDiv">
+									<div class="ratingsDivLeft"><img src="assets/images/ratings.png" alt=""></div>
+									<div class="ratingsDivRight">3.0 <span>(7,1118)</span></div>
+								</div>
+								<h6>$450.00</h6>
+							</div>
+						</div>
+
+					</owl-carousel>
+				</ng-template>
+			</ngb-tab>
+		</ngb-tabset>
+	</div> -->
+</section>

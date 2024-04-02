@@ -1,0 +1,627 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>{{(isCreateMode) ? 'Event Create' : 'Event Edit'}}</h2>
+	</div>
+
+	<ul class="nav nav-tabs">
+		<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#basicInfo" #basicInfo>Ticket Info</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" [ngClass]="{ 'disabled': (isCreateMode), '': (!isCreateMode) }" data-toggle="tab"
+				href="#priceInfo" #priceInfo>Price Info</a>
+		</li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane container active" id="basicInfo">
+
+			<div class="formWrap" *ngIf="!isCompletedProfile">
+				<div class="alert alert-warning text-center">Please completed your <a
+						[routerLink]="['/dashboard', 'profile']">profile</a> to publish your product.</div>
+			</div>
+
+			<div class="formWrap" *ngIf="isCompletedProfile">
+				<form [formGroup]="formObj" (submit)="saveForm()" class="multi">
+					<div class="row">
+						<div class="col-sm-12">
+							<label for="">Title*:</label>
+							<div class="inputWrap">
+								<input class="inpField" formControlName="title" name="title_name" placeholder="Title"
+									type="text">
+								<div class="form-validation-error" *ngIf="formError?.title">
+									<span *ngFor="let err of formError?.title">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-sm-6">
+							<label for="">Quantity:</label>
+							<div class="inputWrap">
+								<input class="inpField" formControlName="quantity" name="quantity" placeholder="Quantity" type="number">
+								<div class="form-validation-error" *ngIf="formError?.quantity">
+									<span *ngFor="let err of formError?.quantity">{{err?.message}}</span>
+								</div>
+							</div>
+						</div> -->
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<label for="">Description*:</label>
+							<div class="inputWrap">
+								<!-- <textarea class="inpField" formControlName="description" name="description"
+									placeholder="Description"></textarea> -->
+
+								<!-- <ckeditor [editor]="Editor" tagName="textarea" formControlName="description" [config]="{ label: 'Foo', toolbar: [ 'heading', '|', 'bold', 'italic','link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo','alignment' ] }" (ready)="onReady($event)"></ckeditor> -->
+
+								<ckeditor [editor]="Editor" tagName="textarea" formControlName="description" [config]="editorConfig" (ready)="onReady($event)"></ckeditor>
+
+								<div class="form-validation-error" *ngIf="formError?.description">
+									<span *ngFor="let err of formError?.description">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- <div class="row">
+						<div class="col-md-12">
+							<label for="">Short Description:</label>
+							<div class="inputWrap">
+								<textarea class="inpField" formControlName="short_description" name="short_description"
+									placeholder="Short Description" maxlength="250"></textarea>
+								<div class="form-validation-error" *ngIf="formError?.short_description">
+									<span *ngFor="let err of formError?.short_description">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+					</div> -->
+
+					<div class="row">
+						<div class="col-md-12">
+							<label for="">Banner Image*:</label>
+							
+								<div class="inputWrap">
+									<div class="section_block">
+										<ng-container *ngIf="newImage">
+											<image-cropper
+											[imageChangedEvent]="imageChangedEvent"
+											[maintainAspectRatio]="true"
+											[aspectRatio]="4 / 1"
+											[resizeToWidth]="2000"
+											format="png,jpeg,jpg,gif"
+											(imageCropped)="imageCropped($event)"
+											(imageLoaded)="imageLoaded()"
+											(loadImageFailed)="loadImageFailed()"
+										*ngIf="imageSrc"  ></image-cropper>
+										</ng-container>
+										<div class="row">
+											<div class="col-lg-5">
+												<div class="courseIMg"><img [src]="croppedImage || 'assets/images/demo.png'" alt=""></div>
+											</div>
+											<div class="col-lg-7">
+												<div class="courseTXt">
+												<div class="inpWrap"> 
+													<div class="text-right">
+														<span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="file" class="form-control" (change)="uploadFile($event)" id="file" style="width: 124px;" required ></span>
+														<!-- <a href="javascript:void(0);" class="btn btn-sm btn-primary btnSpace uploads3" *ngIf="!!fileInstance"  (click)="uploadToS3()">Upload Course Image</a> -->
+														<a href="javascript:void(0);" class="btn btn-sm btn-primary btnSpace uploads3 form_imgbtn" *ngIf="newCourseImageFile"  (click)="uploadToS3()">Upload Event Banner Image</a>
+													</div>
+													
+												</div>
+												</div>
+											</div>
+											<div class="col-lg-12">
+												<div hidden="true" [innerHtml]="thumbnail" class="link">
+												</div>
+											</div>
+										</div>
+									</div>
+									<h6 class="fileFormatInfo"> *Image best view upload ratio is 2000px*500px (width*height). </h6>
+									<h6  class="fileFormatInfo"> *Image needs to be in png,jpeg,jpg,gif format. </h6>
+								</div>
+							
+								
+						</div>
+					</div>
+					
+
+					
+
+					<div class="row">
+						<!-- <div class="col-sm-6">
+							<label for="">Price:</label>
+							<div class="inputWrap">
+								<input class="inpField" formControlName="price" name="price" placeholder="Price" type="number">
+								<div class="form-validation-error" *ngIf="formError?.price">
+									<span *ngFor="let err of formError?.price">{{err?.message}}</span>
+								</div>
+							</div>
+						</div> -->
+						<!-- <div class="col-sm-6">
+							<label for="">Discount (%):</label>
+							<div class="inputWrap">
+								<input class="inpField" formControlName="discount" name="discount" placeholder="Discount" type="number">
+								<div class="form-validation-error" *ngIf="formError?.discount">
+									<span *ngFor="let err of formError?.discount">{{err?.message}}</span>
+								</div>
+							</div>
+						</div> -->
+					</div>
+
+					<div class="row">
+						<!-- <div class="col-sm-6"><label for="">Is Featured:</label>
+							<div class="inputWrap status">
+								<span class="status">
+									<input type="checkbox" [value]="1" [checked]="isFeaturedChecked()" (change)="changeFeatured($event)"> Make Feature
+								</span>
+								<div class="form-validation-error" *ngIf="formError?.is_featured">
+									<span *ngFor="let err of formError?.is_featured">{{err?.message}}</span>
+								</div>
+							</div>
+						</div> -->
+						<!-- <div class="col-sm-6"><label for="">Status:</label>
+							<div class="inputWrap status">
+								<span class="status" *ngFor="let rs of statusArr">
+									<input type="radio" formControlName="status" [value]="rs?.code" [checked]="isStatusChecked(rs?.code)" (change)="changeStatus(rs?.code)"> {{rs?.name}}
+								</span>
+								<div class="form-validation-error" *ngIf="formError?.status">
+									<span *ngFor="let err of formError?.status">{{err?.message}}</span>
+								</div>
+							</div>
+						</div> -->
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12"><label for="">Event Category*:</label>
+							<div class="inputWrap">
+								<ng-select class="inpClass" *ngIf="categoriesTree.length > 0" [items]="categoriesTree"
+									[multiple]="true" [closeOnSelect]="false" [clearOnBackspace]="false"
+									bindLabel="name" bindValue="id" placeholder="Select Categories"
+									class="inpClass multiselect" formControlName="categories">
+									<ng-template ng-option-tmp let-item="item" let-index="index"
+										let-search="searchTerm">
+										<span [ngStyle]="getSpan(item)">{{item?.name}}</span>
+									</ng-template>
+								</ng-select>
+								<div class="form-validation-error" *ngIf="formError?.categories">
+									<span *ngFor="let err of formError?.categories">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12"><label for="">Speakers*:</label>
+							<div class="inputWrap">
+								<ng-select class="inpClass" *ngIf="speakers.length > 0" [items]="speakers"
+									[multiple]="true" [closeOnSelect]="false" [clearOnBackspace]="false"
+									bindLabel="name" bindValue="id" placeholder="Select Speakers"
+									class="inpClass multiselect" formControlName="speakers">
+									<ng-template ng-option-tmp let-item="item" let-index="index"
+										let-search="searchTerm">
+										<span [ngStyle]="getSpan(item)">{{item?.name}}</span>
+									</ng-template>
+								</ng-select>
+								<div class="form-validation-error" *ngIf="formError?.speakers">
+									<span *ngFor="let err of formError?.speakers">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-sm-12"><label for="">Upload Image*:</label>
+							<div class="inputWrap">
+								<input type="file" name="productImage" (change)="onSelectEventFiles($event)"
+									multiple="true" class="inpField">
+
+								<div class="form-validation-error" *ngIf="formError?.images_field_count">
+									<span *ngFor="let err of formError?.images_field_count">{{err?.message}}</span>
+								</div>
+								<h6 class="fileFormatInfo"> *Image best view upload ratio is 400px*400px (width*height). </h6>
+              					<h6  class="fileFormatInfo"> *Image needs to be in png,jpeg,jpg,gif format. </h6>
+							</div>
+							
+						</div>
+					</div>
+
+					<div class="row m-t-20 align-items-center" *ngIf="eventUploadUrlArr.length > 0">
+						<div class="col-md-3 productImgDiv" *ngFor="let uplImg of eventUploadUrlArr">
+							<div class="img-div">
+								<img [src]="uplImg.url" alt="" class="img-fluid">
+							</div>
+							<div class="progress-div">
+
+								<div class="progress md-progress" *ngIf="uplImg?.uploading">
+									<div class="progress-bar" role="progressbar" style="height: 20px"
+										[ngStyle]="{'width': uplImg?.uploadingPercentage}" aria-valuenow="25"
+										aria-valuemin="0" aria-valuemax="100">{{uplImg?.uploadingPercentage}}</div>
+								</div>
+
+							</div>
+
+						</div>
+						<div class="col-md-3 productImgDiv">
+							<div class="action-div">
+								<img src="assets/images/plus-icon.png" alt="" />
+								<input type="file" name="" id="upload-image" (change)="onSelectEventFiles($event)"/>
+							</div>
+							<div class="progress-div"></div>
+						</div>
+					</div>
+
+					<div class="row" *ngIf="isUploadedAll">
+						<div class="col">
+							<div class="inputWrap">
+								<button type="button" class="btn btn-primary" (click)="uploadEventImages($event)">Upload
+									All</button>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row align-items-center" *ngIf="eventUploadedUrlArr.length > 0">
+						<div class="col-md-3 productImgDiv" *ngFor="let uplImg of eventUploadedUrlArr">
+							<div class="img-div">
+								<img [src]="uplImg?.original" alt="" class="img-fluid">
+							</div>
+							<div class="col-md-3">
+								<div class="action-delete-div">
+									<button class="btn btn-sm btn-danger" (click)="deleteUploadedImage(uplImg)"><i
+												class="fa fa-trash-o"></i></button>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12"><label for="">Event venue details*:</label></div>
+
+
+						<div class="col-sm-12">
+							<div class="row">
+								<span class="sideRadio" >
+								  <input class="" type="radio" name="type"  value="2" formControlName="type" >
+								  <label class="form-check-label" for="">
+									  Online
+								  </label>
+								</span>
+								<span class="sideRadio">
+								<input class="" type="radio" name="type"  value="1"  formControlName="type">
+								<label class="form-check-label" for="" >
+									Venued
+								</label>
+								</span>
+								<span class="sideRadio">
+									<input class="" type="radio" name="type"  value="3"  formControlName="type">
+									<label class="form-check-label" for="" >
+											TBC
+									</label>
+								</span>
+								
+							</div>
+							<div class="form-validation-error" *ngIf="formError?.type">
+									<span *ngFor="let err of formError?.type">{{err?.message}}</span>
+							</div>
+						</div>
+						<div class="col-sm-6"><label for="" class="sub_label">Address*:</label>
+							<div class="inputWrap">
+								<input class="inpField" formControlName="address" name="address" placeholder="Address"
+									type="text">
+
+								<div class="form-validation-error" *ngIf="formError?.address">
+									<span *ngFor="let err of formError?.address">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<label for="" class="sub_label">Country*:</label>
+							<div class="inputWrap">
+								<ng-select class="inpClass" *ngIf="countries.length > 0" [items]="countries"
+									bindLabel="name" bindValue="id" placeholder="Select Country"
+									(change)="onCountryChange($event)" formControlName="country_id">
+								</ng-select>
+								<div class="form-validation-error" *ngIf="formError?.country_id">
+									<span *ngFor="let err of formError?.country_id">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-sm-6">
+							<label for="" class="sub_label">State*:</label>
+							<div class="inputWrap">
+								<ng-select class="inpClass" [items]="states" bindLabel="name" bindValue="id"
+									placeholder="Select State" (change)="onStateChange($event)"
+									formControlName="state_id">
+								</ng-select>
+								<div class="form-validation-error" *ngIf="formError?.state_id">
+									<span *ngFor="let err of formError?.state_id">{{err?.message}}</span>
+								</div>
+							</div>
+							<button class="buttonload" *ngIf="showStateLoading">
+									<i class="fa fa-spinner fa-spin"></i> Loading...
+							</button>
+						</div>
+						<div class="col-sm-6">
+							<label for="" class="sub_label">City*:</label>
+							<div class="inputWrap">
+								<ng-select class="inpClass" [items]="cities" bindLabel="name" bindValue="id"
+									placeholder="Select City" formControlName="city_id">
+								</ng-select>
+								<div class="form-validation-error" *ngIf="formError?.city_id">
+									<span *ngFor="let err of formError?.city_id">{{err?.message}}</span>
+								</div>
+							</div>
+							<button class="buttonload" *ngIf="showCityLoading">
+									<i class="fa fa-spinner fa-spin"></i> Loading...
+							</button>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<label for="">Pincode*:</label>
+							<div class="inputWrap">
+								<input class="inpField" formControlName="post_code" name="post_code" placeholder="Pincode"
+									type="text">
+								<div class="form-validation-error" *ngIf="formError?.post_code">
+									<span *ngFor="let err of formError?.post_code">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<label for="" class="sub_label">Start Date*:</label>
+							<div class="inputWrap">
+								<input class="inpField" placeholder="yyyy-mm-dd" name="startDp"
+									formControlName="start_date_show" ngbDatepicker #startDp="ngbDatepicker"
+									(click)="startDp.open()" [minDate]="minStartDate" [maxDate]="maxStartDate"
+									(dateSelect)="onStartDateSelection($event, startDp)" autoClose="outside">
+								<div class="form-validation-error" *ngIf="formError?.start_date_show">
+									<span *ngFor="let err of formError?.start_date_show">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<label for="" class="sub_label">End Date*:</label>
+							<div class="inputWrap">
+								<!-- <input class="inpField" placeholder="yyyy-mm-dd" name="dp"> -->
+								<input class="inpField" placeholder="yyyy-mm-dd" name="endDp" formControlName="end_date_show"
+									ngbDatepicker #endDp="ngbDatepicker" (click)="endDp.toggle()" [minDate]="minEndDate"
+									[maxDate]="maxEndDate" (dateSelect)="onEndDateSelection($event, endDp)"
+									autoClose="outside">
+								<div class="form-validation-error" *ngIf="formError?.end_date_show">
+									<span *ngFor="let err of formError?.end_date_show">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- <div class="row">
+						<div class="col-sm-6">
+							<label for="">Start Time:</label>
+							<div class="inputWrap">
+								<ngb-timepicker name="time" formControlName="start_time_show" (keypress)="keyPress($event)" ></ngb-timepicker>
+								<div class="form-validation-error" *ngIf="formError?.end_date_show">
+									<span *ngFor="let err of formError?.start_time_show">{{err?.message}}</span>
+								</div>
+				
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<label for="">End Time:</label>
+							<div class="inputWrap">
+								<ngb-timepicker name="time"  formControlName="end_time_show" (keypress)="keyPress($event)"></ngb-timepicker>
+								<div class="form-validation-error" *ngIf="formError?.end_date_show">
+									<span *ngFor="let err of formError?.end_time_show">{{err?.message}}</span>
+								</div>
+							</div>
+						</div>
+					</div> -->
+					<div class="row">
+						<div class="col-md-12">
+							<label for="">Meta Description:</label>
+							<div class="inputWrap">
+								<textarea class="inpField" formControlName="meta_description" name="meta_description"
+									placeholder="Meta Description" maxlength="250"></textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<label for="">Meta Keywords:</label>
+							<div class="inputWrap">
+								<textarea class="inpField" formControlName="meta_keywords" name="meta_keywords"
+									placeholder="Meta Keywords" maxlength="250"></textarea>
+							</div>
+						</div>
+					</div>
+					<!-- disableSubmit -->
+					<button type="submit" class="submitBtn" [ngClass]="{'disableSubmit': formLoading}"
+						[disabled]="formLoading">{{(formLoading) ? 'Saving' : 'Save'}} <i *ngIf="formLoading"
+							class="fa fa-spinner fa-spin"></i></button>
+					<!-- <input type="submit" value="Save" class="submitBtn"> -->
+				</form>
+
+			</div>
+
+
+		</div>
+
+		<div class="tab-pane container fade" id="priceInfo">
+			<div class="formWrap clearfix" *ngIf="isCompletedProfile">
+					
+			<ng-container  *ngFor="let rs of paymentCategories; let idx1 = index;">	<div class="price-outer-continer">
+				<div class="price-inner-cnt">
+					
+					<label for="">
+						<input type="checkbox" (change)="onChangePaymentCategory($event, idx1)" name="paymentCat" [checked]="isEnableForm(rs?.id)" [value]="rs?.id">
+						{{rs?.title}}
+					</label>
+				</div>
+						
+				<div  class="price-inner-cnt" *ngFor="let formGroupObj of priceFormArr; let idx2 = index;" >
+					<ng-container *ngIf="idx1==idx2">
+						<div class="myDiv catForm" *ngIf="isEnableForm(paymentCategories[idx2]?.id)">
+							<form [formGroup]="formGroupObj" (submit)="savePriceForm(idx2)">
+
+								<div class="row">
+									<div class="col-sm-12"><label for="">Price Type:</label>
+										<div class="inputWrap">
+
+											<select formControlName="payment_type_id" name="payment_type_id" class="inpField" (change)="onChangePaymentType($event, idx2)">
+												<option value="">Select</option>
+												<option *ngFor="let el of paymentTypes" [value]="el?.id">{{el?.title}}</option>
+											</select>
+											<div class="form-validation-error" *ngIf="paymentFormErrorArr[idx2]?.payment_type_id">
+												<span *ngFor="let err of paymentFormErrorArr[idx2]?.payment_type_id">{{err?.message}}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div formArrayName="categoryPrice" *ngFor="let elm of formGroupObj.get('categoryPrice').controls; let i = index;">
+									<div class="row" [formGroupName]="i">
+
+										<div class="col-sm-12"><label for="">Quantity:</label>
+											<div class="inputWrap">
+												{{number}}
+												<input type="number" class="inpField" formControlName="quantity" >
+
+												<div class="form-validation-error" *ngIf="paymentFormErrorArr[idx2]?.categoryPrice[i]?.quantity">
+													<span *ngFor="let err of paymentFormErrorArr[idx2]?.categoryPrice[i]?.quantity">{{err?.message}}</span>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-sm-6" *ngIf="!isDisableUSD(idx2)"><label for="">USD Price:</label>
+											<div class="inputWrap">
+
+												<input type="number" class="inpField" formControlName="usd_price" >
+												<div class="form-validation-error" *ngIf="paymentFormErrorArr[idx2]?.categoryPrice">
+													<span *ngFor="let err of paymentFormErrorArr[idx2]?.categoryPrice[i]?.usd_price">{{err?.message}}</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6" *ngIf="!isDisableSXL(idx2)"><label for="">SXL Price:</label>
+											<div class="inputWrap">
+
+												<input type="number" class="inpField" formControlName="sxl_price" >
+												<div class="form-validation-error" *ngIf="paymentFormErrorArr[idx2]?.categoryPrice">
+													<span *ngFor="let err of paymentFormErrorArr[idx2]?.categoryPrice[i]?.sxl_price">{{err?.message}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<button type="submit" class="submitBtn" [ngClass]="{'disableSubmit': pricingFormLoadingArr[idx2]}" [disabled]="pricingFormLoadingArr[idx2]">{{(pricingFormLoadingArr[idx2]) ? 'Saving' : 'Save'}} <i *ngIf="formLoading" class="fa fa-spinner fa-spin"></i></button>
+
+							</form>
+						</div>
+					</ng-container>
+				</div>
+
+				</div>
+			</ng-container>
+			<div class="clearfix"></div>
+			<a class="finishBtn" [routerLink]="['/dashboard', 'ticket']">Finish</a>
+				<!-- <ul class="eventPrice">
+					<li *ngFor="let rs of paymentCategories; let idx = index;">
+						<label for="" class="labelWrap">
+							<input type="checkbox" (change)="onChangePaymentCategory($event, idx)" name="paymentCat"
+								[checked]="isEnableForm(rs?.id)" [value]="rs?.id">
+							{{rs?.title}}
+						</label>
+						<div class="eventPriceForm">
+							<div class="row">
+
+								<div class="col-sm-12" *ngIf="isEnableForm(paymentCategories[idx]?.id)">
+									<div class="catFormAlt">
+										<form [formGroup]="formGroupObj" (submit)="savePriceForm(idx)">
+											<div class="row">
+												<div class="col-sm-12"><label for="">Price Type:</label>
+													<div class="inputWrap">
+														<select formControlName="payment_type_id" name="payment_type_id"
+															class="inpField" (change)="onChangePaymentType($event, idx)">
+															<option value="">Select</option>
+															<option *ngFor="let el of paymentTypes" [value]="el?.id">
+																{{el?.title}}</option>
+														</select>
+														<div class="form-validation-error"
+															*ngIf="paymentFormErrorArr[idx]?.payment_type_id">
+															<span
+																*ngFor="let err of paymentFormErrorArr[idx]?.payment_type_id">{{err?.message}}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+													<label for="">Quantity:</label>
+													<div class="inputWrap">
+
+														<input type="number" class="inpField" formControlName="quantity">
+														<div class="form-validation-error"
+															*ngIf="paymentFormErrorArr[idx]?.categoryPrice[i]?.quantity">
+															<span
+																*ngFor="let err of paymentFormErrorArr[idx]?.categoryPrice[i]?.quantity">{{err?.message}}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-6">
+													<label for="">USD Price:</label>
+													<div class="inputWrap">
+
+														<input type="number" class="inpField" formControlName="usd_price">
+														<div class="form-validation-error"
+															*ngIf="paymentFormErrorArr[idx]?.categoryPrice">
+															<span
+																*ngFor="let err of paymentFormErrorArr[idx]?.categoryPrice[i]?.usd_price">{{err?.message}}</span>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<label for="">SXL Price:</label>
+													<div class="inputWrap">
+														<input type="number" class="inpField" formControlName="sxl_price">
+														<div class="form-validation-error"
+															*ngIf="paymentFormErrorArr[idx]?.categoryPrice">
+															<span
+																*ngFor="let err of paymentFormErrorArr[idx]?.categoryPrice[i]?.sxl_price">{{err?.message}}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<button type="submit" class="submitBtn"
+												[ngClass]="{'disableSubmit': pricingFormLoadingArr[idx]}"
+												>
+												Save
+												<i *ngIf="formLoading" class="fa fa-spinner fa-spin"></i>
+											</button>
+										</form>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</li>
+				</ul> -->
+			</div>
+			
+		</div>
+	</div>
+</div>

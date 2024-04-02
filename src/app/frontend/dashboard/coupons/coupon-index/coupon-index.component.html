@@ -1,0 +1,131 @@
+<section class="mainContainer">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-2 col-lg-3 leftPanel">
+          <app-dashboard-left-panel></app-dashboard-left-panel>
+        </div>
+        
+      
+        <div class="col-xl-10 col-lg-9">
+            <div class="rightPanel alt">
+                <breadcrumb>
+                  <li class="active"><span> Course Coupons</span></li>
+                </breadcrumb>
+                
+                <div class="row">
+                  <div class="col-md-8"><h2 class="headTitle">All Coupons</h2></div>
+                  <!-- <div class="col-lg-6">	 
+                    <div class="search_sec">
+                      <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+                        <div class="topSearchCont acTive">
+                          <input autocomplete="off" formControlName="string" name="string"
+                              placeholder="Search" type="search" >
+                        </div>
+                        <div class="topSearch">
+                          <button type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                        <div class="clearfix"></div>
+                      </form>
+                    </div>
+                  </div> -->
+                  <div class="col-md-4">
+                    <a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/dashboard','coupon','create',courseId]">
+                      <i class="fa fa-plus"></i> Create Coupons
+                    </a>
+                  </div>
+                  
+                </div>
+                
+                
+                  <div class="">
+                    
+                    <!-- <notification-message [messages]="error_messages"></notification-message> -->
+                
+                    <table class="table table-striped" *ngIf="data.length > 0" >
+                        <thead>
+                          <tr>
+                            <th>
+                              Coupon Code
+                            </th>
+                            <th>
+                              Discount Mode
+                            </th>
+                            <th>
+                              Discount Value
+                            </th>
+                            <th>
+                              Use Per Code
+                            </th>
+                            <th>
+                              Max Use
+                            </th>
+                            <th>
+                              Start Date
+                            </th>
+                            <th>
+                              End Data
+                            </th>
+                            <th>
+                              Actions
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="data.length > 0">
+                          <tr *ngFor="let coupon of data">
+                              <td>{{coupon?.coupon_code}}</td>
+                              <td>{{coupon?.discount_mode}}</td> 
+                              <td>{{coupon?.discount_value}}</td>
+                              <td>{{coupon?.use_per_user}}</td>
+                              <td>{{coupon?.max_use}}</td>
+                              <td>{{coupon?.started_on | date: 'dd/MM/yyyy'}}</td>
+                              <td>
+                                {{coupon?.ended_on | date: 'dd/MM/yyyy' }}
+                                <a class="" (click)="changeEndDateModal(coupon?.id, coupon?.ended_on,coupon?.started_on )"><i class="fa fa-pencil-square-o"></i></a>
+
+                              
+                              </td>
+                              <td class="text-right">
+                                <button 
+                                  (click)="removeCoupon(coupon?.id,i)"
+                                  type="button"
+                                  class="btn btn-sm btn-danger linkBg">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                              </td>
+                          </tr>
+                  
+                        </tbody> 
+                        <tbody *ngIf="data.length === 0">
+                          <tr>
+                            <td colspan="6" class="text-center">
+                              No record found
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tfoot class="tabPagination" *ngIf="data.length > 0">
+                          <tr>
+                            <td colspan="6">
+                              <app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)"
+                               (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                
+                    
+                      <div class="row mt30" *ngIf="data.length === 0">
+                        <div class="col-12">
+                            <div class="alert alert-warning text-center">
+                                <strong>Oops!</strong>
+                                No record found.
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                
+        </div>
+
+    </div>
+  </div>
+</section>

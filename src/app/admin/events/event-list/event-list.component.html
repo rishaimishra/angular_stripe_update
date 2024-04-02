@@ -1,0 +1,189 @@
+<div class="rightPanel alt">
+  <breadcrumb>
+    <li class="active"><span>Events</span></li>
+  </breadcrumb>
+
+  <div class="row">
+   <div class="col-md-4"><h2 class="headTitle">All Events</h2></div>
+   <div class="col-md-6">
+    <div class="search_sec" >
+			<form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+				<div class="topSearchCont acTive">
+					<input autocomplete="off" formControlName="string" name="string"
+							placeholder="Search" type="search" >
+				</div>
+				<div class="topSearch">
+					<button type="submit"><i class="fa fa-search"></i></button>
+				</div>
+				<div class="clearfix"></div>
+			</form>
+		</div>
+   </div>
+  </div>
+
+
+    <div class="noWrapTable scrollDiv table-responsive">
+
+      <!-- <notification-message [messages]="error_messages"></notification-message> -->
+
+      <table class="table table-striped noWrap" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+
+        <thead>
+          <tr>
+            <th>Event Id</th>
+            <th style="width:150px;">Title</th>
+            <th>Country</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th class="plan_d_none">Plan</th>
+            <th>Created By</th>
+            <th>Is First Selling</th>
+            <th>Status</th>
+            <th>Approval Status</th>
+            <th>Feature</th>
+            <th>Event Tickets</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of mf.data; let i = index">
+            <td>{{getEventID(item.id)}}</td>
+            <td class="topProfile profileImg" style="width:150px; vertical-align: top; float:none; word-wrap: break-word;">
+                <span class="topProfileImg">
+                    <img src="{{item?.images[0]?.thumbnail}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />
+                </span>
+                <br>
+               <span style="width:150px; display: inline-block; white-space: nowrap;
+               overflow: hidden !important;
+               text-overflow: ellipsis; color:#000; font-size: 13px;">{{item?.title |titlecase }}</span> 
+              
+            </td>
+            <td style="vertical-align: top;">{{item?.event?.country?.name}}</td>
+            <td>{{item?.event?.start_date | date}}</td>
+					  <td>{{item?.event?.end_date | date}}</td>
+            <td style="vertical-align: top;" class="plan_d_none">
+              <div class="d-block priceBlk" *ngFor="let rsp of item?.pricable">
+                <div class="col-12">
+                  <b>Plan: </b>
+                  <span class="text-bold">{{rsp?.payment_category?.title}}</span>
+                </div>
+                <div class="col-12" *ngIf="rsp?.payment_type?.id !== 4">
+                  <b>Price: </b>
+                  <ng-container *ngIf="rsp?.usd_price>0">
+                  <span class="text-bold">{{rsp?.usd_price | number: '1.2-2'}} USD</span>
+                  </ng-container>
+                  <ng-container *ngIf="rsp?.usd_price>0 && rsp?.sxl_price>0 ">
+                  &nbsp;+
+                  </ng-container>
+                  <ng-container *ngIf="rsp?.sxl_price>0">
+                  <span class="text-bold">{{rsp?.sxl_price | number: '1.2-2'}} SXL</span>
+                  </ng-container>
+                  <ng-container *ngIf="rsp?.usd_price==0 && rsp?.sxl_price==0 ">
+                      Free
+                  </ng-container>
+                </div>
+                <div class="col-12" *ngIf="rsp?.payment_type?.id === 4">
+                  <b>Price: </b>
+                  <span class="text-bold">FREE</span>
+                </div>
+                <div class="col-12">
+                  <b>Quantity: </b>
+                  <span class="text-bold">{{rsp?.quantity}}</span>
+                </div>
+                <div class="col-12">
+                    <b>Stock In Hand: </b>
+                    <span class="text-bold">{{rsp?.quantity}}</span>
+                     -
+                    <span class="text-bold">{{rsp?.total_order}}</span>
+                     =
+                    <span class="text-bold">{{rsp?.quantity - rsp?.total_order}}</span>
+                  </div>
+              </div>
+            </td>
+            <td style="vertical-align: top;">{{item?.user?.profile?.full_name | titlecase}}</td>
+            <td>
+                <button [swal]="{text:'Do you want to continue',type:'question'}"
+                (confirm)="changeFirstSellingStaus(item.is_fast_selling,item.id,i)"
+                [innerHtml]="item.is_fast_selling == 1 ? 'Yes' : 'No'"
+                class="btn btn-sm btn-primary linkBg"></button>
+            </td>
+            <!-- <td style="vertical-align: top;"><button [swal]="{text:'Do you want to continue',type:'question'}"
+              (confirm)="changeStatus(item.status,item.id,i)" class="btn btn-sm btn-success linkBg" [innerHtml]="item.status=='publish'?'Published' : 'Draft'" ></button></td>
+            <td style="vertical-align: top;"> -->
+              <td>
+                  <!-- <label class="btn-sm btn-warning linkBg">
+                    {{ item.status=='publish'? item.approved_status?'Published' : 'Waiting for approval' : 'Draft' }}
+                  </label> -->
+                  <label class='btn-sm btn-success linkBg' *ngIf="item.status=='publish' && item.approved_status"> Publish</label>
+                  <label class='btn-sm btn-warning linkBg' *ngIf="item.status=='publish' && !item.approved_status"> Waiting for approval</label>
+                  <label class='btn-sm btn-info linkBg' *ngIf="item.status=='draft'" > Draft</label>
+              </td>
+              <td>
+                <ng-container *ngIf="!item?.approved_status  && item.status=='publish'">
+                    <button [swal]="{text:'Do you want to continue',type:'question'}"
+                    (confirm)="changeApproveStatus(item.id,i)" [className]="'btn btn-sm btn-success linkBg'"
+                    [innerHtml]="'Publish'"></button>
+                </ng-container>
+                <ng-container *ngIf="item?.approved_status">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </ng-container>
+                  
+              </td>
+            <td>  
+              <button [swal]="{text:'Do you want to continue',type:'question'}" (confirm)="changeFeatureStaus(item.is_featured,item.id,i)" [innerHtml]="item.is_featured==1? featureYes : featureNo"  *ngIf="item.status=='publish'" class="btn btn-sm btn-success linkBg"></button>
+            </td>
+
+            <td style="vertical-align: top;">
+
+              <!-- <button class="btn btn-sm btn-success linkBg" (click)="eventTicketsList(item?.id)" > <i class="fa fa-download" aria-hidden="true"></i> Export </button> -->
+              <!-- <ng-container *ngIf="item.TicketExportStatus">
+              <button class="btn btn-sm btn-success linkBg" (click)="eventTicketsList(item?.id)" > <i class="fa fa-download" aria-hidden="true"></i> Export </button>
+              </ng-container>
+              <ng-container *ngIf="!item.TicketExportStatus">
+                &nbsp;
+              </ng-container> -->
+              <ng-container *ngIf="item?.event?.is_event_sent">
+                <button class="btn btn-sm btn-success linkBg" (click)="eventTicketsList(item?.id)" > <i class="fa fa-download" aria-hidden="true"></i> Export </button>
+                </ng-container>
+                <ng-container *ngIf="!item?.event?.is_event_sent">
+                  NA
+              </ng-container>
+              
+            </td>
+            <td style="vertical-align: top;">
+              <!-- <button >Edit</button> -->
+              <a routerLink="/event-details/{{item.slug}}" class="btn btn-sm btn-success linkBg" ><i class="fa fa-eye"></i></a>
+
+              <button [swal]="{text:'Are you sure you want to delete?',type:'question',confirmButtonText:'Yes',cancelButtonText:'No'}"
+              (confirm)="deleteRecord(item?.id)" [innerHtml]="trashBtn" 
+              class="btn btn-sm btn-danger linkBg"  ></button>
+
+              <button [swal]="{text:'Do you want to continue',type:'question'}"
+              (confirm)="changeActiveStaus(item.is_active,item.id,i)"
+              [innerHtml]="item.is_active==1? 'Enable' : 'Disable'"
+			        class="btn btn-sm btn-primary linkBg"></button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="tabPagination">
+          <tr>
+            <td colspan="11">
+              <mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+
+     
+      <div class="row mt30" *ngIf="data.length === 0">
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                <strong>Oops!</strong>
+                No record found.
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>

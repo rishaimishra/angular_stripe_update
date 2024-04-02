@@ -1,0 +1,77 @@
+<div class="loginModal">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Reply</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <!-- <notification-message [messages]="messages"></notification-message>
+          <form [formGroup]="replyForm" (ngSubmit)="replyAnswer()" >
+            
+
+            <div class="modalInp" *ngVar="replyForm.get('comments') as comments" >
+                <label class=""> Request for payment </label>
+                <textarea  id="comments" class=""  name="comments" formControlName="comments"  autocomplete="false"></textarea>
+                <form-validation-message [fromInstance]="comments" ></form-validation-message>
+            </div>
+
+            <div class="modalInp">
+              <input type="submit" name="" value="Submit" [className]="replyForm.valid ? ' ' : 'disableSubmit'">
+            </div>
+          </form> -->
+
+    <div class="total_messg_area">
+      <div class="question_block">
+        <div class="user_avtar">
+          <div class="user-avatar__inner fx-c">
+            <span class="topProfileImg">
+              <img src="{{questionData?.user?.avatar}}" onError="this.src='assets/images/no-image.png';" alt="..." />
+            </span>
+          </div>
+        </div>
+        <div class="question_list">
+          <h4>{{questionData?.title}}</h4>
+          <p class="date">{{ questionData?.user?.full_name }} {{questionData?.created_at | date:'MMM dd,yyyy' }}</p>
+          <p class="content">{{questionData?.description}}</p>
+        </div>
+      </div>
+
+      <div class="qa_content ng-star-inserted" *ngIf="discussiondata.length>0">
+
+        <div class="qa_block ng-star-inserted" *ngFor="let answer of discussiondata">
+          <div class="user_avtar">
+            <div class="user-avatar__inner fx-c">
+              <!-- <span  class="user-initials"> Tc </span> -->
+              <span class="topProfileImg">
+                <img src="{{answer?.user?.avatar}}" onError="this.src='assets/images/no-image.png';" alt="..." />
+              </span>
+            </div>
+          </div>
+          <div class="question_list">
+            <div>
+              <strong>{{answer?.user?.profile?.full_name}}</strong>
+            </div>
+            <div class="qa_des">
+              {{answer?.comments}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <form [formGroup]="replyForm" (ngSubmit)="replyAnswer()">
+        <div class="input_area" *ngVar="replyForm.get('comments') as comments">
+          <input autocomplete="off" class="input-sm question-editor--title-editor--2n8ko" name="comments" placeholder="Write Your response"
+            type="text" formControlName="comments">
+          <form-validation-message [fromInstance]="comments"></form-validation-message>
+
+          <button type="submit" data-purpose="post-question" [className]="replyForm.valid ? 'btn btn-info ' : 'btn btn-info disableSubmit'">Reply</button>
+          <!-- <input type="submit" name="" value="Submit" [className]="replyForm.valid ? 'btn btn-info ' : 'btn btn-info disableSubmit'"> -->
+        </div>
+      </form>
+    </div>
+
+
+  </div>
+</div>

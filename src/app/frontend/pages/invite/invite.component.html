@@ -1,0 +1,63 @@
+<section class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h3>
+      <i class="fa fa-home" aria-hidden="true"></i> / Invite Friends</h3>
+    <h2>Invite Friends</h2>
+  </div>
+</section>
+
+<section class="cmsWrap">
+  <div class="container"> 
+    <div class="invite_box_container">
+      
+      <div class="invite_box">
+        <div class="invite-box_icon">
+            <img alt="" src="assets/images/global_logo.png">
+        </div>
+        <div class="invite_box_cont">
+          <h1>Share SuccessLife with friends</h1>
+          <p>Spread the word about the world’s most dynamic learning marketplace. Introduce friends or colleagues to Sucesslife.</p>
+          <div class="share_link">
+            <h2>Share your link</h2>
+            <div class="social_area">
+              <div class="social_area_link_ara ">
+                  <div class="search-container">
+                    <div class="fld_group input-group">
+                        <input type="text" name="" value="{{shareUrl}}" #userinput/>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"  (click)="copyInputMessage(userinput)">Copy</button></span>
+                    </div>
+                  </div>
+              </div>
+              <div *ngIf="copeidTooltip == 1" id="tooltip-top" data-purpose="base-tooltip" role="tooltip" class="in with-chevron tooltip tooltip-blue bottom">
+                  <div class="tooltip-arrow"></div>
+                  <div class="tooltip-inner">
+                    <div class="">Link Copied!</div>
+                  </div>
+              </div>
+
+              <div class="social_area_link_icon">
+                <!-- <button class="social_link"><i class="fa fa-facebook" aria-hidden="true"></i></button> -->
+                <!-- <share-button class="social_link" button="facebook" text="Share" [showText]="false" [url]="shareUrl" ></share-button> -->
+                <!-- <share-button button="facebook" text="Share" [showText]="false" [url]="shareUrl" ></share-button> -->
+              </div>
+              <div class="social_area_link_icon">
+                <!-- <a href="https://twitter.com/share?text={{courseData?.title}}&url={{shareUrl}}" target="_blank">
+                <button class="social_link"><i class="fa fa-twitter" aria-hidden="true"></i></button>
+                </a> -->
+                <share-button button="twitter" text="Tweet" [showText]="false" [url]="shareUrl" ></share-button>
+              </div>
+              <div class="social_area_link_icon">
+                	<a href="mailto:someone@example.com" target="_top" style="display:inline-block; padding:3px;">
+                    <img src="assets/images/mail.png" alt="" width="57" height="35" />
+                  </a>
+                  <!-- <share-button button="email" text="Email" [showText]="false" [url]="shareUrl" ></share-button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

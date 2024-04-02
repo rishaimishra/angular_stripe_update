@@ -1,0 +1,369 @@
+<section class="pageHeading d-flex">
+	<div class="container align-self-center">
+		<h3><i class="fa fa-home" aria-hidden="true"></i> / Checkout</h3>
+		<h2>Shopping Checkout</h2>
+	</div>
+</section>
+
+<section class="checkoutMain">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-4">
+				<div class="checkoutItem" *ngIf="cartObj">
+					<h2 #elCp>Your Orders ({{cartObj?.items.length}})</h2>
+					<div class="checkoutItemSingle" *ngFor="let rs of cartObj?.items">
+						<div class="checkoutItemImg"> <img class="img-fluid" [src]="getImage(rs)" alt=""> </div>
+						<a [routerLink]="['/'+rs?.type+'-details', rs?.details?.slug]">
+							<h3>{{(rs?.details?.title?.length > 50) ? (rs?.details?.title | slice: 0:50) + '...' : (rs?.details?.title)}}
+							</h3>
+						</a>
+						<h4>By {{rs?.details?.user?.profile?.first_name}} {{rs?.details?.user?.profile?.last_name}}
+							{{ ((rs?.details?.user?.profile?.head_line?.length > 50) ? (', ' + (rs?.details?.user?.profile?.head_line|slice: 0:50) + '...') : rs?.details?.user?.profile?.head_line) }}
+						</h4>
+						<!-- Old price -->
+						<!-- <h5>{{getItemDiscountPrice(rs) | currency: 'USD' :'symbol':'1.2-2'}}</h5>
+						<h6 *ngIf="rs?.coupon">
+							<span>{{rs?.details?.price | currency: rs?.details?.currency :'symbol':'1.2-2'}}</span></h6> -->
+
+						<!-- New Price -->
+						<h5 *ngIf="rs.details.pricable.length>0">
+							<ng-container *ngIf="rs.details.pricable[0].usd_price >0">{{rs.details.pricable[0].usd_price | number:'1.2-2'}} USD</ng-container>
+							<ng-container *ngIf="rs.details.pricable[0].usd_price && rs.details.pricable[0].sxl_price >0">
+								+ 
+							</ng-container> 
+							
+							<ng-container *ngIf="rs.details.pricable[0].sxl_price >0" >{{rs.details.pricable[0].sxl_price | currency: 'SXL' :'symbol':'1.2-2'}}</ng-container>
+						</h5>
+						<h5 *ngIf="!rs.details.pricable.length">Free</h5>
+						<span>Quantity: {{rs?.quantity}}</span>
+					</div>
+					<!-- <div class="checkoutItemSingle">
+						<div class="checkoutItemImg"> <img src="../../../assets/images/cart-item2.jpg" alt=""> </div>
+						<h3>Complete Blender Creator: Learn 3D Modelling for Beginn</h3>
+						<h4>Ben Tristem and 2 othersers</h4>
+						<h5>₹ 640</h5>
+						<h6>₹ <span>12,480</span></h6>
+					</div> -->
+				</div>
+			</div>
+			<div class="col-xl-8">
+				<div class="checkoutRight">
+					<h2>
+						Total: 
+						<!-- Old price code -->
+						<!-- <span>{{cartObj?.total_order_price | currency : 'USD' : 'symbol' : '1.2-2'}}</span> -->
+						<!-- New price code -->
+						<span>
+							<ng-container *ngIf="cartObj?.total_order_price.usd_price > 0">
+								{{cartObj?.total_order_price.usd_price | number:'1.2-2'}} USD
+							</ng-container>
+							<ng-container *ngIf="cartObj?.total_order_price.usd_price > 0 && cartObj?.total_order_price.sxl_price>0 ">
+								+
+							</ng-container>
+							<ng-container *ngIf="cartObj?.total_order_price.sxl_price > 0">
+								{{cartObj?.total_order_price.sxl_price | currency : 'SXL' : 'symbol' : '1.2-2'}}
+							</ng-container>
+							<ng-container *ngIf="cartObj?.total_order_price.usd_price == 0 && cartObj?.total_order_price.sxl_price == 0">
+								Free
+							</ng-container>
+						</span>
+
+						<!-- Old Price Code -->
+						<!-- <div *ngIf="isShownOriginalAmount()">
+							<small
+								class="orgPrice">{{cartObj?.original_order_price | currency : 'USD' : 'symbol' : '1.2-2'}}</small>
+							<small>{{getTotalDiscountPercentage() | number: '2.2-2'}}% off</small>
+						</div> -->
+					</h2>
+					<!-- <div class="walletBal" *ngIf="wallet">
+						<label class="checkBoxCustom" *ngIf="isShowWalletCheckbox(wallet)">
+							<input type="checkbox" name="wallet" (change)="onChangeWallet($event)"
+								[checked]="isWalletChecked"> Use your wallet balance
+							{{ wallet?.amount | currency : 'USD' : 'symbol' : '1.2-2'}}
+							<span class="checkBoxMark"></span>
+						</label>
+					</div> -->
+				</div>
+
+				<!-- <div class="freeOrder tabsRadio" *ngIf="!isShowCard()">
+					<button type="button" class="paymentBtn" [disabled]="orderLoader"
+						(click)="orderWalletMethod($event)">Complete Order Using Wallet <i *ngIf="orderLoader"
+							class="fa fa-spinner fa-spin"></i></button>
+				</div>
+
+				<div class="freeOrder tabsRadio" *ngIf="(cartObj?.total_order_price === 0)">
+					<button type="button" class="paymentBtn" [disabled]="orderLoader"
+						(click)="orderFreeMethod($event)">Complete Order <i *ngIf="orderLoader"
+							class="fa fa-spinner fa-spin"></i></button>
+				</div> -->
+
+				<div *ngIf="!proceedToPayment">
+					Payment procedure are not activated
+				</div>
+				
+				<div class="tabsRadio" *ngIf="(cartObj?.total_order_price !== 0) && proceedToPayment">
+					<div class="tabsCustom">
+
+						<!-- <div class="tabsRadioWrap">
+							
+							<label for="tab-4" class="label">
+								<input name="tabs" type="radio" id="tab-4" class="input" (change)="onChangeMethod('cod')" [checked]="true" />
+								<span class="checkmark">
+									<span class="checkmark_round"></span>
+								</span>
+								COD
+							</label>
+							<div class="panel" [ngClass]="{'d-block': isSelectedMethod('cod'), 'd-none': (!isSelectedMethod('cod'))}">
+								<p>Cash on delivery</p>
+								<div class="divCompletePayment">
+									<div class="">
+										<button type="button" [disabled]="orderLoader" class="paymentBtn" (click)="saveOrder($event)">Complete Order <i *ngIf="orderLoader" class="fa fa-spinner fa-spin"></i></button>
+									</div>
+								</div>
+							</div>
+						</div> -->
+
+
+						<!-- Free payment -->
+						<div class="tabsRadioWrap" *ngIf="freeCartPay">
+							<div class="freeOrder tabsRadio" *ngIf="(cartObj?.total_order_price.usd_price === 0)">
+								<button type="button" class="paymentBtn" [disabled]="orderLoader"
+									(click)="orderFreeMethod($event)">Complete Order <i *ngIf="orderLoader"
+										class="fa fa-spinner fa-spin"></i></button>
+							</div>
+						</div>
+
+						<!-- Cyber source payment -->
+
+						<div class="tabsRadioWrap" *ngIf="showUsdPayment" >
+
+							<!-- <label for="tab-1" class="label">
+								<input name="tabs" type="radio" id="tab-1" class="input"
+									(change)="onChangeMethod('cyber-source')" />
+								<span class="checkmark"><span class="checkmark_round"></span></span>
+								Cyber Source <img src="../../../assets/images/card.png" alt="">
+							</label> -->
+
+							<div class="walletBal" *ngIf="wallet">
+								<label class="checkBoxCustom" *ngIf="isShowWalletCheckboxUsd(wallet)">
+									<input type="checkbox" name="wallet" (change)="onChangeWalletUsd($event)"
+										[checked]="isWalletCheckedUsd"> Use your wallet balance
+									{{ wallet?.amount | number:'1.2-2'}} USD
+									<span class="checkBoxMark"></span>
+								</label>
+							</div>
+
+							<div class="freeOrder tabsRadio" *ngIf="!isShowCardUsd()">
+								<button type="button" class="paymentBtn" [disabled]="orderLoader"
+									(click)="orderWalletMethodUsd($event)">Complete Order Using Wallet <i *ngIf="orderLoader"
+										class="fa fa-spinner fa-spin"></i></button>
+							</div>
+			
+							<!-- <div class="freeOrder tabsRadio" *ngIf="(cartObj?.total_order_price.usd_price === 0)">
+								<button type="button" class="paymentBtn" [disabled]="orderLoader"
+									(click)="orderFreeMethod($event)">Complete Order <i *ngIf="orderLoader"
+										class="fa fa-spinner fa-spin"></i></button>
+							</div> -->
+
+
+
+							<ng-container *ngIf="isShowCardUsd() && stripeUsdComplete">
+								<!-- <div class="panel"
+									[ngClass]="{'d-block': isSelectedMethod('cyber-source'), 'd-none': (!isSelectedMethod('cyber-source'))}"> -->
+
+								<div class="panel" [ngClass]="{'d-block': true}">	
+									
+										<!-- <label class="checkBoxCustom">
+											<input type="checkbox" name="" value=""> Remember this card
+											<span class="checkBoxMark"></span>
+										</label> -->
+
+										<div class="divCompletePayment">
+											<div class="">
+												<button type="submit" [disabled]="orderLoader" class="paymentBtn" (click)="checkout()">Pay
+													{{getPaybleAmountUsd() | number:'1.2-2'}} USD<i
+														*ngIf="orderLoader" class="fa fa-spinner fa-spin"></i></button>
+												<!-- <input type="submit" value="Complete Payment"> -->
+											</div>
+											<div class="">
+												<p>By completing your purchase you <br> agree to these <a href="#">Terms of
+														Service</a>.</p>
+											</div>
+											<div class="">
+												<i class="fa fa-lock" aria-hidden="true"></i> Secure Connection
+											</div>
+										</div>
+									
+
+								</div>
+							</ng-container>
+						</div>
+						<div class="tabsRadioWrap" *ngIf="haveSxl && showUsdPayment && stripeUsdComplete">
+							<p><strong>Ethereum Wallet Payment</strong></p>
+							<p><span>SXL Total:</span> <strong>{{getPaybleAmountSxl() | currency : 'SXL' : 'symbol' : '1.2-2'}} </strong></p>
+							<p >
+									SXL amount need to be pay after making your Debit/Credit card payment.
+							</p>
+						</div>
+						
+
+
+
+						<!-- SXL Payment -->
+						<div class="tabsRadioWrap" *ngIf="showSxlPayment">
+
+							<!-- <label for="tab-5" class="label">
+								<input name="tabs" type="radio" id="tab-5" class="input"
+									(change)="onChangeMethod('sxl')" />
+								<span class="checkmark">
+									<span class="checkmark_round"></span>
+								</span>
+								SuccessLife (SXL) Token
+							</label> -->
+
+
+							<!-- <div class="walletBal" *ngIf="wallet">
+								<label class="checkBoxCustom" *ngIf="isShowWalletCheckboxSlx(wallet)">
+									<input type="checkbox" name="wallet" (change)="onChangeWalletSxl($event)"
+										[checked]="isWalletCheckedSxl"> Use your wallet balance
+									{{ wallet?.amount | currency : 'USD' : 'symbol' : '1.2-2'}}
+									<span class="checkBoxMark"></span>
+								</label>
+							</div>
+
+							<div class="freeOrder tabsRadio" *ngIf="!isShowCardSxl()">
+								<button type="button" class="paymentBtn" [disabled]="orderLoader"
+									(click)="orderWalletMethodSxl($event)">Complete Order Using Wallet <i *ngIf="orderLoader"
+										class="fa fa-spinner fa-spin"></i></button>
+							</div> -->
+			
+							<!-- <div class="freeOrder tabsRadio" *ngIf="(cartObj?.total_order_price.sxl_price === 0)">
+								<button type="button" class="paymentBtn" [disabled]="orderLoader"
+									(click)="orderFreeMethod($event)">Complete Order <i *ngIf="orderLoader"
+										class="fa fa-spinner fa-spin"></i></button>
+							</div> -->
+
+							<ng-container *ngIf="isShowCardSxl()">
+							<!-- <div class="panel"
+								[ngClass]="{'d-block': isSelectedMethod('sxl'), 'd-none': (!isSelectedMethod('sxl'))}"> -->
+							<div [ngClass]="{'d-block': true}">
+								<p style="color:#258232;" *ngIf="haveUsd"> <strong>Thank you for your purchase! Your USD payment is successful. 
+										Kindly complete the SXL Payment also to place your order</strong> </p>
+								<!-- <p>Pay using SuccessLife (SXL) payment mode</p> -->
+								<div class="divCompletePayment">
+									<div class="">
+										<button type="button" [disabled]="orderLoader" class="paymentBtn"
+											(click)="orderSLXMethod($event)">Proceed for SXL payment {{getPaybleAmountSxl() | currency : 'SXL' : 'symbol' : '1.2-2'}}<i *ngIf="orderLoader"
+												class="fa fa-spinner fa-spin"></i></button>
+									</div>
+								</div>
+							</div>
+							</ng-container>
+						</div>
+
+
+
+
+						<!-- <div class="tabsRadioWrap">
+							
+							<label for="tab-2" class="label">
+								<input name="tabs" type="radio" id="tab-2" class="input" (change)="onChangeMethod('paypal')" />
+								<span class="checkmark"><span class="checkmark_round"></span></span>
+								<img src="../../../assets/images/paypal-logo.png" alt="">
+							</label>
+							<div class="panel" [ngClass]="{'d-block': isSelectedMethod('paypal'), 'd-none': (!isSelectedMethod('paypal'))}">
+								<p>Paypal</p>
+								<div class="divCompletePayment">
+									<div class="">
+										<button type="button" [disabled]="orderLoader" class="paymentBtn" (click)="orderUsingPaypal($event)">Complete Order <i *ngIf="orderLoader" class="fa fa-spinner fa-spin"></i></button>
+									</div>
+								</div>
+							</div>
+						</div> -->
+
+						<!-- <div class="tabsRadioWrap">
+							
+							<label for="tab-3" class="label">
+								<input name="tabs" type="radio" disabled id="tab-3" class="input" (change)="onChangeMethod('local')" />
+								<span class="checkmark"><span class="checkmark_round"></span></span>
+								Payby by Mobile Using Local Method
+							</label>
+							<div class="panel" [ngClass]="{'d-block': isSelectedMethod('local'), 'd-none': (!isSelectedMethod('local'))}">
+								<p>Local Method</p>
+							</div>
+						</div> -->
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- <button class="btn btn-default" (click)="copyToClipboard('Hello')" ngbTooltip="Copied:" triggers="click:mouseout">click</button> -->
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">You have <span class="totalIntv">{{slxTransactionInterval}}</span> to make payment
+			through SXL</h4>
+	</div>
+	<div class="modal-body">
+		<div class="orderDetailModalData" *ngIf="!slxLoader">
+			<div class="orderTopDiv">
+				<p>Your order # is <span class="highlightedTxt">{{env?.orderIdPrefix + slxTokenResponse?.order_id}}</span></p>
+				<p>Please wait. checking payment status in <span
+						class="highlightedTxt">{{slxPerMinuteObj?.secondsText}}</span></p>
+				<p>Once your payment is completed we will email you an order confirmation details and redemption info</p>
+				<p><i class="fa fa-info-circle"></i> Please send only exact amount. Do not send more or less.</p>
+	
+				<div class="amntDiv">
+					<img src="assets/images/keyword-icon.png" alt="" class="img-fluid">
+					<span class="highlightedTxt amntPrc">{{slxTokenResponse?.order_amount}} SXL</span>
+				</div>
+			</div>
+			<div class="orderBottomDiv">
+				<div class="tabBtn">
+					<ul class="nav nav-pills">
+						<li class="active"><a data-toggle="pill" href="#copy">COPY</a></li>
+						<li><a data-toggle="pill" href="#scan">SCAN</a></li>
+					</ul>
+				</div>
+				<div class="tab-content">
+					<div id="copy" class="tab-pane fade show active">
+						<div class="addressTopDiv">
+							<p>Please send success token to this address</p>
+							<p class="tokenAddress">{{slxTokenResponse?.address}}</p>
+						</div>
+						<div class="addressBottomDiv">
+							<div class="copyAddress">
+								<p class="boldData">{{slxTokenResponse?.address}}</p>
+								<a href="javascript:void(0);" (click)="copyToClipboard(slxTokenResponse?.address)" ngbTooltip="Copied: {{slxTokenResponse?.address}}" triggers="click:mouseout"><i class="fa fa-copy"></i> Copy Address</a>
+							</div>
+							<div class="copyAmount">
+								<p class="boldData">{{slxTokenResponse?.order_amount}} SXL</p>
+								<a href="javascript:void(0);" (click)="copyToClipboard(slxTokenResponse?.order_amount)" ngbTooltip="Copied: {{slxTokenResponse?.order_amount}}" triggers="click:mouseout"><i class="fa fa-copy"></i> Copy Amount</a>
+							</div>
+						</div>
+					</div>
+					<div id="scan" class="tab-pane fade">
+						<div class="addressTopDiv">
+							<p>Please scan success code</p>
+						</div>
+						<div class="qrcodeBottomDiv">
+							<div class="scanQRCodeDiv" *ngIf="slxTokenResponse?.address">
+								<qrcode [qrdata]="slxTokenResponse?.address" [size]="100" [level]="'L'"></qrcode>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="orderDetailModalLoader" *ngIf="slxLoader">
+			<div class="loaderDivSlx">
+				<i *ngIf="orderLoader" class="fa fa-spinner fa-spin"></i> Processing your order.
+			</div>
+		</div>
+	</div>
+
+</ng-template>

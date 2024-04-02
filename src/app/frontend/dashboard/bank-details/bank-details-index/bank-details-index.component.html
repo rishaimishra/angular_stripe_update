@@ -1,0 +1,61 @@
+<div class="rightPanel">
+
+    <div class="centerHeading">
+      <h2>Bank Details</h2>
+      <ng-container *ngIf="records.length < 1">
+        <a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/dashboard', 'bank-details', 'create']">
+          <i class="fa fa-plus"></i> Add Bank Details
+        </a>
+      </ng-container>
+    </div>
+  
+    <div class="table-responsive table_cont" *ngIf="records.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th width="20%">
+                Bank Name
+            </th>
+            <th> Branch Name</th>
+            <th> Branch Address </th>
+            <th style="width:10%" class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="records.length > 0">
+          <tr *ngFor="let rs of records">
+            <td>{{rs?.bank_name}}</td>
+            <td>{{rs?.branch_name }}</td>
+            <td>{{rs?.branch_address }}</td>
+            <td class="text-center">
+              <a class="btn btn-sm btn-success linkBg" [routerLink]="['/dashboard', 'bank-details', 'edit', rs?.id]"><i class="fa fa-pencil-square-o"></i></a>
+              <button class="btn btn-sm btn-danger linkBg" type="button" (click)="deleteRecord(rs?.id)"><i class="fa fa-trash-o"></i></button>
+            </td>
+          </tr>
+  
+        </tbody>
+        <tbody *ngIf="records.length === 0">
+          <tr>
+            <td colspan="8" class="text-center">
+              No Bank Details is added yet.
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="tabPagination">
+          <tr>
+            <td colspan="8">
+              <app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="row mt30" *ngIf="records.length === 0">
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                <strong>Oops!</strong>
+                No record found.
+            </div>
+        </div>
+    </div>
+  
+  </div>

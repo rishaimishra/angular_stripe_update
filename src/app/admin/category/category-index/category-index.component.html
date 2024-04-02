@@ -1,0 +1,91 @@
+<div class="rightPanel alt">
+<breadcrumb>
+	<li class="active"><span> {{categoryType=='courses'? 'Course' : 'Event'}} Category</span></li>
+</breadcrumb>
+
+<div class="row">
+	<div class="col-md-4"><h2 class="headTitle">All {{categoryType=='courses'? 'Course' : 'Event'}} Category</h2></div>
+	<div class="col-lg-6">	 
+			<div class="search_sec" >
+				<form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+					<div class="topSearchCont acTive">
+						<input autocomplete="off" formControlName="string" name="string"
+								placeholder="Search" type="search" >
+					</div>
+					<div class="topSearch">
+						<button type="submit"><i class="fa fa-search"></i></button>
+					</div>
+					<div class="clearfix"></div>
+				</form>
+			</div>
+	</div>
+	<div class="col-md-2">
+		<a  class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['create']">
+			<i class="fa fa-plus"></i> Create Category
+		</a>
+	</div>
+</div>
+	
+<div class="alert alert-success" *ngIf="success_messages !=''">
+		{{success_messages}}
+</div>
+<!-- <notification-message [messages]="error_messages"></notification-message> -->
+<div class="table-responsive">
+	<table class="table table-striped" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+		<thead>
+		<tr>
+			<th>
+				<mfDefaultSorter by="name">Name</mfDefaultSorter>
+			</th>
+			<th>
+				<mfDefaultSorter by="icon">Icon</mfDefaultSorter>
+			</th>
+			<th>
+				<mfDefaultSorter by="title">Parent</mfDefaultSorter>
+			</th>
+			<th class="text-center">Action</th>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of mf.data; let i = index">
+				<td>{{item?.name}}</td>
+				<td><i class="fa {{item.icon}}" aria-hidden="true"></i></td>
+				<td>{{(!!item.parent?.name) ? (item.parent?.name) :'-----'}}</td>			
+				
+				<td class="text-center">
+					<a [routerLink]="['/admin',categoryType,'category',item.id,'edit']" class="btn btn-sm btn-success linkBg">
+					<i class="fa fa-pencil-square-o"></i>
+				</a>
+				<button
+				[swal]="{text:'Do you really want to remove this category',type:'question'}"
+				(confirm)="removeCategory(item.id,i)"
+				type="button"
+				class="btn btn-sm btn-danger linkBg">
+					<i class="fa fa-trash-o"></i>
+				</button>
+
+				<button [swal]="{text:'Do you want to continue',type:'question'}"
+				(confirm)="changeActiveStaus(item.is_active,item.id,i)"
+				[innerHtml]="item.is_active==1? 'Enable' : 'Disable'" 
+				class="btn btn-sm btn-success linkBg"></button>
+				
+				</td>
+			</tr>
+		</tbody>
+		<tfoot class="tabPagination">
+			<tr>
+				<td colspan="6">
+					<mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<div class="row mt30" *ngIf="data.length === 0">
+	<div class="col-12">
+		<div class="alert alert-warning text-center">
+			<strong>Oops!</strong>
+			No record found.
+		</div>
+	</div>
+</div>
+</div>

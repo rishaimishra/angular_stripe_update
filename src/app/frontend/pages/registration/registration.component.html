@@ -1,0 +1,98 @@
+<div class="loginModal">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" *ngIf="checkRole === 'vendor'">Sign Up and Become a Tutor!</h4>
+    <h4 class="modal-title" id="modal-basic-title" *ngIf="checkRole !== 'vendor'">Sign Up and Start Learning!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div Class="alert-success" *ngIf="successMsg">
+    {{successMsg}}
+  </div>
+  <div class="modal-body">
+    <notification-message [messages]="messages" *ngIf="errorMsg"></notification-message>
+    <form [formGroup]="registrationForm" (ngSubmit)="register()">
+      <div class="modalInp" *ngVar="registrationForm.get('user_name') as user_name">
+        <input type="email" id="user_name" class="" placeholder="Email *" name="user_name" formControlName="user_name" autocomplete="off">
+        <form-validation-message [fromInstance]="user_name"></form-validation-message>
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+      </div>
+      <div class="modalInp" *ngVar="registrationForm.get('password') as password">
+        <input type="password" id="password" class="" placeholder="Password *" name="password" formControlName="password"  autocomplete="off">
+        <form-validation-message [fromInstance]="password"></form-validation-message>
+        <i class="fa fa-lock" aria-hidden="true"></i>
+      </div>
+
+      <div class="modalInp" *ngVar="registrationForm.get('mobile_no') as mobile_no">
+        <div class="row">
+          <div class="col-md-5 col-4">
+              <!-- <select class="selectCommon" name="phone_code" id="phone_code" formControlName="phone_code">
+                  <option *ngFor="let country of countryList" [value]="country.phone_code">+ {{ country.phone_code }} ({{ country.code }})</option>
+              </select> -->
+              <!-- <ng-select class="inpClass "
+              [items]="countryList"
+              bindLabel="label"
+              bindValue="phone_code"
+              formControlName="phone_code">
+            </ng-select> -->
+            <ng-select [items]="countryList"  bindLabel="label" bindValue="phone_code" formControlName="phone_code" [(ngModel)]="IN"  placeholder="+91(IN)">
+                <ng-template ng-label-tmp let-item="item">
+                    <img height="15" width="15" [src]="item.image ? item.image: ''"/>
+                    {{item.label}}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <img height="15" width="15" [src]="item.image ? item.image: ''"/>  <b>{{item.label}}</b>
+                </ng-template>
+            </ng-select>
+           
+          </div>
+
+          <div class="col-md-7 col-8">
+            <div class="modalInp-inner">
+                <input type="text" id="mobile_no" class="" placeholder="Mobile No *" name="mobile_no" formControlName="mobile_no" (keypress)="keyPress($event)"
+                minlength=10 maxlength=10>
+              <form-validation-message [fromInstance]="mobile_no"></form-validation-message>
+              <i class="fa fa-phone" aria-hidden="true"></i>
+            </div>
+          </div>  
+        </div>
+      </div>
+
+      <div class="inpSignup" *ngVar="registrationForm.get('detailsCheck') as detailsCheck">
+        <input type="checkbox" name="" value="" formControlName="detailsCheck" id="detailsCheck" name="detailsCheck"> * I’m in for emails with exciting discounts and personalized recommendations
+        <form-validation-message [fromInstance]="detailsCheck"></form-validation-message>
+      </div>
+      <div class="fgPass alt">
+        <h6 class="textMain">Please fill up all (*) mandatory fields.</h6>
+      </div>
+      <div class="modalInp" style="padding: 8px;">
+        <input [className]="registrationForm.valid ? ' ' : 'disableSubmit'" type="submit" name="" value="Sign Up">
+      </div>
+    </form>
+    <div class="fgPass">
+      <h6>By signing up, you agree to our
+        <!-- <a routerLink="" (click)="redirectToTermsOfUse()">Terms of Use</a> and -->
+        <a href="/terms" target="_blank">Terms of Use</a> and 
+        <!-- <a routerLink="" (click)="redirectToPrivacyPolicy()">Privacy Policy</a>.</h6> -->
+        <a href="/privacy-policy" target="_blank">Privacy Policy</a>.</h6>
+    </div>
+
+    <div class="or">
+      <span>or</span>
+    </div>
+
+    <!-- <a class="loginSocial facebookLogin" (click)="socialSignIn('facebook')" routerLink="">
+      <img src="assets/images/facebook-login.png" alt="">
+      <span></span> Continue with Facebook</a> -->
+    <a class="loginSocial googleLogin" (click)="socialSignIn('google')" routerLink="">
+      <img src="assets/images/google-login.png" alt="">
+      <span></span> Continue with Google</a>
+
+    <div class="popSign">
+      <h5>Already have an account - 
+        <a routerLink="" (click)="loginFormModal()">Log In</a>
+      </h5>
+    </div>
+
+  </div>
+</div>

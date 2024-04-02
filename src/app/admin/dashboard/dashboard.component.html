@@ -1,0 +1,179 @@
+<div class="rightPanel alt">
+	<breadcrumb>
+		<li class="active"><span>Dashboard</span></li>
+	</breadcrumb>
+
+	<div class="dashboard_cont">
+		<div class="row">
+
+			<div class="col-xs-12 col-md-6 col-lg-6 chart_area">
+				<div class="order_grph">
+					<h1>Order overview</h1>
+					<div style="display: block">
+						<canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="lineChartLegend"
+							[chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+					</div>
+				</div>
+				<div class="sale_amount">
+					Total Sale Amount :
+					<ng-container *ngIf="dashboardData?.total_sale_amount[0]?.amount > 0">{{dashboardData?.total_sale_amount[0]?.amount| number:'1.2-2' }} USD </ng-container>
+					<ng-container *ngIf="!dashboardData?.total_sale_amount[0]?.amount">0.00 USD </ng-container>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-6 box_area">
+				<div class="row clumn">
+						<div class="col-lg-6">
+							<div class="blue_box box">
+								<h2>Total Course</h2>
+								<p class="number">{{dashboardData?.course_count}}</p>
+								<div class="icon">
+									<img src="assets/images/coursedash_icon.png" alt="" >
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="orenge box">
+								<h2>Total Events</h2>
+								<p class="number">{{dashboardData?.event_ticket_count}}</p>
+								<div class="icon">
+									<img src="assets/images/ticketdash_iocn.png" alt="" >
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="yellow_box box">
+								<h2>Total Course Sold</h2>
+								<p class="number">{{dashboardData?.total_course_sold}}</p>
+								<div class="icon">
+									<img src="assets/images/eventsolddash_icon.png" alt="" >
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="green_box box">
+								<h2>Total Event Sold</h2>
+								<p class="number">{{dashboardData?.total_event_sold}}</p>
+								<div class="icon">
+									<img src="assets/images/eventsolddash_icon.png" alt="" >
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="purple box">
+								<h2>Total Course Sales</h2>
+								<ng-container *ngIf="dashboardData?.total_vendor_course_sale_amt.length > 0 ">
+									<p class="number"> {{dashboardData?.total_vendor_course_sale_amt[0]?.balance | number:'1.2-2'}} USD </p> 
+								</ng-container>
+								<ng-container *ngIf="dashboardData?.total_vendor_course_sale_amt.length == 0 ">
+									<p class="number"> 0.00 USD </p> 
+								</ng-container>
+								<div class="icon">
+									<img src="assets/images/coursesalesdash_icon.png" alt="" >
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="green_box01 box">
+								<h2>Total Event Ticket Sales</h2>
+								<ng-container *ngIf="dashboardData?.total_event_ticket_vendor_sale_amt.length > 0 ">
+									<p class="number"> {{dashboardData?.total_event_ticket_vendor_sale_amt[0]?.balance | number:'1.2-2'}} USD </p> 
+								</ng-container>
+								<ng-container *ngIf="dashboardData?.total_event_ticket_vendor_sale_amt.length == 0 ">
+									<p class="number"> 0.00 USD </p> 
+								</ng-container>
+								<div class="icon">
+									<img src="assets/images/eventsales_icon.png" alt="" >
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="red_box01 box">
+								<h2>Total Admin Commission</h2>
+								<ng-container *ngIf="dashboardData?.total_admin_amt.length > 0 ">
+									<p class="number"> {{dashboardData?.total_admin_amt[0]?.balance | number:'1.2-2'}} USD </p> 
+								</ng-container>
+								<ng-container *ngIf="dashboardData?.total_admin_amt.length == 0 ">
+									<p class="number"> 0.00 USD </p> 
+								</ng-container>
+								<div class="icon">
+									<img src="assets/images/eventsales_icon.png" alt="" >
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="dashboard_listing" *ngIf="notifications.length > 0">
+			<div class="col-md-12">
+				<a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/admin', 'notifications']">
+					  <i class="fa fa-plus"></i> Show More
+				</a>
+			</div>
+		<h1>Notification</h1>
+			<div class="table-responsive">
+				<table class="table table-bordered">
+				  <thead>
+					<tr>
+					  <th>Data</th>					 
+					  <th>Sender</th>
+					  <th>Date</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr *ngFor=" let notification of notifications; let i = index">
+						<td>{{ notification?.data}}</td>						
+					  	<td class="topProfile profileImg">
+							<span class="topProfileImg">
+								<img src="{{notification?.user?.avatar}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    
+							</span>
+							<br>
+						  {{notification?.user?.profile?.full_name}}
+						</td>
+					  	<td>{{ notification.created_at | date: 'dd-mm-yyyy'}}</td>
+					</tr>
+					
+				  </tbody>
+				</table>
+			</div>
+	</div> -->
+
+	<!-- <div class="dashboard_listing" *ngIf="annoucements?.length > 0">
+		<div class="col-md-12">
+			<a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/admin', 'annoucements']">
+				<i class="fa fa-plus"></i> Show More
+			</a>
+		</div>
+		<h1>Annoucements</h1>
+		<div>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Description</th>
+						<th>User</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor=" let annoucement of annoucements; let i = index">
+						<td>{{ annoucement?.title}}</td>
+						<td>{{ annoucement?.description}}</td>
+						<td class="topProfile profileImg">
+								<span class="topProfileImg">
+									<img src="{{annoucement?.user?.avatar}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    
+								</span>
+								<br>
+							  {{annoucement?.user?.email}}
+						</td>
+						<td>{{ annoucement?.created_at | date: 'dd-mm-yyyy'}}</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</div> -->
+
+</div>

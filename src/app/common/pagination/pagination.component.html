@@ -1,0 +1,10 @@
+<ul class="pagination" *ngIf="pagination.pageCount > 1">
+    <li *ngIf="pagination.page > 1" (click)="previousPage()" class="pointer page-item"><span class="page-link">«</span></li>
+    <li *ngIf="pagination.page == 1" class="disabled page-item"><span class="page-link">«</span></li>
+	<li *ngFor="let page of pagination.pageCount|toArray" class="page-item" [class.active]="page == getCurrentPage()">
+        <a *ngIf="page != getCurrentPage()" class="pointer page-link" (click)="pageChange(page)">{{page}}</a>
+        <span *ngIf="page == getCurrentPage()" class="page-link">{{page}}</span>
+    </li>
+    <li *ngIf="pagination.page !== pagination.pageCount" (click)="nextPage()" class="pointer page-item"><span class="page-link">»</span></li><li>
+    <li *ngIf="pagination.page == pagination.pageCount" class="disabled page-item"><span class="page-link">»</span></li><li>
+</ul>

@@ -1,0 +1,201 @@
+<section class="mainContainer">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-2 col-lg-3 leftPanel">
+          <app-dashboard-left-panel></app-dashboard-left-panel>
+        </div>
+        
+      
+        <div class="col-xl-10 col-lg-9">
+              <div class="rightPanel">
+                <div class="centerHeading"><h2 >Course List</h2></div>
+                <!-- <div class="col-lg-12" *ngIf="!data.length">
+                
+                  <p style="color: green;font-size: 18px;margin-top: 47px;width: 100%;text-align: center;">
+                  Course yet not created.
+                  </p>
+      
+                </div> -->
+                <div class="custom_form">	 
+                  <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+                  <div class="row">
+                        <div class="col-sm-2">
+                            <label style="width:100%;">Search Key</label>
+                            <div class="topSearchCont acTive">
+                                <input autocomplete="off" formControlName="string" name="string"
+                                    placeholder="Search" type="search" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Category</label>
+                            <ng-select  [items]="categories"
+                            bindLabel="name"
+                            bindValue="id"						
+                            groupBy="parent_name"           	
+                            [groupValue]="groupValueFn"				
+                            placeholder="Select Category"												
+                            formControlName="category"
+                            dropdownPosition="auto"
+                            name="parent_id"								 
+                          >
+                          </ng-select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Published</label>
+                            <ng-select [items]="publishOptions" bindLabel="label"
+                              [closeOnSelect]="false" bindValue="value"  formControlName="is_publish"  placeholder="Select"	>
+                              <ng-template ng-option-tmp let-item="item" >
+                                {{item.label}}
+                              </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Featured</label>
+                            <ng-select [items]="featureOptions" bindLabel="label"
+                              [closeOnSelect]="false" bindValue="value"  formControlName="is_featured" placeholder="Select">
+                              <ng-template ng-option-tmp let-item="item" >
+                                {{item.label}}
+                              </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Price</label>
+                            <ng-select [items]="price" bindLabel="label"
+                              [closeOnSelect]="false" bindValue="value"  formControlName="price_filter" placeholder="Select">
+                              <ng-template ng-option-tmp let-item="item" >
+                                {{item.label}}
+                              </ng-template>
+                            </ng-select>
+                        </div>
+                      
+                        <!-- <div class="topSearchCont acTive">
+                          <input autocomplete="off" formControlName="string" name="string"
+                              placeholder="Search" type="search" >
+                        </div>-->
+                        <div class="col-sm-2">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-primary btn-sm btn-full">Search</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    
+                  </div>
+                </form>
+              </div>
+
+              <div class="table-responsive table_cont" *ngIf="data.length > 0">
+                <table class="table table-striped" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <!-- <th>Promote</th> -->
+                        <th>Admin approval status </th>
+                        <th>Date</th>
+                        <th style="width: 9%;">Is Active</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                  
+                    <tbody>
+                      <tr *ngFor="let item of mf.data; let i = index">
+                        <td>{{item?.title |titlecase }}</td>
+                        <td>{{item?.categories[0]?.name |titlecase }}</td>
+                        <!-- Old price code -->
+                        <!-- <td *ngIf="item.price">{{item?.price |currency }}</td>
+                        <td *ngIf="!item.price">Free</td> -->
+                        <!-- New price code -->
+                        <td *ngIf="item.pricable.length">
+                          <ng-container *ngIf="item?.pricable[0].usd_price">
+                              {{item?.pricable[0].usd_price | number:'1.2-2'}} USD
+                          </ng-container>
+                          <ng-container *ngIf="item?.pricable[0]?.usd_price>0 && item?.pricable[0]?.sxl_price>0">
+                            +
+                          </ng-container>
+                          <ng-container *ngIf="item?.pricable[0].sxl_price">
+                            SXL {{item?.pricable[0].sxl_price | number:'1.2-2' }}
+                          </ng-container>
+
+                        </td>
+                        <td *ngIf="!item.pricable.length" >Free</td>
+
+                        <td *ngIf="user.is_kyc">
+                          
+                            <button [swal]="{text:'Do you want to continue',type:'question'}"
+                            (confirm)="changeStatus(item.status,item.id,i,item)" [className]="item.status=='publish' ? 'btn btn-sm btn-success linkBg' : 'btn btn-sm btn-warning linkBg'" [innerHtml]="item.status=='publish'?'Published' : 'Draft'" ></button>
+                        </td>
+                        <td>
+                          <ng-container *ngIf="item.status=='publish' && item.approved_status ">
+                            <label class="btn-sm btn-success linkBg">
+                              Approved
+                            </label>
+                          </ng-container>
+                          <ng-container *ngIf="item.status=='publish' && !item.approved_status ">
+                            <label class="btn-sm btn-warning linkBg">
+                              Waiting for approval
+                            </label>
+                          </ng-container>
+                          <ng-container *ngIf="item.status!='publish'">
+                              --
+                          </ng-container>
+                        </td>
+                        <td style="width: 10%;" *ngIf="!user.is_kyc">
+                        
+                          <button class="btn btn-sm btn-warning linkBg" (click)="kycModal(item?.id)">Draft</button>
+                        </td>
+
+                        <!-- <td style="width: 10%;" >
+                          <ng-container  *ngIf="(item.course_promotions | json) == '{}' && item.status=='publish'">
+                            <button class="btn btn-sm btn-primary linkBg" (click)="promoteCourseModal(item?.id)">Promote</button>
+                          </ng-container>
+                          <ng-container *ngIf="(item.course_promotions | json) != '{}' && item.status=='publish'">
+                              Promoted till {{item.course_promotions.start_on | date: 'dd-MM-yyyy'}} to {{item.course_promotions.end_on | date: 'dd-MM-yyyy'}}
+                          </ng-container>
+                        </td> -->
+                        <td style="width: 10%;">{{item.created_at | date: 'dd-MM-yyyy'}}</td>
+                        <td *ngIf="item.is_active" style="text-align: center;"> <i class="fa fa-check" aria-hidden="true"></i> </td>
+                        <td *ngIf="!item.is_active" style="text-align: center;"> <i class="fa fa-times" aria-hidden="true"></i></td>
+                        <td style="width: 14%;" >
+                          <ng-container *ngIf="item.is_active">
+                          <!-- <button >Edit</button> -->
+                          <a [routerLink]="['/dashboard','coupons', item.id]" class="btn btn-sm btn-primary linkBg" *ngIf="item.status=='publish' && item.order_details.length > 0">Coupons</a>
+
+                          <a (click)="editCourse(item)" class="btn btn-sm btn-success linkBg" ><i class="fa fa-pencil-square-o"></i></a>
+                          <!-- <a routerLink="/course-details/{{item.slug}}" class="btn btn-sm btn-success linkBg" ><i class="fa fa-eye"></i></a> -->
+                          <a routerLink="/dashboard/tutor-course-details/{{item.slug}}" class="btn btn-sm btn-info linkBg" ><i class="fa fa-line-chart"></i></a>
+                          
+                          <!-- <a (click)="deleteCourse(item)" class="btn btn-sm btn-success linkBg" ><i class="fa fa-trash"></i></a> -->
+
+                          <button [swal]="{text:'Are you sure you want to delete?',type:'question',confirmButtonText:'Yes',cancelButtonText:'No'}"
+                            (confirm)="deleteCourse(item)" [innerHtml]="trashBtn" 
+                            class="btn btn-sm btn-danger linkBg"></button>
+                          </ng-container>  
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot class="tabPagination">
+                      <tr>
+                        <td colspan="8">
+                          <mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+              </div>
+              
+              <div class="row mt30" *ngIf="data.length === 0">
+                  <div class="col-12">
+                      <div class="alert alert-warning text-center">
+                          <strong>Oops!</strong>
+                          No record found.
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</section>

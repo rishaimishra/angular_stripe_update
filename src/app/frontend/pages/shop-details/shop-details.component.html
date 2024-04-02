@@ -1,0 +1,180 @@
+<div class="eventBanner d-flex">
+	<div class="container align-self-center">
+		<h2>{{productData?.title}}</h2>
+		<h3>{{productData?.short_description | slice:0:30}}</h3>
+	</div>
+</div>
+
+<!-- <section class="eventMap">
+  <div class="container">
+    <div class="eventMapContainer">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.268266311951!2d88.43354301543901!3d22.56906773878692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275ab8b31fd9d%3A0x42804e7cbbd02806!2sStesalit+Tower!5e0!3m2!1sen!2sin!4v1543396700464" width="100%" height="270" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+  </div>
+</section> -->
+
+<section class="eventDetails">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-9 col-lg-8">
+				<div class="row">
+					<div class="col-lg-7">
+						<div class="eventDetailsGallery">
+							<ngx-gallery [options]="galleryOptions" [images]="galleryImages" *ngIf="productData?.images.length>1"></ngx-gallery>
+
+
+							<img [src]="productData?.images[0].banner" *ngIf="productData?.images.length ==1 " style="height:345px;">
+
+							<img [src]=" 'assets/images/noimg-530x345.jpg'" *ngIf="productData?.images.length == 0" style="height:345px;">
+
+						</div>
+					</div>
+					<div class="col-lg-5">
+						<div class="eventDetailsGalleryCont">
+							<h3>{{productData?.title}}</h3>
+							<p>{{productData?.categories[0].name}}</p>
+							<ngb-rating [rate]="0"></ngb-rating>
+							<span> 0.0
+								<!-- <small>(7,1118 ratings)</small> -->
+							</span>
+							<h5>
+									<span>Created By :</span> {{productData?.user?.profile?.full_name}} , {{ productData?.user?.profile?.head_line}}
+							</h5>
+							<!-- <h4>Thursday at 12 pm</h4> -->
+							<!-- <h4>{{productData?.created_at |date}} {{productData?.created_at |date:'EEEE'}} at {{productData?.created_at |date:'hh aa'}} </h4> -->
+							<h4></h4>
+							<!-- Old price code -->
+							<!-- <h5>
+								<span>Price :</span> ${{productData?.price}}
+							</h5> -->
+
+							<!-- New price code -->
+							<span *ngIf="productPrice?.total_price>0">Price :</span> 
+									<ng-container *ngIf="productPrice?.usd_price > 0"> {{productPrice?.usd_price | number:'1.2-2'}} USD</ng-container>
+									<ng-container *ngIf="productPrice?.sxl_price > 0"> SXL {{productPrice?.sxl_price | number:'1.2-2'}}</ng-container>
+
+							<span *ngIf="productPrice?.total_price == 0">Price :</span> Free
+							<h5>
+								<span>Available Quantity :</span> {{productData?.quantity}} <br>
+								<!-- <span>Organization :</span> Health club -->
+							</h5>
+
+							<form [formGroup]="cartForm" (submit)="saveToCart()">
+								<!-- <input type="number" formControlName="quantity"> <br> -->
+
+								<div class="quantity_area">
+
+									<div class="input-group">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default btn-number" (click)="minusQuantity($event)">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</span>
+										<input type="number" formControlName="quantity" name="quant[1]" class="input-number" value="0" style="padding:5px 15px; width:80px;"
+										readonly>
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default btn-number" (click)="plusQuantity($event)">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</span>
+									</div>
+
+								</div>
+
+								<div class="button_area">
+									<!-- <a href="javascript:void(0);" class="btnSeemore text-center col-md-12">Add to cart</a> -->
+									<button type="submit" class="buyTick"> Add to cart</button>
+								</div>
+							</form>
+							<!-- <input type="number" name="" value=""> <br> -->
+							<!-- <a (click)="eventTicketModal()" class="buyTick" href="javascript:void(0)">Buy ticket</a> -->
+						</div>
+					</div>
+				</div>
+				<ngb-tabset class="eventDetailsTabs">
+
+					<ngb-tab>
+						<ng-template ngbTabTitle>General features</ng-template>
+						<ng-template ngbTabContent>
+							{{productData?.short_description}}
+						</ng-template>
+					</ngb-tab>
+
+					<ngb-tab>
+						<ng-template ngbTabTitle>Description</ng-template>
+						<ng-template ngbTabContent>
+							{{productData?.description}}
+						</ng-template>
+					</ngb-tab>
+
+					<ngb-tab>
+						<ng-template ngbTabTitle>Reviews</ng-template>
+						<ng-template ngbTabContent>
+							<h3>Coming soon</h3>
+						</ng-template>
+					</ngb-tab>
+
+				</ngb-tabset>
+			</div>
+			<div class="col-xl-3 col-lg-4">
+				<!-- <div class="sideAdd">
+          <img src="assets/images/nothing-290x507.jpg" alt="">
+        </div> -->
+				<div class="browseBy alt" *ngIf="otherProducts?.length>0">
+					<h2>Other Products by the vendor</h2>
+					<!-- <h2> Coming Soon</h2> -->
+					<!-- <div class="featuredSide">
+            <owl-carousel [options]="featureSide"  [carouselClasses]="['owl-theme', 'sliding']" >
+            <div class="item">
+              <div class="featuredSideSingle">
+                <div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+                <h3>Masterclass courses for skills development</h3>
+                <img src="assets/images/ratings.png" alt="">
+                <h4>01.08.2018</h4>
+              </div>
+              <div class="featuredSideSingle">
+                <div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+                <h3>Masterclass courses for skills development</h3>
+                <img src="assets/images/ratings.png" alt="">
+                <h4>01.08.2018</h4>
+              </div>
+              <div class="featuredSideSingle">
+                <div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+                <h3>Masterclass courses for skills development</h3>
+                <img src="assets/images/ratings.png" alt="">
+                <h4>01.08.2018</h4>
+              </div>
+            </div>
+            <div class="item">
+              <div class="featuredSideSingle">
+                <div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+                <h3>Masterclass courses for skills development</h3>
+                <img src="assets/images/ratings.png" alt="">
+                <h4>01.08.2018</h4>
+              </div>
+              <div class="featuredSideSingle">
+                <div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+                <h3>Masterclass courses for skills development</h3>
+                <img src="assets/images/ratings.png" alt="">
+                <h4>01.08.2018</h4>
+              </div>
+              <div class="featuredSideSingle">
+                <div class="featuredSideSingleImg"><img src="assets/images/featured.jpg" alt=""></div>
+                <h3>Masterclass courses for skills development</h3>
+                <img src="assets/images/ratings.png" alt="">
+                <h4>01.08.2018</h4>
+              </div>
+            </div>
+            </owl-carousel>
+					</div> -->
+					<ng-container *ngFor="let product of otherProducts; let i = index">
+						<app-product-by-vendor [data]="product" [currentProductId]="productData?.id">
+						</app-product-by-vendor>
+					</ng-container>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

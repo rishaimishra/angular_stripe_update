@@ -1,0 +1,30 @@
+.featuredSide{
+    .featuredSideSingle{ overflow: hidden; position: relative; padding: 10px 10px 10px 95px; min-height: 122px; border-top: 1px solid #e3e5e6;
+      &:first-child{ border: none;}
+      h3{ font-size: 15px; color: #323232; padding: 3px 0 5px 0; line-height: 22px;}
+      h4{ font-size: 16px; color: #38a8b6; padding: 8px 0 0 0;}
+      img{ width: auto !important; max-width: 100% !important;}
+    }
+    .featuredSideSingleImg{ position: absolute; left: 10px; top: 9px; width: 73px;}
+
+    .courseRating{
+      padding: 3px 0;
+
+      .courseRatingLeft{
+        display: inline-block;
+        vertical-align: top;
+        border-right: 1px solid #b6b6b6;
+        padding: 0 10px 0 0;
+      }
+      span{
+        font-size: 18px;
+        color: #000;
+        font-weight: 400;
+        vertical-align: top;
+        display: inline-block;
+        padding: 0 0 0 10px;
+        line-height: 18px;
+      }
+    }
+   }
+   

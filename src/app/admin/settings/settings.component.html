@@ -1,0 +1,210 @@
+<div class="rightPanel alt">
+
+    <!-- <div class="centerHeading">
+      <h2>Edit Settings</h2>
+    </div> -->
+    <breadcrumb>
+      <li class="active"><span>Settings</span></li>
+    </breadcrumb>
+  
+    <div class="row">
+      <div class="col-md-12"><h2 class="headTitle"> Settings </h2></div>
+      <!-- <div class="col-md-2">
+          <h2 class="backLink">
+            <a routerLink="/admin/dashboard" >Back </a> 
+          </h2>  
+      </div> -->
+    </div>
+   
+    <div class="formWrap">
+      <form [formGroup]="formObj" (submit)="updateSettings()">
+        
+        <div class="row">
+            <div class="col-sm-12"><label for="">SXL To USD Rate:</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="sxl_to_usd_rate" name="sxl_to_usd_rate" placeholder="SXL To USD Rate" type="text" (keypress)="keyPress($event)"> 
+                <div class="form-validation-error" *ngIf="formError?.sxl_to_usd_rate">
+                  <span *ngFor="let err of formError?.sxl_to_usd_rate">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12"><label for="">Vendor Commission (in percent):</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="vendor_commission" name="vendor_commission" placeholder="Vendor Commission" type="text" (keypress)="keyPress($event)"> 
+                <div class="form-validation-error" *ngIf="formError?.vendor_commission">
+                  <span *ngFor="let err of formError?.vendor_commission">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Reseller Commission (in percent):</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="reseller_commission" name="reseller_commission" placeholder="Reseller Commission" type="text" (keypress)="keyPress($event)"> 
+                <div class="form-validation-error" *ngIf="formError?.reseller_commission">
+                  <span *ngFor="let err of formError?.reseller_commission">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">KYC Url:</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="kycUrl" name="kycUrl" placeholder="KYC Url" type="text" > 
+                <div class="form-validation-error" *ngIf="formError?.kycUrl">
+                  <span *ngFor="let err of formError?.kycUrl">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">KYC Reference Video Url:</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="kycReferenceVideoUrl" name="kycReferenceVideoUrl" placeholder="KYC Reference Video Url" type="text" > 
+                <div class="form-validation-error" *ngIf="formError?.kycReferenceVideoUrl">
+                  <span *ngFor="let err of formError?.kycReferenceVideoUrl">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Ticket Booking Time Difference:</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="ticketBookingTimeDiff" name="ticketBookingTimeDiff" placeholder="Ticket Booking Time Difference" type="text" (keypress)="keyPress($event)"> 
+                <div class="form-validation-error" *ngIf="formError?.ticketBookingTimeDiff" >
+                  <span *ngFor="let err of formError?.ticketBookingTimeDiff">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Address:</label>
+              <div class="inputWrap">
+                  <textarea class="inpField" formControlName="address" placeholder="Address" > </textarea>
+                <div class="form-validation-error" *ngIf="formError?.address">
+                  <span *ngFor="let err of formError?.address">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12"><label for="">Mail Address:</label>
+              <div class="inputWrap">
+                  <input type="text" class="inpField" formControlName="mail_address" name="address" placeholder="Mail Address" type="text" > 
+                <div class="form-validation-error" *ngIf="formError?.mail_address">
+                  <span *ngFor="let err of formError?.mail_address">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Phone Number:</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="phone_number" name="phone_number" placeholder="Phone Number" type="text" > 
+                <div class="form-validation-error" *ngIf="formError?.phone_number">
+                  <span *ngFor="let err of formError?.phone_number">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Freshdesk Email:</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="freshdesk_email" name="freshdesk_email" placeholder="Freshdesk Email" type="text" > 
+                <div class="form-validation-error" *ngIf="formError?.freshdesk_email">
+                  <span *ngFor="let err of formError?.freshdesk_email">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12"><label for="">Freshdesk Password:</label>
+            <div class="inputWrap">
+              <input type="text" class="inpField" formControlName="freshdesk_password" name="freshdesk_password" placeholder="Freshdesk Password" type="text" > 
+              <div class="form-validation-error" *ngIf="formError?.freshdesk_password">
+                <span *ngFor="let err of formError?.freshdesk_password">{{err?.message}}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-12"><label for="">Freshdesk Url:</label>
+            <div class="inputWrap">
+              <input type="text" class="inpField" formControlName="freshdesk_url" name="freshdesk_url" placeholder="Freshdesk Url" type="text" >
+              <div class="form-validation-error" *ngIf="formError?.freshdesk_url">
+                <span *ngFor="let err of formError?.freshdesk_url">{{err?.message}}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-sm-12"><label for="">Freshdesk Agent Id:</label>
+            <div class="inputWrap">
+              <input type="text" class="inpField" formControlName="freshdesk_agent_id" name="freshdesk_agent_id" placeholder="Freshdesk Agent Id" type="text" > 
+              <div class="form-validation-error" *ngIf="formError?.freshdesk_agent_id">
+                <span *ngFor="let err of formError?.freshdesk_agent_id">{{err?.message}}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-12"><label for="">Cybersource Secrete Key:</label>
+            <div class="inputWrap">
+              <input type="text" class="inpField" formControlName="cybersource_secrete_key" name="cybersource_secrete_key" placeholder="Freshdesk Url" type="text" >
+              <div class="form-validation-error" *ngIf="formError?.cybersource_secrete_key">
+                <span *ngFor="let err of formError?.cybersource_secrete_key">{{err?.message}}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Meta title:</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="metaTitel" name="metaTitel" placeholder="Meta title" type="text" > 
+                <div class="form-validation-error" *ngIf="formError?.metaTitel">
+                  <span *ngFor="let err of formError?.metaTitel">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Meta Description:</label>
+              <div class="inputWrap">
+                <textarea type="text" class="inpField" formControlName="metaDescription" placeholder="Meta Description"> </textarea>
+                <div class="form-validation-error" *ngIf="formError?.metaDescription">
+                  <span *ngFor="let err of formError?.metaDescription">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Meta Keywords:</label>
+              <div class="inputWrap">
+                <input type="text" class="inpField" formControlName="metaKeywords" name="metaKeywords" placeholder="Meta Keywords" type="text" > 
+                <div class="form-validation-error" *ngIf="formError?.metaKeywords">
+                  <span *ngFor="let err of formError?.metaKeywords">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+  
+        <button type="submit" class="submitBtn" [ngClass]="{'disableSubmit': formLoading}" [disabled]="formLoading">{{(formLoading) ? 'Saving' : 'Save'}} <i *ngIf="formLoading" class="fa fa-spinner fa-spin"></i></button>
+      </form>
+  
+    </div>
+  
+  </div>

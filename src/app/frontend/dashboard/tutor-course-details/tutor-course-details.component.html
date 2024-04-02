@@ -1,0 +1,220 @@
+<section class="mainContainer">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-2 col-lg-3 leftPanel">
+          <app-dashboard-left-panel></app-dashboard-left-panel>
+        </div>
+        
+      
+        <div class="col-xl-10 col-lg-9">
+          <div class="rightPanel">
+              <div class="course_area">
+                  <div class="centerHeading">
+                    <h2>{{courseData?.title}}
+                        <a href="javascript:void(0);" routerLink="/dashboard/my-course" class="btn btn-primary btn-sm titleLink02 pull-right">Back</a>
+                    </h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-3">
+                          <div class="green_box box">
+                            <h2>Total Enrollment</h2>
+                            <p class="number">{{dashboardData?.total_enrolled}}</p>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="black_box box">
+                            <h2>Total Number Of Orders</h2>
+                            <!-- <p class="number">{{dashboardData?.order_count[0]?.count | currency}}</p> -->
+                            <p class="number">{{dashboardData?.order_count[0]?.count}}</p>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="blue_box box">
+                            <h2>Total Review</h2>
+                            <p class="number">{{dashboardData?.total_review}}</p>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="orenge box">
+                            <h2>Total Q/A</h2>
+                            <p class="number">{{dashboardData?.total_qa}}</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="table_area">
+                      <div class="top_table">
+                        <div class="row">
+                          <div class="col-md-12" *ngIf="dashboardData?.order_list.length > 0">
+                            <div class="table_bg">
+                              <h1>Order List</h1>
+                              <div class="table-responsive">
+                                <table class="table table-bordered">
+                                  <thead>
+                                    <tr>
+                                      <th>id</th>
+                                      <th>Customer<br> Details</th>
+                                      <!-- <th>Gross Amount</th>
+                                      <th>Discount Amount</th>
+                                      <th>Net Amount</th> -->
+                                      <th>Amount</th>
+                                      <th>Date</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let order of dashboardData?.order_list; index as i;">
+                                      <td>{{ i+1 }}</td>
+                                      <td >
+                                        <div class="user_details">
+                                          <div class="user_img">
+                                            <div class="user_img_area">
+                                              <!-- <span class="name">ss</span> -->
+                                              <span class="topProfileImg">
+                                                <img src="{{order?.order?.user?.avatar}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    
+                                              </span>
+                                            </div>
+                                          </div>
+                                          <div class="user_name">
+                                            <p>{{order?.order?.user?.profile?.full_name}}</p>
+                                            <p>{{order?.order?.user?.email}}</p>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <!-- <td>500</td>
+                                      <td>10</td>
+                                      <td>490</td> -->
+                                      <td> 
+                                        <ng-container *ngIf="order?.total_usd>0 || order?.total_sxl> 0">
+                                            {{order?.total_usd }} USD + SXL{{order?.total_sxl }}
+                                        </ng-container>
+                                        <ng-container *ngIf="order?.total_usd==0 && order?.total_sxl== 0">
+                                          Free
+                                        </ng-container>
+                                      
+                                      </td>
+                                      <td>{{order?.created_at | date:'dd-MM-yyyy'}}</td>
+                                    </tr>
+
+                                
+                                    
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12" *ngIf="dashboardData?.enroll_student.length > 0">
+                              <div class="table_bg">
+                                  <h1>Enrolled student</h1>
+                                  <div class="table-responsive">
+                                      <table class="table table-bordered">
+                                        <thead>
+                                          <tr>
+                                            <th>id</th>
+                                            <th >Student</th>
+                                            <th>Course Status</th>
+                                            <th>Progress</th>
+                                            <th>Enrollment Date</th>
+                                            <th>Options</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let enrolStudent of dashboardData?.enroll_student; index as i;">
+                                            <td>{{ i+1 }}</td>
+                                            <td>
+                                              <div class="user_details">
+                                                <div class="user_img">
+                                                  <div class="user_img_area">
+                                                    <!-- <span class="name">ss</span> -->
+                                                    <span class="topProfileImg">
+                                                      <img src="{{enrolStudent?.user?.avatar}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    
+                                                    </span>
+                                                  </div>
+                                                </div>
+                                                <div class="user_name">
+                                                  <p>{{ enrolStudent?.user?.profile?.full_name}}</p>
+                                                  <p>{{ enrolStudent?.user?.email}}</p>
+                                                </div>
+                                              </div>
+                                            </td>
+                                            <td>{{enrolStudent?.status}}</td>
+                                            <td><ngb-progressbar type="success" [value]="(enrolStudent?.completed_lecture/ enrolStudent?.total_lecture) *100"></ngb-progressbar></td>
+                                            <td>{{enrolStudent?.created_at | date:'dd-MM-yyyy'}}</td>
+                                            <td >
+                                              <ng-container *ngIf="enrolStudent.status == 'completed'">
+                                                <button class="btn btn-sm btn-success linkBg" (click)="certificateModal(enrolStudent?.id)" ><i class="fa fa-cloud-upload" aria-hidden="true"></i> Upload Certificate</button>
+                                                <br>
+                                                <br>
+                                                <span *ngIf="enrolStudent?.certificate_link" class="upload_txt">
+                                                    <!-- <a href="{{enrolStudent?.certificate_link}}">Uploded Certificate: 
+                                                      <span><i class="fa fa-file-archive-o" aria-hidden="true"></i></span>
+                                                    </a> -->
+                                                    <a class="btn btn-sm btn-success linkBg"  href="{{enrolStudent?.certificate_link}}" ><i class="fa fa-download " aria-hidden="true"></i> Download Certificate</a>
+                                                </span>
+                                              </ng-container>
+                                            </td>
+                                          </tr>
+      
+                                      
+                                          
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                </div>
+                          </div>
+
+                          <div class="col-md-12" *ngIf="dashboardData?.total_qa_list.length > 0">
+                              <div class="table_bg">
+                                  <h1>Q/A List</h1>
+                                  <div class="table-responsive">
+                                      <table class="table table-bordered">
+                                        <thead>
+                                          <tr>
+                                            <th>id</th>
+                                            <th >Customer</th>
+                                            <th>Title</th>
+                                            <th>Date</th>
+                                            <th></th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let questionsAnswer of dashboardData?.total_qa_list;  index as i; ">
+                                            <td>{{ i+1 }}</td>
+                                            <td >
+                                              <div class="user_details">
+                                                <div class="user_img">
+                                                  <div class="user_img_area">
+                                                    <!-- <span class="name">ss</span> -->
+                                                    <span class="topProfileImg">
+                                                        <img src="{{questionsAnswer?.user?.avatar}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    
+                                                    </span>
+                                                  </div>
+                                                </div>
+                                                <div class="user_name">
+                                                  <p>{{questionsAnswer?.user?.profile?.full_name}}</p>
+                                                  <p>{{questionsAnswer?.user?.email}}</p>
+                                                </div>
+                                              </div>
+                                            </td>
+                                            <td>{{ questionsAnswer?.title}}</td>
+                                            <td>{{ questionsAnswer?.created_at | date:'dd-MM-yyyy'}}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-success linkBg" (click)="replyModal(questionsAnswer?.id, questionsAnswer )">Reply</button>
+                                            </td>
+                                          </tr>
+
+                                        
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</section>

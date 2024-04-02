@@ -1,0 +1,428 @@
+<!-- <div class="courseDtlBanner d-flex" [style.background-image]="'url(' + image + ')'"> -->
+<div class="courseDtlBanner eventBanner newEventbanner">
+	<img [src]="image" alt="background image">
+	<div class="container align-self-center banner_new_txt">
+		<div class="row">
+			<div class="col-xl-6 col-lg-8 col-md-8">
+				<h2>{{courseData?.title}}</h2>
+				<h3>{{courseData?.sub_title }}</h3>
+				<div class="selltagpara">
+					<!-- <span class="carouselImgTagNormal">Best seller</span> -->
+					<div class="ratingsDiv" *ngIf="courseData?.rating > 0">
+							<div class="ratingsDivLeft" >
+							  <span class="star_area">
+								<ngb-rating [rate]="Math.round(courseData?.rating)| number:'1.0-0'"></ngb-rating>
+							  </span>
+							</div>
+							<div class="ratingsDivRight" style="color: #FFF;">{{Math.round(courseData.rating) | number:'1.0-0'}}
+							  <span style="color: #FFF;" >({{courseData?.avg_reviews}})</span>
+							</div>
+					</div>
+					<div class="ratingsDiv" *ngIf="courseData?.rating === 0">
+						<div class="ratings Right noreview">No review yet</div>
+					</div>
+
+				</div>
+				<h4>{{courseData?.primary_thought }}</h4>
+				<a [routerLink]="['/', getSlug(courseData)]" *ngIf="courseData?.user">Created by {{courseData?.user.profile.full_name}} , {{courseData?.user.profile.head_line}} </a>
+				
+				<ng-container  *ngIf="http.isLoggednIn() && this.http.getUserRole()[0]=='customer'">
+					<a href="javascript:void(0);" (click)="addToWishList(courseData?.id)" *ngIf="!isAddedWishList(courseData?.id)" class="bannerStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+					<a href="javascript:void(0);" (click)="removeFromWishList(courseData?.id)" *ngIf="isAddedWishList(courseData?.id)" class="bannerStar"><i class="fa fa-heart" aria-hidden="true"></i></a>
+				</ng-container>
+				<ng-container  *ngIf="!http.isLoggednIn()">
+					<a href="javascript:void(0);" (click)="openModal()" class="bannerStar" ><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+				</ng-container>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="coursedetailMain">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+
+				<!-- <div class="keywordBox">
+					<p>{{courseData?.description }}</p>
+
+					<div class="courseQuestion" [ngClass]="{'show' : show}">
+						<div *ngFor="let courseTargetAnswer of courseTargetAnswers">
+							<h4 *ngIf="courseTargetAnswer.course_answer.length > 0">{{courseTargetAnswer.question}}</h4>
+							<ul class="keyiconList row" *ngFor="let answers of courseTargetAnswer.course_answer">
+								<li class="col-md-6">
+									<div class="keyIcontext">{{answers.answer}}</div>
+								</li>
+								
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12"><a href="javascript:void(0)" class="btnSeemore" (click)="toggle()">{{ showLessMoreButton
+								}}</a></div>
+					</div>
+
+				</div> -->
+
+
+				<div class="keywordBox">
+					<!-- <p>{{courseData?.description }}</p> -->
+					<p [innerHTML]="courseData?.description"></p>
+
+					<div class="question_area">
+						<ng-container *ngFor="let courseTargetAnswer of courseTargetAnswers; let i=index;">
+							<div  class="question_block"  *ngIf="courseTargetAnswer.course_answer.length > 0">
+								<h4>{{courseTargetAnswer.question}}</h4>
+
+								<ul class="row">
+									<li class="col-md-12" *ngFor="let answers of courseTargetAnswer.course_answer; let ic = index">
+										<div class="keyIcontext" *ngIf="showMore(i, ic)">{{answers.answer}}</div>
+									</li>
+
+								</ul>
+								<div class="row">
+									<div class="col-md-12">
+										<a *ngIf="courseTargetAnswer.course_answer.length > 2" href="javascript:void(0)" class="btnSeemore" (click)="onClickMore(i);">{{(showMore(i, ic)) ? '- Show less' : '+ See more'}}</a>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+
+
+				</div>
+
+
+				<!-- Question area closed -->
+
+
+				<div class="accrodianarea">
+					<h4 class="coursepageHeading">Course content</h4>
+
+
+
+					<ngb-accordion activeIds="static-0" [closeOthers]="true" class="accordStyle1">
+						<ng-container *ngFor=" let chapter of courseModules; let index = index" >
+						<ngb-panel *ngIf="showStatus(index)" id="static-{{index}}" title="{{chapter.title}}">
+							<ng-template ngbPanelContent >
+								<p [innerHTML]="chapter.description"></p>
+								<ngb-accordion activeIds="static2-0" [closeOthers]="true" class="accordStyle1">
+									<ngb-panel *ngFor=" let lecture of chapter.course_lectures; let index2 = index" id="static2-{{index2}}" title="{{lecture.title}}">
+										<ng-template ngbPanelContent>
+											<p [innerHTML]="lecture.description"></p>
+										</ng-template>
+									</ngb-panel>
+								</ngb-accordion>
+							</ng-template>
+						</ngb-panel>
+						</ng-container>
+					</ngb-accordion>
+					<div class="btnGraybox" *ngIf="noOfChapter > showNoOfChapter">
+						<a *ngIf="noOfChapter > showNoOfChapter" href="javascript:void(0)" class="btnShowmore" (click)="onClickMoreChapters();">{{ showMoreChapter==false ? noOfChapter - showNoOfChapter+' more chapters' : 'Show Less' }}</a>
+					</div>
+				
+					
+
+				</div>
+				<!-- accrodian area closed -->
+
+				<div class="courseGraybox" *ngIf="courseData">
+					<!-- <h4 class="coursepageHeading">Consumer review
+						<a class="addReview" *ngIf="isShowAddReview" [routerLink]="['/review', 'course', courseData?.slug]">Add Review</a>
+
+					</h4> -->
+					<div class="reviewListArea">
+						<!-- <h2>Review Coming Soon</h2> -->
+						<ul *ngIf="reviews.length > 0">
+							<li *ngFor="let rs of reviews">
+								<div class="reviewAuthor">
+									<img *ngIf="rs?.user?.avatar" [src]="rs?.user?.avatar" alt="{{rs?.user?.profile?.full_name}}">
+									<img *ngIf="!rs?.user?.avatar" src="assets/images/noimg-75x60.jpg" alt="{{rs?.user?.profile?.full_name}}">
+								</div>
+								<div class="contentWrap" *ngIf="rs">
+									<h4>{{rs?.user?.profile?.full_name}}
+										<span class="text-right">
+											<a *ngIf="isRatingEditable(rs)" [routerLink]="['/review', 'course', courseData?.slug, rs?.id]">
+												<i class="fa fa-pencil"></i>
+											</a>
+										</span>
+									</h4>
+									
+									<div class="starrate">
+										<ngb-rating [rate]="rs?.rating?.count">
+											<ng-template let-fill="fill" let-index="index">
+												<span class="star" [ngStyle]="getRatingColor(rs, fill)">&#9733;</span>
+											</ng-template>
+										</ngb-rating>
+									</div>
+									<p *ngIf="isShowFullReview(rs)">{{(rs?.review_note?.length > 100) ? (rs?.review_note | slice: 0:100) + '...' : rs?.review_note}}
+										<a href="javascript:void(0);" *ngIf="(rs?.review_note?.length > 100) && isShowFullReview(rs)" (click)="onClickMoreReview(rs)">see more</a>
+									</p>
+									<p *ngIf="!isShowFullReview(rs)">{{rs?.review_note}}
+										<a href="javascript:void(0);" *ngIf="(rs?.review_note?.length > 100) && !isShowFullReview(rs)" (click)="onClickMoreReview(rs)">see less</a>
+									</p>
+
+									<h5>{{rs?.created_at | amTimeAgo : true}} ago</h5>
+								</div>
+							</li>
+							<!-- <li>
+								<div class="reviewAuthor"><img src="assets/images/avatar-2.jpg" alt=""></div>
+								<div class="contentWrap">
+									<h4>Steve Mark</h4>
+									<div class="starrate"><img src="assets/images/ratings.png" alt=""></div>
+									<p>Curabitur tristique risus vel purus consequat molestie. Maecenas cursus interdum enim, in
+										tincidunt lorem mollis eget. Phasellus lacinia justo non nisl tincidunt. Curabitur tristique risus
+										vel purus consequat molestie.</p>
+									<h5>2 months ago</h5>
+								</div>
+							</li>
+							<li>
+								<div class="reviewAuthor"><img src="assets/images/avatar-3.jpg" alt=""></div>
+								<div class="contentWrap">
+									<h4>Steve Mark</h4>
+									<div class="starrate"><img src="assets/images/ratings.png" alt=""></div>
+									<p>Curabitur tristique risus vel purus consequat molestie. Maecenas cursus interdum enim, in
+										tincidunt lorem mollis eget. Phasellus lacinia justo non nisl tincidunt. Curabitur tristique risus
+										vel purus consequat molestie.</p>
+									<h5>2 months ago</h5>
+								</div>
+							</li> -->
+						</ul>
+
+						<div class="col-md-12 text-center" *ngIf="reviewLoader">
+							<i class="fa fa-spinner fa-spin fa-3"></i>
+						</div>
+
+						<div class="col-md-12 text-center" *ngIf="(!reviewLoader) && (reviews.length === 0)">
+							<div class="alert alert-warning">No review submitted yet</div>
+						</div>
+						<div class="col-md-12 text-center">
+							<a *ngIf="isShowReviewPaginate()" class="btnSeemore" (click)="reviewPagination()">More Reviews</a>
+						</div>
+					</div>
+				</div>
+				<!-- review area closed -->
+
+				<div class="courseGraybox" *ngIf="courseData">
+						<h4 class="coursepageHeading">About the instructor</h4>
+						<div class="reviewListArea">
+							<ul>
+								<li>
+									<div class="reviewAuthor">
+									<img *ngIf="courseData?.user?.avatar" [src]="courseData?.user?.avatar" alt="{{courseData?.user?.profile?.full_name}}">
+									<img *ngIf="!courseData?.user?.avatar" src="assets/images/noimg-75x60.jpg" alt="{{courseData?.user?.profile?.full_name}}">
+									</div>
+									<div class="contentWrap" >
+										<h4>{{courseData?.user?.profile?.full_name}}</h4>
+											<p> {{courseData?.user?.profile?.head_line}}</p>
+											<div class="social_area">
+							
+												<a href="{{link?.value}}" target="_blank" *ngFor="let link of courseData?.user?.profile?.social_links | keys">
+													<!-- <i *ngIf="link?.key == 'facebook' && link?.value" class="fa fa-facebook-official" aria-hidden="true"></i> -->
+													<i *ngIf="link?.key == 'twitter' && link?.value" class="fa fa-twitter-square" aria-hidden="true"></i>
+													<i *ngIf="link?.key == 'youtube'&& link?.value" class="fa fa-youtube-square" aria-hidden="true"></i>
+													<i *ngIf="link?.key == 'linkedin'&& link?.value" class="fa fa-linkedin-square" aria-hidden="true"></i>
+												</a>
+											</div>
+											<p> {{courseData?.user?.profile?.biography}}</p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- Instrutor area closed -->
+
+
+
+			</div>
+			<!-- left part closed -->
+
+			<div class="col-lg-4">
+
+				<div class="videoArea">
+					<!-- <iframe width="560" height="315" src="https://s3.ap-southeast-1.amazonaws.com/marketplace.successlife.com/srmarketplace/2019/1/%278feee8aa-7c2c-4d9f-a12f-5ffd0d4079c2%27.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+					<!-- <img [src]="courseData?.images.thumbnail || 'assets/images/noimg-387x400.jpg'" alt="" style="height: 400px; width: 387px"
+					 alt=""> -->
+
+					<ng-container *ngIf="courseData?.promotional_video">
+						<video width="100%" height="100%" [src]="courseData?.promotional_video" controls >
+						</video>
+					</ng-container>
+					<ng-container *ngIf="!courseData?.promotional_video">
+						<img [src]="'assets/images/noimg-387x400.jpg'" alt="" style="width: 100%" alt="" *ngIf="!courseData?.promotional_video">
+					</ng-container>
+
+				</div>
+
+				<div class="sideRgtrnArea">
+					<div class="rgtrnContarea">
+						<!-- Old price code -->
+						<!-- <div class="rgtrnPrice">
+							<div class="single_clumn" *ngIf="courseData?.price">
+								<span class="originalPrc" *ngIf="hasOffer()">
+									{{courseData?.price | currency }}
+								</span>
+								<span class="actualPrc">
+									{{getPrice() | currency }}
+								</span>
+							</div>
+							<div class="single_clumn" *ngIf="!courseData?.price">Free</div>
+						</div> -->
+
+						<!-- New price code -->
+						<div class="rgtrnPrice">
+							<ng-container *ngIf="coursePrice != 0">
+								<ng-container *ngIf="coursePrice?.total_price>0">
+									<div class="single_clumn" >
+										<span class="actualPrc">
+											<ng-container *ngIf="coursePrice?.usd_price > 0">
+													{{coursePrice?.usd_price | number:'1.2-2'}} USD
+											</ng-container> 
+											<ng-container *ngIf="coursePrice?.usd_price > 0 && coursePrice?.sxl_price > 0">
+													+ 
+											</ng-container>
+											
+											<ng-container *ngIf="coursePrice?.sxl_price > 0">
+													SXL {{coursePrice?.sxl_price | number:'1.2-2'}}
+											</ng-container>
+										</span>
+									</div>
+
+								</ng-container>
+								<div class="single_clumn" *ngIf="coursePrice?.total_price == 0" >Free</div>
+							</ng-container>		
+							<div class="single_clumn" *ngIf="coursePrice == 0" >Free</div>
+						</div>
+
+						<div class="rightButtonarea">
+							<button *ngIf="!logUserCourse" [disabled]="cartLoader" (click)="buyNow($event);"  class="courseCartButton text-center col-md-12">Buy Now</button>
+							<!-- Add to cart button -->
+							<button *ngIf="!logUserCourse" [disabled]="cartLoader" (click)="addToCart($event);" class="roundedBtn col-md-12">Add to Cart</button>
+							<a target="_blank" [routerLink]="['/tutorial/', courseData?.slug]" *ngIf="(courseData) &&  (logUserCourse)" class="courseCartButton text-center col-md-12">Go to Course</a>
+							<!-- Add to cart button -->
+							<!-- <a href="javascript:void(0);" (click)="registerFormModal();"  class="roundedBtn col-md-12" *ngIf="!http.isLoggednIn()">Become a Guest User</a> -->
+							<a href="javascript:void(0);" (click)="registerVendorFormModal();" class="roundedBtn greenBtn col-md-12" *ngIf="!http.isLoggednIn()">Register for Tutor</a>
+						</div>
+						<div class="courseListArea">
+							<h4>Course included</h4>
+							<ul>
+								<!-- <li>41 hours on-demand video</li>
+                    <li>27 articles</li>
+                    <li>3 downloadable resources</li>
+                    <li>Full lifetime access</li> 
+                    <li>Access on mobile and TV</li>
+                    <li>Certificate of Completion</li> -->
+								<li *ngIf="courseData?.video_count > 0"> <i class="fa fa-video-camera" aria-hidden="true"></i> - {{courseData?.video_count}} on-demand video</li>
+								<li *ngIf="courseData?.pdf_count > 0"> <i class="fa fa-download" aria-hidden="true"></i> - {{courseData?.pdf_count}} downloadable resources</li>
+								<li *ngIf="time >0"> <i class="fa fa-clock-o" aria-hidden="true"></i> - Total duration {{hour}}  {{ hour > 1 ? 'hours' : 'hour' }} {{min}} {{ min > 1 ? 'minutes' : 'minute' }} </li>
+							</ul>
+						</div>
+						<div class="text-center ">
+							<button (click)="shareModelOpen()" class="share">
+								<span>
+									<i class="fa fa-share"></i>
+								</span>
+								Share
+							</button>
+							<div class="backdrop" [ngStyle]="{'display':display}"></div>
+						</div>
+					</div>
+				</div>
+				<!-- registration box closed -->
+
+				<div class="otherCourseVendor" *ngIf = "otherCourses.length > 0">
+					<h2>Other courses by the tutor</h2>
+
+					<ng-container *ngFor="let otherCourse of otherCourses; let i = index">
+						<div *ngIf="i<4">
+							<!-- Other course by vendor -->
+							<app-course-by-vendor [data]="otherCourse"></app-course-by-vendor>
+						</div>
+					</ng-container>
+
+
+				</div>
+
+
+			</div>
+			<!-- right part closed -->
+		</div>
+	</div>
+</div>
+
+
+<section class="customerViewing forCourse" *ngIf="reletedCourses.length > 0">
+	<div class="container" *ngIf="reletedCourses.length > 0">
+		<h2>Other related courses</h2>
+		<owl-carousel [options]="customerViewingCarousel" [items]="reletedCourses" [carouselClasses]="['owl-theme', 'sliding']">
+			<!-- Related Courses -->
+			<ng-container *ngFor="let reletedCourse of reletedCourses">
+					<app-carousal-course-card [data]="reletedCourse"></app-carousal-course-card>
+			</ng-container>
+
+		</owl-carousel>
+	</div>
+</section>
+
+
+<!-- modal -->
+<div class="modal course-share" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+	<!-- modal-dialog -->
+	<div class="modal-dialog" role="document">
+		<!-- modal-content -->
+		<div class="modal-content">
+			<!-- modal-header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Share this course</h4>
+				<button type="button" class="close" aria-label="Close" (click)="shareModalClose()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal-body -->
+			<div class="modal-body">
+				
+				<div class="share_link">
+						<h2>Share your link</h2>
+						<div class="social_area">
+						  <div class="social_area_link_ara ">
+							  <div class="search-container">
+								<div class="fld_group input-group">
+									<input type="text" name="" value="{{shareUrl}}" #userinput/>
+									<span class="input-group-btn">
+									  <button type="button" class="btn btn-default"  (click)="copyInputMessage(userinput)">Copy</button></span>
+								</div>
+							   </div>
+						  </div>
+			
+						  <div *ngIf="copeidTooltip == 1" id="tooltip-top" data-purpose="base-tooltip" role="tooltip" class="in with-chevron tooltip tooltip-blue bottom">
+							  <div class="tooltip-arrow"></div>
+							  <div class="tooltip-inner">
+								<div class="">Link Copied!</div>
+							  </div>
+						  </div>
+			
+						  <div class="social_area_link_icon">
+							<!-- <button class="social_link"><i class="fa fa-facebook" aria-hidden="true"></i></button> -->
+							<!-- <share-button class="social_link" button="facebook" text="Share" [showText]="false" [url]="shareUrl" ></share-button> -->
+							<!-- <share-button button="facebook" text="Share" [showText]="false" [url]="shareUrl" ></share-button> -->
+						  </div>
+						  <div class="social_area_link_icon">
+							<!-- <a href="https://twitter.com/share?text={{courseData?.title}}&url={{shareUrl}}" target="_blank">
+							<button class="social_link"><i class="fa fa-twitter" aria-hidden="true"></i></button>
+							</a> -->
+							<share-button button="twitter" text="Tweet" [showText]="false" [url]="shareUrl" ></share-button>
+						  </div>
+						  <div class="social_area_link_icon">
+							  <a href="mailto:someone@example.com" target="_top" style="display:inline-block; padding:3px;">
+								<img src="assets/images/mail.png" alt="" width="57" height="35" />
+							  </a>
+							  <!-- <share-button button="email" text="Email" [showText]="false" [url]="shareUrl" ></share-button> -->
+						  </div>
+						</div>
+					  </div>
+			</div>
+		</div> 
+	</div>
+</div>

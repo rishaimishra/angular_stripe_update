@@ -1,0 +1,67 @@
+<a role="link" tabindex="0" (click)="backToAllQuestion()" class="back_link" data-purpose="back-link">Back to All Questions</a>
+
+<div class="total_messg_area">
+
+<div class="question_block">
+    <div class="user_avtar">
+        <div class="user-avatar__inner fx-c">
+            <span class="user-initials">
+                {{(question.user?.profile?.first_name | slice: 0:1) + (question.user?.profile?.last_name | slice: 0:1)}}
+            </span>
+        </div>
+    </div>
+    <div class="question_list">
+        <h4>{{question.title}}</h4>
+        <p class="date">{{question.user?.profile?.full_name}} {{question.created_at | date}}</p>
+        <p class="content">{{question.description}}</p>
+    </div>
+    <!-- <div ngbDropdown placement="bottom-right" class="response">
+        <button class="question_option"  id="dropdownBasic1" ngbDropdownToggle>
+            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown_list">
+            <button class="dropdown-item edit">Edit</button>
+            <button class="dropdown-item delete" >Delete</button>
+        </div>
+    </div> -->
+
+    
+</div>
+
+
+<div class="qa_content" *ngIf="responseDataObj?.length > 0">
+    <div class="qa_block" *ngFor="let data of responseDataObj">    
+        <div class="user_avtar">
+            <div class="user-avatar__inner fx-c">
+                <span class="user-initials">
+                    {{(data?.user?.profile?.first_name | slice: 0:1) + (data?.user?.profile?.last_name | slice: 0:1)}}
+                </span>
+            </div>
+        </div> 
+        <div class="question_list">
+            <div>
+                <strong>{{data?.user?.profile?.full_name}}</strong>
+            </div>
+            <div class="qa_des">{{data.comments}}</div>
+        </div>
+
+        <!-- <div ngbDropdown placement="bottom-right" class="response">
+            <button class="question_option"  id="dropdownBasic1" ngbDropdownToggle>
+                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown_list">
+                <button class="dropdown-item edit">Edit</button>
+                <button class="dropdown-item delete" >Delete</button>
+            </div>
+        </div> -->
+    </div>
+    
+</div>
+
+    
+<div class="input_area">
+    <input type="text" class="input-sm question-editor--title-editor--2n8ko" placeholder="Write Your response" #responseInput name="title" autocomplete="off" (keyup)="responseInputKeyUp($event)">
+    <button [disabled]="buttonActive !== 1"  data-purpose="post-question" type="button" (click)="answerResponse(responseInput.value,question)" class="btn btn-info">Add an answer</button>
+</div>
+
+</div>

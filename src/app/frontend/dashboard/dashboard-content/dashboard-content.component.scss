@@ -1,0 +1,154 @@
+.dashboard_cont{
+    margin-top: 20px;
+}
+.order_grph{
+    margin: 0;
+    padding: 15px;
+    background: #fff;
+
+}
+    
+.order_grph h1{
+    color:#000;
+    font-size:18px;
+    padding: 20px 0;
+}
+
+
+.box{
+    margin:0 0 25px 0;
+    padding: 0;
+    // text-align: center;
+    min-height: 134px;
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction:column;
+
+    .icon{
+        position: absolute;
+        top: -10px;
+        right: 30px;
+        z-index: 0;
+        font-size: 90px;
+        color: rgba(0,0,0,0.15);
+    }
+}
+
+.green_box{
+    padding: 15px;
+    background: #00b5c2;
+}
+
+.black_box{
+    padding: 15px;
+    background: #3e4d6c;
+}
+.blue_box{
+    padding: 15px;
+    background: #00c0ef;
+}
+.orenge{
+    padding: 15px;
+    background: #f75b36;
+}
+.yellow_box{
+    padding: 15px;
+    background: #f39c12;
+}
+.purple{
+    padding: 15px;
+    background: #ad69d1;
+}
+.green_box01{
+    padding:15px;
+    background:#48c6a7 
+}
+
+.box h2{
+    color:#fff;
+    font-size: 18px;
+    padding: 0;
+}
+.box .number{
+    color:#fff;
+    font-size: 30px;
+    font-weight: 700;
+}
+.dashboard_listing{
+    margin:20px 0 0 0;
+    padding: 0;
+    background: #fff;
+    padding: 15px;
+}
+.dashboard_listing h1{
+    color:#000;
+    font-size:18px;
+    padding: 20px 0;
+}
+/* .clumn .col-sm-6:nth-child(5) .box, .clumn .col-sm-6:nth-child(6) .box{
+    margin-bottom: 0;
+} */
+
+@media (max-width: 1139px) {
+    .chart_area, .box_area{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .box{
+        margin: 25px 0 0 0;
+    }
+}
+
+
+.user_details{
+    margin:0;
+    padding: 0;
+    display: flex;
+    // justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    
+    .user_img{
+        display: inline-block;
+        position: relative;
+        max-width: 100%;
+        background-color: #686f7a;
+        font-size: 15px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 1px solid #FFF;
+        color: #FFF;
+
+        .user_img_area{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        img{
+            border-radius: 50%;
+        }
+    }
+    .user_name{
+        padding-left: 10px;
+        word-break: break-all;
+    }
+}
+.kycBtn {
+    padding-left: 45px;
+    padding-right: 45px;
+}
+
+.sale_amount{
+    margin: 15px 0 0 0;
+    font-weight: 700;
+    font-size: 20px;
+}

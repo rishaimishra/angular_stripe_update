@@ -1,0 +1,34 @@
+.imageCourse {
+    display: block;
+    padding: 5px;
+}
+.titleCourse {
+    display: block;
+    padding: 5px;
+}
+span.star {
+    font-size: 25px;
+    color: #d3d3d3;
+    &.full {
+        color: #f0c256;
+    }
+}
+
+.search_sec{
+    margin: 0 0 0 0;
+    padding:0;
+    position: relative;
+}
+.search_sec .topSearchCont.acTive{ width: calc(100% - 33px); margin-right: 0;}
+.search_sec .topSearch{
+    margin: 18px 0 0 0;
+}
+.search_sec .topSearch button{
+    background: #38a5b9;
+    border:none;
+    padding: 6px 10px;
+    color:#fff;
+}
+.mt30 {
+    margin-top: 80px;
+}

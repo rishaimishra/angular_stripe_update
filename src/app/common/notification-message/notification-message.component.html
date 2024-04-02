@@ -1,0 +1,9 @@
+<div 
+	class="alert alert-dismissible" 
+	[ngClass] = "isError ? 'alert-danger' : 'alert-success'"
+	*ngIf="display_messages.length > 0 && edited">
+		<!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+		<ul>
+			<li *ngFor="let m of display_messages">{{m.message}}</li>
+		</ul>
+</div>

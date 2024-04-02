@@ -1,0 +1,31 @@
+<section class="d-flex siteBanner " *ngIf="banner.length !=0">
+  <div class="item">
+    <img alt="" src="{{banner[0].thumbnail}}">
+    <div class="bannerCont d-flex">
+      <div class="container align-self-center">
+        <div class="row">
+          <div class="col-xl-5 col-lg-8 col-md-8">
+            <h2>{{banner[0].title}}</h2>
+            <h3 >{{banner[0].content}}</h3> 
+            <button *ngIf="!http.isLoggednIn() && banner[0].button_1_title" class="linkSlide dark" (click)="registerFormModal()">{{banner[0].button_1_title}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h3><i class="fa fa-home" aria-hidden="true"></i> / {{title}}</h3>
+    <h2>{{title}}</h2>
+  </div>
+</section> -->
+
+<section class="cmsWrap about_cont">
+
+    <div class="container" innerHTML="{{content}}"></div>
+ 
+</section>
+
+

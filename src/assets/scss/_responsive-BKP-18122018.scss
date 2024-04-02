@@ -1,0 +1,90 @@
+@media (max-width: 1279px) {
+  .container{ max-width: 1140px;}
+}
+
+@media (max-width: 1139px) {
+  .container{ max-width: 1000px;}
+  .howItWorks .topCategory ul li a{ font-size: 13px;}
+  h2{ font-size: 25px;}
+  .customerViewing{ padding-top: 15px;}
+  .footerBottom .footerLogo, .footerTop p, .footerBottom .footLink li a, .footerTop .footNav li a{ font-size: 13px;}
+  .footerTop .footSocial li{ margin-left: 10px;}
+  .footerTop .footSocial li a{ font-size: 20px;}
+
+  .owl-nav{ text-align: right;}
+  .owl-nav button{ position: static; left: inherit; right: inherit; margin: 0; background: #151840 !important; width: 40px; height: 40px; margin-left: 8px;}
+  .owl-nav button.owl-prev{ background: #151840 !important; margin-left: 0;}
+  .owl-nav button span{ display: inline-block; color: #FFF !important; font-size: 30px; line-height: 30px; margin: -6px 0 0 0;}
+
+  .vendor .owl-nav{ display: none;}
+  .testimonial .owl-nav{ padding: 30px 0 0 0;}
+
+  .popInstructure .owl-nav{ margin-top: 25px !important;}
+}
+
+@media (max-width: 1023px) {
+  .container{ max-width: 960px;}
+  .siteNav{ position: fixed; width: 100%; left: -100%; top: 0; height: 100%; overflow-y: auto; background: #3eb7aa; z-index: 99; @include transition(left 0.5s ease);
+    ul{
+      li{ float: none; margin: 0; border-top: 1px solid #239e91;
+        a{ display: block; color: #FFF; text-transform: uppercase; padding: 8px;}
+      }
+    }
+  }
+  .siteNav.acTive{ left: 0;}
+  .siteNavClose{ display: block;}
+  .mobNavOpen{ display: block;}
+  .howItWorks .videoWrap{ margin-bottom: 40px;}
+  .topOffer{ padding-top: 0; padding-bottom: 30px;}
+  .featuredEvent{ padding-top: 30px;}
+  .howItWorks{ padding-top: 30px; padding-bottom: 40px;}
+
+  .topSearchCont{ margin-top: 0; position: absolute; right: 0; top: 0; z-index: 9;}
+  .topSearchCont.acTive{ width: 322px; margin-right: 15px;}
+  .topSearchCont input[type="search"]{ height: 82px;}
+
+  .footerBottom .footerLogo{ text-align: center; border-bottom: 1px solid #292c4e; padding-bottom: 20px;}
+  .footerBottom .footLink{ text-align: center; float: none;}
+  .footerBottom .footLink li{ float: none; display: inline-block; margin: 0 10px;}
+  .footerBottom .footerLogo img{ margin-right: 15px;}
+  .footerTop p{ word-break: break-all; line-height: 20px;}
+  .footerTop .footSocial li{ margin-left: 5px;}
+}
+
+@media (max-width: 767px) {
+  .container{ max-width: 100%;}
+  .topOffer ul li{ width: 100% !important; margin-top: 15px;}
+  .logo{ padding: 5px 0 5px 0; float: none; width: auto; text-align: center; border: none; border-bottom: 1px solid #ebebeb; margin-left: -15px; margin-right: -15px;}
+  .headerTop{ text-align: center;}
+  .topSocial{ border-right: 0;}
+  .headerTopRight{ float: none; width: 100%;}
+  .topSearch{ margin: 5px 10px 0 10px; float: none; display: inline-block; vertical-align: top;}
+  .signUp{ padding: 9px 20px 8px 20px; height: auto; float: none; display: inline-block; vertical-align: top;}
+  .cartIcon{ padding: 5px 39px 5px 39px; height: auto; float: none; display: inline-block; vertical-align: top;}
+  .cartnum{ top: 5px;}
+  .topSocial{ padding: 5px 0 5px 0;}
+  .topSocial ul li a{ font-size: 18px;}
+  .mobNavOpen{ padding: 4px; padding-left: 0;}
+
+  .featuredCourse{ padding-top: 20px;}
+  .topSearchCont.acTive{ width: 100%; margin-right: 0;}
+  .topSearchCont{ top: 95px;}
+  .topSearchCont input[type="search"]{ height: 38px; border: none; border-bottom: 1px solid #ebebeb;}
+
+  .footerTopSingle{ border-bottom: 1px solid #0f122f; padding: 15px 0;}
+  .footerTopSingle.noBdr{ border: none; padding-bottom: 0;}
+  .footerTop .footSocial{ float: none; padding: 0;}
+  .footerTop{ padding: 15px 0;}
+  .dispnM{ display: none;}
+  .footerTop p.pAlt{ padding-top: 0;}
+  .loginModal .modal-body{ padding-left: 15px; padding-right: 15px;}
+}
+
+@media (max-width: 567px) {
+  .howItWorks .topCategory ul li{ width: 100%; margin: 10px 0 0 0;}
+  .signUp{ padding-left: 5px; padding-right: 5px;}
+  .cartIcon{ padding-right: 15px;}
+  .footerBottom .footerLogo span{ display: block;}
+  .footerBottom .footerLogo img{ margin-right: 0;}
+
+}

@@ -1,0 +1,68 @@
+<div class="item cartListTransform">
+	<div class="carouselCont">
+		<div class="carouselImg">
+			<!-- <a routerLink="/course-details/{{data.slug}}"> -->
+				<img [src]="data?.images?.thumbnail || 'assets/images/noimg_400_400.jpg'" alt="" 
+					alt="" routerLink="/course-details/{{data.slug}}" style="cursor: pointer;">
+			<!-- </a> -->
+			<!-- <div class="carouselImgTag">Best seller</div> -->
+
+			<ng-container  *ngIf="http.isLoggednIn() && this.http.getUserRole()[0]=='customer'">
+					<a href="javascript:void(0);" (click)="addToWishList(item.id)" *ngIf="!isAddedWishList(item.id)" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+					<a href="javascript:void(0);" (click)="removeFromWishList(item.id)" *ngIf="isAddedWishList(item.id)" class="imgOverStar"><i class="fa fa-heart" aria-hidden="true"></i></a>
+			</ng-container>
+			<ng-container  *ngIf="!http.isLoggednIn()">
+					<a href="javascript:void(0);" (click)="openModal()" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+			</ng-container>
+		</div>
+		
+		<a routerLink="/course-details/{{data.slug}}">
+			<h3 class="cartListTitle">{{data?.title}}</h3>
+		
+
+		
+		<!-- <h4>{{data.description | slice:0:25}}</h4> -->
+		<!-- <h5>{{data.primary_thought | slice:0:25}}</h5> -->
+		<h5>{{data?.user?.profile?.full_name }}</h5>
+		<div class="ratingsDiv" *ngIf="data?.rating > 0">
+			<div class="ratingsDivLeft ">
+				<span class="star_area">
+					<ngb-rating [rate]="Math.round(data?.rating)| number:'1.0-0'"></ngb-rating>
+				</span>
+			</div>
+			<div class="ratingsDivRight">{{Math.round(data?.rating) | number:'1.0-0'}}
+				<span>({{data?.avg_reviews}})</span>
+			</div>
+		</div>
+		<div class="ratingsDiv" *ngIf="data?.rating === 0">
+			<div class="ratings Right noreview">No review yet</div>
+		</div>
+
+		<!-- Old price code -->
+		<!-- <h6 *ngIf="data?.price > 0">
+			<span class="originalPrc" *ngIf="hasOffer()">{{((data?.price) ? (data?.price) : '0') | currency : data?.currency :'symbol':'1.2-2'}}</span>
+			<span class="actualPrc">{{getPrice() | currency : data?.currency :'symbol':'1.2-2'}}</span>
+		</h6>
+		<h6 *ngIf="data?.price === 0">Free</h6> -->
+		<!-- New price code -->
+		<ng-container *ngIf="coursePrice != 0">
+			<ng-container *ngIf="coursePrice?.total_price>0">
+				<h6>
+					<ng-container *ngIf="coursePrice?.usd_price > 0">	
+						<span class="actualPrc">{{coursePrice?.usd_price | number:'1.2-2'}} USD</span>
+					</ng-container>
+					<ng-container  *ngIf="coursePrice?.usd_price > 0 && coursePrice?.sxl_price > 0">
+						+
+					</ng-container> 
+					 
+					<ng-container *ngIf="coursePrice?.sxl_price > 0">	
+						<span class="actualPrc"> SXL {{coursePrice?.sxl_price | number:'1.2-2' }}</span>
+					</ng-container>
+				</h6>
+			</ng-container>
+			<h6 *ngIf="coursePrice?.total_price == 0"> Free </h6>
+		</ng-container>
+		<h6 *ngIf="coursePrice == 0"> Free </h6>
+	</a>
+	</div>
+</div>

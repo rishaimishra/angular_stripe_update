@@ -1,0 +1,94 @@
+<div class="rightPanel alt">
+
+  <breadcrumb>
+    <li class="active"><span>Tutor Bank Details</span></li>
+  </breadcrumb>
+  <button (click)="exportAsXLSX()" class="btn btn-primary btn-sm titleLink02 pull-right" *ngIf="data.length > 0"><i class="fa fa-download" aria-hidden="true"></i> Export</button>
+  <div class="row">
+    <div class="col-md-4">
+      <h2 class="headTitle">All Tutor Bank Details</h2>
+    </div>
+    <div class="col-lg-6">	 
+      <div class="search_sec">
+        <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+          <div class="topSearchCont acTive">
+            <input autocomplete="off" formControlName="string" name="string"
+                placeholder="Search" type="search" >
+          </div>
+          <div class="topSearch">
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </div>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="alert alert-success" *ngIf="success_messages !=''">
+    {{success_messages}}
+  </div>
+  <div class="">
+    <notification-message [messages]="error_messages"></notification-message>
+    <div class="table-responsive">
+  
+      <table class="table table-striped tableNowrap" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+        <tr>
+          <th>
+              Tutor Id
+          </th>
+          <th>
+            Account Holder Name
+          </th>
+          <th>
+              Bank Name
+          </th>
+          <th>
+            Branch Name
+          </th>
+          <th>
+            Branch Address
+          </th>
+          <th>
+            Branch Code
+          </th>
+          <th>
+            Branch Account No
+          </th>
+          <th>
+              Branch Account Type
+          </th>
+         
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data; let i = index">
+            <td>{{getUserID(item?.user?.id)}}</td>
+            <td>{{item?.user?.profile?.full_name}}</td>
+            <td>{{item?.bank_name}}</td>
+            <td>{{item?.branch_name}}</td> 
+            <td>{{item?.branch_address}}</td>
+            <td>{{item?.branch_code}}</td>
+            <td>{{item?.account_no}}</td>
+            <td>{{item?.account_type}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="7">
+              <mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="row mt30" *ngIf="data.length === 0">
+      <div class="col-12">
+          <div class="alert alert-warning text-center">
+              <strong>Oops!</strong>
+              No record found.
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  

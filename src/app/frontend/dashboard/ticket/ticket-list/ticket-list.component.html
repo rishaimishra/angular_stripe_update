@@ -1,0 +1,87 @@
+<div class="rightPanel">
+
+  <div class="centerHeading">
+    <h1>Service Requests</h1>
+    <div class="col-lg-12 custom_form">
+      <a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/dashboard', 'support-ticket', 'create']">
+          <i  class="fa fa-plus"></i> Create Service Request 
+      </a>
+    </div>
+  </div>
+
+  <div class="table-responsive table_cont main-panel"  *ngIf="records.length >0" >
+  <div class="table_bg">
+    <table class="table table-striped">
+      <thead>
+        <th>Ticket No.</th>			
+        <th>Issue</th>	
+        <th>Ticket status</th>
+        <th>Priority</th>
+      </thead>
+      <tbody  *ngIf="records.length > 0" infiniteScroll
+        [infiniteScrollDistance]="3"
+        [infiniteScrollThrottle]="50"
+        [infiniteScrollContainer]="selector"
+        [fromRoot]="true"
+        (scrolled)="onScroll()" >	
+        <ng-container>				
+        <tr  *ngFor="let rs of records">
+          <!-- <td>#{{rs.id}}</td> -->
+          <!-- <td>{{rs?.created_at | date : 'dd-MM-yyyy'}}</td> -->
+          <!-- <td>
+            <div class="title"><a href="#" [routerLink]="['/dashboard', 'support-ticket', 'reply', rs.id]"><span>{{rs?.subject}}</span> #{{rs.id}}</a></div>
+            <div>{{rs?.created_at |  amTimeAgo : true}} ago</div> 
+          </td> -->
+          <!-- <td> -->
+            <!-- <div placement="left" ngbTooltip="Status" class="status">{{rs?.status}}</div>
+            <div placement="left" ngbTooltip="Priority" class="priority">{{rs?.priority}}</div> -->
+            <!-- <select   placeholder="status"  name="status"  [value]='rs?.status' (change)="statusChange($event.target.value, rs.id)">
+                <option value="{{item.value}}" *ngFor="let item of statusList">{{item.label}}</option>
+            </select> -->
+          <!-- </td> -->
+          <!-- <td>
+            {{rs?.priority}}
+            <select   placeholder="priority"  name="priority" [value]='rs?.priority' (change)="priorityChange($event.target.value, rs.id)">
+                <option value="{{item.value}}" *ngFor="let item of priorities">{{item.label}}</option>
+            </select>
+          </td>	 -->
+          <!-- <td>
+              <button class="btn btn-sm btn-primary linkBg" [routerLink]="['/dashboard', 'support-ticket', 'reply', rs.id]">Replies</button>
+          </td>	 -->
+
+
+          <td>
+              #{{rs?.id}}
+              <div>{{rs?.created_at |  amTimeAgo : true}} ago</div> 
+          </td>
+          <td>
+              <a href="#" [routerLink]="['/dashboard', 'support-ticket', 'reply', rs?.id]"> <span>{{rs?.subject}}</span> </a>
+          </td>
+          <td><div placement="left" ngbTooltip="Status" class="status" [ngStyle]="{'color':rs.statusColor }">{{rs?.status}}</div></td>
+          <td>
+            <div placement="left" ngbTooltip="Priority" class="priority" [ngStyle]="{'color':rs.priorityColor }">{{rs?.priority}}</div>
+          </td>
+        </tr>
+        <!-- <tr style="background: none;">
+            <td colspan="2" style="height:8px; padding:0;"></td>
+        </tr> -->
+        </ng-container>
+      </tbody>
+     
+    </table>
+  </div>
+  </div>
+
+ 
+  <div class="row mt30" *ngIf="records.length === 0">
+    <div class="col-12">
+      <div class="alert alert-warning text-center">
+        <strong>Oops!</strong>
+        No record found.
+      </div>
+    </div>
+  </div>
+  
+
+  
+</div>

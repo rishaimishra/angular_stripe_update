@@ -1,0 +1,118 @@
+<div class="rightPanel alt">
+	<breadcrumb>
+		<li class="active"><span>Payouts</span></li>
+	</breadcrumb>
+
+	<div class="row">
+		<div class="col-md-6">
+			<h2 class="headTitle">All Payouts</h2>
+		</div>
+		<div class="col-md-6 text-right">
+			<button *ngIf="availableRec.length > 0" class="btn btn-success" (click)="saveSelectedPayments()">Save</button>
+		</div>
+	</div>
+
+
+	<div class="paymentRec">
+
+		<!-- <notification-message [messages]="error_messages"></notification-message> -->
+
+		<form [formGroup]="formObj">
+
+			<table class="table table-striped" *ngIf="records.length > 0">
+				<thead>
+					<tr>
+						<th>
+							<label class="checkBoxCustom" *ngIf="availableRec.length > 0">
+								<input type="checkbox" (change)="onChangeAllRecordCB($event)" name="rec">
+								<span class="checkBoxMark"></span>
+							</label>
+						</th>
+						<th>Course</th>
+						<th>User</th>
+						<th>Amount</th>
+						<th>No. of order</th>
+						<th width="25%">Message</th>
+					</tr>
+				</thead>
+				<tbody *ngIf="records.length > 0">
+					<tr formArrayName="items" *ngFor="let rs of formObj.get('items').controls; let i = index;">
+						<td>
+							<label *ngIf="(records[i]?.status !== 'complete')" class="checkBoxCustom">
+								<input type="checkbox" name="rec" (change)="onChangeRecordCB($event, i)" [checked]="isSelectedCB(i)">
+								<span class="checkBoxMark"></span>
+							</label>
+						</td>
+						<td>{{ records[i]?.payout_details?.title }}</td>
+						<td class="topProfile">
+							<div class="d-flex">
+								<div class="imageCourse">
+									<img class="img-fluid rounded-circle" [src]="records[i]?.user?.avatar" alt="">
+								</div>
+								<div class="titleCourse">
+									<p>{{records[i]?.user?.profile?.full_name}}</p>	 
+								</div>
+							</div>
+	
+	
+							<!-- <span class="topProfileImg">
+								<img src="{{rs?.user?.avatar}}" onError="this.src='assets/images/no-image.png';"
+									alt="..." />
+							</span>
+							<br>
+							{{rs?.user?.email}} -->
+						</td>
+						<td>{{ records[i]?.request_amount | number:'1.2-2'  }} USD</td>
+						<td>{{ records[i]?.no_of_order }}</td>
+						<td [formGroupName]="i">
+							<div class="d-flex" [formGroupName]="i" *ngIf="(records[i]?.status !== 'complete')">
+								<div class="form-group">
+									<input type="text" formControlName="message" class="form-control">
+									<div class="form-validation-error" *ngIf="formError?.items">
+										<span *ngFor="let err of formError?.items[i]?.message">{{err?.message}}</span>
+									</div>
+								</div>
+							</div>
+							<p *ngIf="(records[i]?.status === 'complete')"> {{records[i]?.message}} </p>
+							<!-- <ng-container *ngIf="rs?.status=='pending'">
+								<button [swal]="{text:'Do you want to continue?',type:'question'}"
+									(confirm)="approvePayment(rs?.id, rs?.wallet?.id, rs?.request_amount)"
+									class="btn btn-sm btn-success linkBg"> Approve </button>
+								<button [swal]="{text:'Do you want to continue?',type:'question'}"
+									(confirm)="cancelPayment(rs?.id, rs?.user?.id)" class="btn btn-sm btn-success linkBg">
+									Cancel </button>
+							</ng-container> -->
+						</td>
+					</tr>
+	
+				</tbody>
+				<tbody *ngIf="records.length === 0">
+					<tr>
+						<td colspan="5" class="text-center">
+							No record found
+						</td>
+					</tr>
+				</tbody>
+				<tfoot class="tabPagination"  *ngIf="records.length > 0">
+					<tr>
+						<td colspan="5">
+							<app-pagination *ngIf="paginationObj" [pagination]="paginationObj"
+								(nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)"
+								(listPageEvent)="pagination($event)"></app-pagination>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</form>
+
+
+		<div class="row mt30" *ngIf="records.length === 0">
+			<div class="col-12">
+				<div class="alert alert-warning text-center">
+					<strong>Oops!</strong>
+					No record found.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

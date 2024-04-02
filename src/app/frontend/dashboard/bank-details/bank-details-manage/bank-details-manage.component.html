@@ -1,0 +1,113 @@
+<div class="rightPanel">
+
+    <div class="centerHeading">
+      <h2>Bank Details</h2>
+    </div>
+    <div>
+      <a href="javascript:void(0);" routerLink="/dashboard/bank-details" class="btn btn-primary btn-sm titleLink02 pull-right">Back</a>
+    </div>
+   
+    <div class="formWrap">
+      <form [formGroup]="formObj" (submit)="saveForm()">
+        <div class="row">
+          <div class="col-sm-12"><label for="">Bank Name*:</label>
+            <div class="inputWrap">
+              <input class="inpField" formControlName="bank_name" formControlName="bank_name" placeholder="Bank Name" type="text">
+              <div class="form-validation-error" *ngIf="formError?.bank_name">
+                <span *ngFor="let err of formError?.bank_name">{{err?.message}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Branch Name*:</label>
+              <div class="inputWrap">
+                <input class="inpField" formControlName="branch_name" name="branch_name" placeholder="Branch Name" type="text">
+                <div class="form-validation-error" *ngIf="formError?.branch_name">
+                  <span *ngFor="let err of formError?.branch_name">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Branch Address*:</label>
+              <div class="inputWrap">
+                <input class="inpField" formControlName="branch_address" name="branch_address" placeholder="Branch Address" type="text">
+                <div class="form-validation-error" *ngIf="formError?.branch_address">
+                  <span *ngFor="let err of formError?.branch_address">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Branch Code*:</label>
+              <div class="inputWrap">
+                <input class="inpField" formControlName="branch_code" name="branch_code" placeholder="Branch Code" type="text">
+                <div class="form-validation-error" *ngIf="formError?.branch_code">
+                  <span *ngFor="let err of formError?.branch_code">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Account Number*:</label>
+              <div class="inputWrap">
+                <input class="inpField" formControlName="account_no" name="account_no" placeholder="Account Number" type="text">
+                <div class="form-validation-error" *ngIf="formError?.account_no">
+                  <span *ngFor="let err of formError?.account_no">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Account Holder Name*:</label>
+              <div class="inputWrap">
+                <input class="inpField" formControlName="account_holder_name" name="account_holder_name" placeholder="Account Holder Name" type="text">
+                <div class="form-validation-error" *ngIf="formError?.account_holder_name">
+                  <span *ngFor="let err of formError?.account_holder_name">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Account Type*:</label>
+              <div class="inputWrap">
+                  <ng-select 
+                  [items]="accountType"
+                  bindLabel="name"
+                  bindValue="value"
+                  placeholder="Select Account Type"
+                  formControlName="account_type">
+                </ng-select>
+                <div class="form-validation-error" *ngIf="formError?.account_type">
+                  <span *ngFor="let err of formError?.account_type">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <div class="row">
+            <div class="col-sm-12"><label for="">Wire Transfer Code*:</label>
+              <div class="inputWrap">
+                <input class="inpField" formControlName="wire_transfer_code" name="wire_transfer_code" placeholder="Wire Transfer Code" type="text">
+                <div class="form-validation-error" *ngIf="formError?.wire_transfer_code">
+                  <span *ngFor="let err of formError?.wire_transfer_code">{{err?.message}}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+  
+  
+        <button type="submit" class="submitBtn" [ngClass]="{'disableSubmit': formLoading}" [disabled]="formLoading">{{(formLoading) ? 'Saving' : 'Save'}} <i *ngIf="formLoading" class="fa fa-spinner fa-spin"></i></button>
+      </form>
+  
+    </div>
+  
+  </div>

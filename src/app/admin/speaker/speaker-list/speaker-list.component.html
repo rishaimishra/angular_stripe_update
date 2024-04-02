@@ -1,0 +1,103 @@
+<div class="rightPanel alt">
+  <breadcrumb>
+    <li class="active"><span>Speakers</span></li>
+  </breadcrumb>
+  
+  <div class="row">
+    <div class="col-md-4"><h2 class="headTitle">All Speakers</h2></div>
+    <!-- <div class="col-lg-6">	 
+      <div class="search_sec">
+        <form  [formGroup]="searchForm" (ngSubmit)="search()"  >
+          <div class="topSearchCont acTive">
+            <input autocomplete="off" formControlName="string" name="string"
+                placeholder="Search" type="search" >
+          </div>
+          <div class="topSearch">
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </div>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div> -->
+    <div class="col-md-8">
+      <a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/admin', 'speaker', 'create']">
+        <i class="fa fa-plus"></i> Create Speakers
+      </a>
+    </div>
+    
+  </div>
+  
+  
+    <div class="table-responsive">
+      
+      <!-- <notification-message [messages]="error_messages"></notification-message> -->
+  
+      <table class="table table-striped" *ngIf="records.length > 0" >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <!-- <th>About</th> -->
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="records.length > 0">
+            <tr *ngFor="let rs of records">
+              <td class=" " style="width: 117%;float: left;">
+                <!-- <span class="topProfileImg">
+                  <img src="{{rs?.avatar}}"   onError="this.src='assets/images/no-image.png';"  alt="..." />    
+                </span>
+                <br> -->
+                {{ rs?.name }}
+              </td>
+              <!-- <td>{{ rs?.about}}</td> -->
+              <td>
+                <button [swal]="{text:'Do you want to continue?',type:'question'}"
+                (confirm)="changeActiveStaus(rs.is_active,rs.id,i)"
+                [innerHtml]="rs.is_active==1? 'Active' : 'Inactive'" 
+                class="btn btn-sm btn-success linkBg"></button>
+              </td>
+              <td>
+                <a (click)="editSpeaker(rs)"  class="btn btn-sm btn-success linkBg">
+                  <i class="fa fa-pencil-square-o"></i>
+                </a>
+               <button
+              [swal]="{text:'Do you really want to remove this page',type:'question'}"
+              (confirm)="deleteRecord(rs?.id)"
+              type="button"
+              class="btn btn-sm btn-danger linkBg">
+                <i class="fa fa-trash-o"></i>
+              </button>
+              </td>
+            </tr>
+    
+          </tbody>
+          <tbody *ngIf="records.length === 0">
+            <tr>
+              <td colspan="6" class="text-center">
+                No record found
+              </td>
+            </tr>
+          </tbody>
+          <tfoot class="tabPagination" *ngIf="records.length > 0">
+            <tr>
+              <td colspan="6">
+                <app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)"
+                 (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+  
+      
+        <div class="row mt30" *ngIf="records.length === 0">
+          <div class="col-12">
+              <div class="alert alert-warning text-center">
+                  <strong>Oops!</strong>
+                  No record found.
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  

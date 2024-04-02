@@ -1,0 +1,139 @@
+
+
+.search_question{
+	margin-bottom: 20px;
+	position: relative;
+	border: none;
+	box-shadow: none;
+	padding: 30px 30px;
+	background-color: #FFF;
+	flex: 1;
+	min-width: 1px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+	box-shadow: 0 0 1px 1px rgba(20,23,28,0.1), 0 3px 1px 0 rgba(20,23,28,0.1);
+
+  	// span{display: inline-block;}
+
+  	.search_box{
+		flex: 1;
+		min-width: 1px;
+		margin-bottom: 0;
+
+		input[type="text"]{
+			padding: 15px !important;
+		}
+  	}
+  	.or{
+		padding:0 10px;
+		text-align: center;
+		display: flex;
+		align-items: center;
+  	}
+}
+
+.shorting{
+	margin: 0 0 20px 0;
+	padding: 0;
+
+  	.select_box{
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		span{
+			margin-right: 10px;
+			&:last-child{
+				margin-right: 0;
+			}
+		}
+  	}
+}
+
+.qa_content{
+	margin:0 0 20px 0;
+	padding: 0;
+	box-shadow: 0 0 1px 1px rgba(20,23,28,0.1), 0 3px 1px 0 rgba(20,23,28,0.1);
+	.qa_block{
+		padding: 15px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		border-bottom: 1px solid #dddd;
+		cursor: pointer;
+
+    	.user_avtar{
+			display: inline-block;
+			position: relative;
+			max-width: 100%;
+			background-color: rgb(104, 111, 122);
+			font-size: 15px;
+			width: 48px;
+			border-radius: 50%;
+			border: 1px solid #FFF;
+			color: #FFF;
+
+			&:after{
+				content: '';
+				display: block;
+				padding-bottom: 100%;
+			}
+
+			.user-avatar__inner {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+			.fx-c, .fxc {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+			} 
+    	}
+		.question_list{
+			flex: 1;
+			min-width: 1px;
+			padding-left: 10px;
+			padding-right: 15px;
+
+			.qa_des{
+				height: 18px;
+				margin-top: 5px;
+				display: block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				line-height: 20px;
+			}
+		}
+		.response{
+			margin: 0;
+			padding: 0;
+			.cont{
+				text-align: center;
+			}
+		}
+  	}
+}
+
+.ask_qa{
+	margin-bottom: 15px;
+}
+
+.reply_frm_area{
+	margin: 0;
+	padding: 0;
+
+	input[type="text"], textarea{
+		padding:15px !important;
+		margin-bottom: 15px;
+		font-size: 14px;
+		&::placeholder{
+			color: #838383 !important;
+		}
+	}
+}

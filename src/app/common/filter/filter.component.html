@@ -1,0 +1,128 @@
+<div class="filter_cont_area" *ngIf="btnFilter">
+  <span class="cancel_btn_area" ><a href="javascript:void(0);"><img src="assets/images/cancel_btn.png" (click)="buttton_showhide()"/></a></span>
+  <div class="row">
+    <div class="col-sm-4">
+      <label>Topic</label>
+      <ng-select  [items]="categoriesTree" [multiple]="true" bindLabel="name" 
+        [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedCategory" (change)="onChange('category')">
+        <ng-template ng-option-tmp let-item="item" >
+              <span [ngStyle]="getSpan(item)">{{item?.name}}</span>
+        </ng-template>
+      </ng-select>
+    </div>
+
+    <div class="col-sm-4">
+      <label>Level</label>
+      <ng-select [items]="standerd" [multiple]="true" bindLabel="title" 
+        [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedStanderd" (change)="onChange('standerd')">
+        
+        <ng-template ng-option-tmp let-item="item" >
+          
+          {{item.title}}
+        </ng-template>
+      </ng-select>
+    </div>
+    
+    <div class="col-sm-4">
+      <label>Duration</label>
+
+      <ng-select
+      [closeOnSelect]="true" [(ngModel)]="selectedDuration" (change)="onChange('duration')">
+        <ng-option *ngFor="let rs of duration" [value]="rs?.id">{{rs?.name}}</ng-option>
+      <!-- <ng-template ng-option-tmp let-item="item" >
+     
+        {{item.name}}
+      </ng-template> -->
+      </ng-select>
+  </div>
+
+
+  <div class="col-sm-4">
+      <label>Ratings</label>
+      <div class="star_rating">
+        <div class="rating_block">
+          <a href="javascript:void(0);" (click)="onChange('rating',4)" [class.active]="selectedRating==4">
+          <span class="star_area">
+            <ngb-rating [rate]="4" [starTemplate]="t"></ngb-rating>
+          </span>
+            <span class="rate_num">4 & up </span> 
+          </a>
+        </div>
+        <div class="rating_block">
+            <a href="javascript:void(0);" (click)="onChange('rating',3)"  [class.active]="selectedRating==3">
+              <span class="star_area">
+                  <ngb-rating [rate]="3" [starTemplate]="t"></ngb-rating>
+              </span> 
+                <span class="rate_num">3 & up</span> 
+            </a>
+        </div>
+        <div class="rating_block">
+            <a href="javascript:void(0);" (click)="onChange('rating',2)"  [class.active]="selectedRating==2">
+              <span class="star_area">
+                  <ngb-rating [rate]="2" [starTemplate]="t"></ngb-rating>
+              </span> 
+              <span class="rate_num">2 & up</span> 
+            </a>
+        </div>
+        <div class="rating_block">
+            <a href="javascript:void(0);" (click)="onChange('rating',1)"  [class.active]="selectedRating==1">
+              <span class="star_area">
+               
+                <ngb-rating [rate]="1" [starTemplate]="t"></ngb-rating>
+              </span> 
+              <span class="rate_num">1 & up</span> 
+            </a>
+        </div>
+        <div class="rating_block" *ngIf="selectedRating>0" >
+            <a href="javascript:void(0);" (click)="onChange('rating',0)"  [class.active]="selectedRating==1">
+             Clear
+            </a>
+        </div>
+      </div>
+    </div>
+
+
+  <!-- <div class="col-sm-4">
+      <label>Price</label> -->
+      <!-- <ng-select [items]="price"  bindLabel="name" groupBy="gender" [selectableGroup]="true"
+        [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedprice" (change)="changePriceType()">
+       
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          {{item.name}}
+        </ng-template>
+      </ng-select> -->
+  <!--   <ng-select [closeOnSelect]="true" [(ngModel)]="selectedprice" (change)="changePriceType()">
+        <ng-option *ngFor="let item of price" [value]="item?.id">{{item?.name}}</ng-option>
+      </ng-select>
+
+      <div class="">       
+       
+        <ng5-slider [(value)]="selectedPriceValue" [options]="options" (click)="onChange('price')"></ng5-slider>
+      </div>
+  </div> -->
+
+  <div class="col-sm-4">
+      <label>Tutor</label>
+      <ng-select [items]="vendors" [multiple]="true" bindLabel="profile.full_name"
+        [closeOnSelect]="false" bindValue="id" [(ngModel)]="selectedVendor" (change)="onChange('vendor')" >
+        <ng-template ng-option-tmp let-item="item" >
+          {{item.profile.full_name}}
+        </ng-template>
+      </ng-select>
+  </div>
+
+
+    
+
+    
+
+  </div>
+  <!-- <div class="row flitersec02">
+     
+      
+
+      
+
+      
+    </div> -->
+</div>

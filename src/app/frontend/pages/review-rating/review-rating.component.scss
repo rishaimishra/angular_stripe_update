@@ -1,0 +1,10 @@
+.ratingMain {
+    margin-top: 30px;
+    span.star {
+        font-size: 30px;
+        color: #d3d3d3;
+        &.full {
+            color: #f0c256;
+        }
+    }
+}

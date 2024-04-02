@@ -1,0 +1,28 @@
+
+    <div class="loginModal">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Reason of Payout</h4>
+          <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       
+        <div class="modal-body">
+          <form [formGroup]="payoutForm" (ngSubmit)="submit()" >
+              <div class="row">
+                  <div class="col-sm-12">
+                    <label for="">Comment</label>
+                    <div class="inputWrap"  >
+                      <textarea type="text" class="inpClass"  formControlName="comments" ></textarea>
+                    </div>
+                  </div>
+              </div>
+              <button type="submit"  data-purpose="post-question"  [className]="payoutForm.valid ? 'btn btn-info ' : 'btn btn-info disableSubmit'">Submit</button>
+          </form>
+      </div>
+    </div>
+    
+    
+    
+    
+    

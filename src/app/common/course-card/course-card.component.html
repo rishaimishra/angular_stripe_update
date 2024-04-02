@@ -1,0 +1,104 @@
+
+<div class="spaceBot">
+
+
+	<div class="thumbInfoBox cartListTransform">
+		<div class="carouselCont">
+			<div class="carouselImg">
+				<img *ngIf="!item?.images?.thumbnail" [src]="noImage?.size400x400" alt="No Image" [routerLink]="linkArr" style="cursor: pointer;">
+				<img *ngIf="item?.images?.thumbnail" [src]="item?.images?.thumbnail" alt="" [routerLink]="linkArr" style="cursor: pointer;">
+
+				<ng-container  *ngIf="http.isLoggednIn() && this.http.getUserRole()[0]=='customer'">
+						<a href="javascript:void(0);" (click)="addToWishList(item?.id)" *ngIf="!isAddedWishList(item?.id)" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" (click)="removeFromWishList(item?.id)" *ngIf="isAddedWishList(item?.id)" class="imgOverStar"><i class="fa fa-heart" aria-hidden="true"></i></a>
+				</ng-container>
+				<ng-container  *ngIf="!http.isLoggednIn()">
+						<a href="javascript:void(0);" (click)="openModal()" class="imgOverStar"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+				</ng-container>
+			</div>
+
+		<a *ngIf="item" [routerLink]="linkArr">
+			<div class="list_cont">
+				<h3 class="cartListTitle" title="{{item?.title}}">{{item?.title}}</h3>
+
+				{{item.lecture_count}}
+				<h4 class="show-hide">
+					{{getLectureCount(item?.course_modules)}} |
+					{{item?.duration}}
+					<span *ngIf="item?.duration > 1">hours</span>
+					<span *ngIf="item?.duration <= 1">hour</span>
+					|
+					{{item?.course_standers?.title}}
+				</h4>
+				<h5>
+					<span class="show-hide" style="float: left;">{{item.sub_title}}|By</span>
+					{{item.user?.profile.full_name}}
+				</h5>
+				<h5>{{(item?.short_description?.length > 30) ? (item?.short_description | slice: 0:30) + '...' : (item?.short_description)}}</h5>
+				<!-- <div class="ratingsDiv">
+					<div class="ratings Left"><ngb-rating [rate]="0"></ngb-rating></div>
+				</div> -->
+				<div class="ratingsDiv listingratingDiv" *ngIf="item?.rating > 0">
+					<div class="ratingsDivLeft ">
+						<span class="star_area"><ngb-rating [rate]="item?.rating"></ngb-rating></span>
+					</div>
+					<div class="ratingsDivRight">
+						{{item?.rating}}
+						<!-- <span class="show-hide-grid">
+							({{item?.avg_reviews}})
+						</span> -->
+
+						<span class="show-hide-list">
+								(
+									{{item?.avg_reviews}}
+									<span *ngIf="item?.avg_reviews > 1">ratings</span>
+									<span *ngIf="item?.avg_reviews <= 1">rating</span>
+								)
+						</span>
+					</div>
+				</div>
+				<div class="ratingsDiv" *ngIf="item?.rating === 0">
+					<div class="ratings Right">No review yet</div>
+				</div>
+				<!-- Old Price code Start -->
+				<!-- <h6 *ngIf="item?.price > 0">
+					<span class="originalPrc" *ngIf="hasOffer()">{{((item?.price) ? (item?.price) : '0') | currency : item?.currency :'symbol':'1.2-2'}}</span>
+					<span class="actualPrc">{{getPrice() | currency : item?.currency :'symbol':'1.2-2'}}</span>
+				</h6>
+				<h6 *ngIf="item?.price === 0 "> Free </h6> -->
+				<!-- Old Price code End -->
+
+
+				<!-- New Payment code Start-->
+
+
+
+				<ng-container *ngIf="this.item.pricable.length > 0">
+
+					<ng-container *ngIf="this.item?.pricable[0]?.total_price>0">
+						<h6>
+							<ng-container *ngIf="this.item?.pricable[0]?.usd_price > 0">	
+								<span class="actualPrc">{{this.item?.pricable[0]?.usd_price| number:'1.2-2' }} USD </span>
+							</ng-container> 
+							<ng-container  *ngIf="this.item?.pricable[0]?.usd_price > 0 && this.item?.pricable[0]?.sxl_price > 0">
+								+
+							</ng-container>
+							
+							<ng-container *ngIf="this.item?.pricable[0]?.sxl_price > 0">	
+								<span class="actualPrc">SXL {{this.item?.pricable[0]?.sxl_price | number:'1.2-2'}}</span>
+							</ng-container>
+						</h6>
+					</ng-container>
+
+					<h6 *ngIf="this.item?.pricable[0]?.total_price == 0"> Free </h6>
+				</ng-container>
+				<h6 *ngIf="this.item.pricable.length == 0"> Free </h6>
+				<!-- New Payment code End-->
+
+			</div>
+		</a>
+			<div  class="clearfix"></div>
+		</div>
+	</div>
+
+	</div>

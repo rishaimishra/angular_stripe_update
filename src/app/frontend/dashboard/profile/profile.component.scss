@@ -1,0 +1,16 @@
+.image-hldr{ float: left; width:100%;}
+.inputWrap .iconLeft {
+    height: 59px;
+}
+.required { color:red; }
+
+.inpClass{ width: 100%; background: #F8F8F8; border: 1px solid #D1D1D1; padding: 15px !important; font-size: 16px; color: #434343; border-radius: 0;
+    &.withMerg{ margin-bottom: 15px;}
+    
+  }
+  
+  .inpClass.multiselect{
+    padding: 9px !important;    
+  }
+
+  

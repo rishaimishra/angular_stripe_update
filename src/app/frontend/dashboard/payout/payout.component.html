@@ -1,0 +1,35 @@
+
+    <div class="loginModal">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">PayOut!</h4>
+          <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       
+        <div class="modal-body">
+            <notification-message [messages]="messages"></notification-message>
+            <form [formGroup]="payoutForm" (ngSubmit)="payout()" >
+              <div class="modalInp" >
+                <label class=""> Total wallet balance</label>
+                <input type="text" class=""  value="{{walletBalance}}" readonly="true">
+              </div>
+
+              <div class="modalInp" *ngVar="payoutForm.get('request_amount') as request_amount" >
+                  <label class=""> Request for payment </label>
+                  <input type="text" id="request_amount" class=""  name="request_amount" formControlName="request_amount" (keypress)="checkRequestAmount($event)" autocomplete="false">
+                  <form-validation-message [fromInstance]="request_amount" [minValue]="10"></form-validation-message>
+              </div>
+
+              <div class="modalInp">
+                <input type="submit" name="" value="Submit" [className]="payoutForm.valid ? ' ' : 'disableSubmit'">
+              </div>
+            </form>
+
+        </div>
+      </div>
+    
+    
+    
+    
+    

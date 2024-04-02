@@ -1,0 +1,20 @@
+<div class="siteBreadcrumb">
+	<ul>
+		<!-- <li><a href="#"></a></li> -->
+		<li [ngClass]="getPreviousDisableClass()"><a href="javascript:void(0);" (click)="previousPage($event)"></a></li>
+
+		<li *ngFor="let item of firstPaginationArr"><a [ngClass]="getActiveClass(item?.value)" href="javascript:void(0);" (click)="listPage($event, item)">{{item?.page}}</a></li>
+		<li class="dot-blank" *ngIf="lastPaginationArr.length > 0"><i class="fa fa-ellipsis-h"></i></li>
+		<li *ngFor="let item of lastPaginationArr"><a [ngClass]="getActiveClass(item?.value)" href="javascript:void(0);" (click)="listPage($event, item)">{{item?.page}}</a></li>
+
+
+		<!-- <li><a class="active" href="#">1</a></li>
+		<li><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li> -->
+
+		<li [ngClass]="getNextDisableClass()"><a href="javascript:void(0);" (click)="nextPage($event)"></a></li>
+		<!-- <li><a href="#"></a></li> -->
+	</ul>
+</div>

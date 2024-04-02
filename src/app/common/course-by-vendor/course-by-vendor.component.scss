@@ -1,0 +1,80 @@
+.courseThumb{ position: absolute; left: 10px; top: 10px; width: 100px; border: 1px solid #cfcfcf;}
+  h3{ font-size: 16px; color: #231f20; font-weight: 600; border-bottom: 1px solid #e5e5e5; line-height: 22px; padding-bottom: 8px;
+   span{ font-size: 13px; color: #616161; font-weight: 400;}
+  }
+  h4{ font-size: 13px; color: #616161; padding-top: 8px;}
+  h5{ font-size: 18px; color: #484848; font-weight: 600;}
+  h5{ font-size: 15px;}
+  .courseRating{ padding: 10px 0;
+    .courseRatingLeft{ display: inline-block; vertical-align: top; border-right: 1px solid #b6b6b6; padding: 0 10px 0 0;
+     img{ vertical-align: unset;}
+    }
+    span{ font-size: 18px; color: #000; font-weight: 400; vertical-align: top; display: inline-block; padding: 0 0 0 10px; line-height: 18px;
+     small{ font-size: 12px; color: #616161;}
+    }
+  }
+
+  .otherVendorCourse{
+    overflow: hidden;
+    border: 1px solid #cfcfcf;
+    padding: 10px 10px 10px 10px !important;
+    margin: 15px 0 0 0;
+    padding-left:0;
+
+    .col-sm-5{
+      padding-right: 10px;
+    }
+    // .col-sm-9{
+    //   max-width: 100%;
+    // }
+    // .container {
+    //   height: 100%;
+    //  }
+    //  .container {
+    //   display: table;
+    //  }
+    //  .row
+    //  {
+    //   height: 100%;
+    //   display: table-row;
+    //  }
+     .vertical-center
+     {
+      // display: table-cell;
+      // float: none;
+      // vertical-align: middle;
+      // width:50%;
+      // background: #e8e5e5;
+      min-height: 139px;
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      margin: 0;
+
+      img{
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-height: 100%;
+        min-width: 100%;
+        transform: translate(-50%, -50%);
+      }
+     }
+
+     h6{ color: #616161; padding: 8px 0 0 0;}
+  }
+
+.originalPrc{ font-size: 12px; text-decoration: line-through; display: inline-block; padding: 0 8px 0 0; vertical-align: middle;}
+
+.imgArea{
+  position: relative;
+}
+.imgOverStar{
+  position: absolute;
+  top:10px;
+  right:10px;
+  color:#fff;
+  font-size: 24px;
+  z-index: 999;
+}

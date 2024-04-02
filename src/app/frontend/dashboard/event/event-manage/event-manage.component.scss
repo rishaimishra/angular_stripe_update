@@ -1,0 +1,134 @@
+.m-t-20 {
+    margin-top: 20px;
+}
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border: 1px solid #dc3545;
+}
+
+
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+  }
+  .custom-day.focused {
+    background-color: #e6e6e6;
+  }
+  .custom-day.range, .custom-day:hover {
+    background-color: rgb(2, 117, 216);
+    color: white;
+  }
+  .custom-day.faded {
+    background-color: rgba(2, 117, 216, 0.5);
+  }
+
+.productImgDiv {
+  margin-top: 20px; margin-bottom: 20px;
+  .progress-div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .img-div {
+    height: 150px;
+    line-height: 145px;
+    text-align: center;
+    border: 1px solid rgb(180, 176, 176);
+    img.img-fluid {
+      vertical-align: middle;
+      max-height: 150px;
+    }
+  }
+
+  .action-div {
+    display: block;
+    text-align: center;
+    height: 150px;
+    line-height: 145px;
+    text-align: center;
+    border: 1px solid #b4b0b0;
+    position: relative;
+
+    #upload-image{
+      opacity: 0;
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      left: 0;
+    }
+  }
+}
+h6 {
+  font-size: 12px;
+    padding: 3px;
+}
+.section_block{
+  margin: 0;
+  padding: 15px;
+  background: #f6f6f6;
+  border: 1px solid #d1d1d1;
+}
+.choose_file {
+  font-size: 14px;
+  padding: 6px 14px;
+  font-weight: normal;
+  background: #3eb7aa;
+  border: none;
+  float: right;
+}
+.price-outer-continer {
+  width: 31%;
+  float: left;
+  margin-right: 20px;
+  min-height: 392px;
+  background: #f2f3f5;
+  padding:10px; 
+  margin-bottom: 20px;
+
+  &:nth-child(3n+3){
+    margin-right: 0;
+  }
+}
+
+.action-delete-div{
+    display: block;
+    text-align: center;
+    height: 150px;
+    line-height: 145px;
+    text-align: center;
+    position: relative;
+}
+.finishBtn {
+  background: #151840;
+  font-size: 16px;
+  color: #FFF;
+  font-weight: 600;
+  border: 2px solid #044cb8;
+  border-radius: 50px;
+  padding: 3px 12px;;
+  cursor: pointer;
+  float: right;
+}
+.buttonload {
+  background: #151840;
+  font-size: 12px;
+  color: #FFF;
+  font-weight: 600;
+  border: 2px solid #044cb8;
+  border-radius: 50px;
+  padding: 7px 13px;
+}

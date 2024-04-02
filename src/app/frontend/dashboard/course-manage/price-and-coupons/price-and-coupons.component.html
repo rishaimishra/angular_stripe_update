@@ -1,0 +1,378 @@
+<section class="pageHeading d-flex">
+  <div class="container align-self-center">
+    <h2>Price and Coupons</h2>
+  </div>
+</section>
+
+<section class="cmsWrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-course-manage-left-panel></app-course-manage-left-panel>
+      </div>
+      <div class="col-lg-9">
+        <div class="formSEc">
+            <h2>Course Price Tier </h2>
+            <p>Please select the price tier for your course below and click ‘save’. The list price that students will see in other currencies is calculated using the price tier success, based on the tier that it corresponds to. </p>
+            <!-- <div Class= "alert-success"   *ngIf="successMsg">
+                {{successMsg}}
+            </div> -->
+            <label class="checkBoxCustom">
+                <input  name="is_default" type="checkbox" (change)="getCheckBoxValue($event)" [checked]="isFree" value="0"> 
+                <span  class="checkBoxMark"></span>
+                *Free.
+            </label>
+            <ng-container *ngIf="!isFree">
+            <form class="form-horizontal" [formGroup]="priceForm" (ngSubmit)="updatePrice()" >
+            <div class="row">
+              
+                  <div *ngIf="errorMsg">
+                      <!-- <notification-message [messages]="messages"></notification-message> -->
+                  </div>
+                  <div class="col-md-3">
+                    <div class="groupForm">
+                      <div class="groupFormSingle" >
+                        <!-- <select class="inpClass" name="currency" formControlName="currency"  [value]='USD'>
+                          <option value="USD" >USD</option>
+                        </select> -->
+                        <input type="text" class="inpClass" value="USD" readonly >
+                       
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="groupForm">
+                      <div class="groupFormSingle"  *ngVar="priceForm.get('total_price') as total_price" >
+                        <input type="text" class="inpClass" formControlName="total_price" (keypress)="checkIntInput($event)">
+                        <form-validation-message [fromInstance]="total_price" [minValue]='10' [maxValue]='10000'></form-validation-message>
+                       
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="groupForm">
+                      <div class="groupFormSingle">
+                        <input type="submit" name="" [className]="priceForm.valid ? ' ' : ' disableSubmit'" value="Save">
+                      </div>
+                    </div>
+                  </div>
+              
+              <!-- <div class="col-md-5">
+                <div class="groupForm">
+                  <div class="groupFormSingle">
+                    <p class="groupForm-p"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Please complete the premium instructor application here in order to set a price for your course. You can set your course price as soon as your linked payment method is approved</p>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </form>
+          </ng-container>
+
+          <!-- <br>
+        <br> -->
+        <!-- Course Discount -->
+            <!-- <h2 *ngIf="discounts.length>0" >Course Discounts</h2>
+
+            <div class="table-responsive table_area" *ngIf="discounts.length>0">
+              <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>
+                        Discount Mode
+                      </th>
+                      <th>
+                        Discount Value
+                      </th>
+                      <th>
+                        Start Date
+                      </th>
+                      <th>
+                        End Data
+                      </th>
+                      <th>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let discount of discounts; let i = index">
+                      <td>{{discount?.discount_mode}}</td> 
+                      <td>{{discount?.discount}}</td>
+                      <td>{{discount?.started_on | date: 'dd/MM/yyyy'}}</td>
+                      <td>{{discount?.ended_on | date: 'dd/MM/yyyy' }}</td>
+                      <td class="text-right">
+                        <button 
+                          (click)="discountRemove(discount?.id,i)"
+                          type="button"
+                          class="btn btn-sm btn-danger linkBg">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody> 
+              </table>
+            </div>
+
+          <div *ngIf="coursePrice && coursePrice!=0">
+                <div class="groupForm alt" *ngIf="discountPrice">
+                  <a href="javascript:void(0);" class="addClass" (click)="createDiscount()">Discount Price</a>
+                </div>
+
+
+                <div *ngIf="!discountPrice" class="secDefault" >
+                    <a class="addClass remove_icon" (click)="removeDiscount()"><i aria-hidden="true" class="fa fa-times"></i></a>
+
+                  <form class="form-horizontal add_section" [formGroup]="discountForm" (ngSubmit)="addDiscount()" >
+                      <div class="row">
+
+                      <div class="col-md-12">
+                          <div class="groupForm">
+                            <label for="">Discount Mode*</label>
+                            <div class="groupFormSingle" *ngVar="discountForm.get('discount_mode') as discount_mode" >
+                              <select class="inpClass" name="discount_mode" formControlName="discount_mode"  (change)="resetDiscountPriceOption($event)" >
+                                <option value="fixed" >Fixed</option>
+                                <option value="percentage" >Percentage</option>
+                              </select>
+                              <form-validation-message [fromInstance]="discount_mode"></form-validation-message>
+                            </div>
+                          </div>
+                      </div>
+
+                      <div class="col-md-12">
+                          <div class="groupForm">
+                            <label for="">Discount Value*</label>
+                            <div class="groupFormSingle"  *ngVar="discountForm.get('discount') as discount" >
+                              <input type="text" class="inpClass"  formControlName="discount"  (keypress)="checkDiscountPrice($event)" >
+                              <p *ngIf="resetDiscountValue=='fixed'">USD</p>
+                              <form-validation-message [fromInstance]="discount"></form-validation-message>
+                            </div>
+                          </div>
+                      </div>
+
+
+                    <div class="col-md-12">
+                 
+                    <div>
+                   
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                         <div class="groupForm">
+                          <label for="">Start Date*:</label>
+                          <div class="groupFormSingle">
+                            <div class="inputWrap" *ngVar="discountForm.get('start_date') as start_date">
+                              <input class="inpField inpClass" placeholder="yyyy-mm-dd" name="startDp" formControlName="start_date" ngbDatepicker #startDp="ngbDatepicker" (click)="startDp.open()" [minDate]="minStartDate" [maxDate]="maxStartDate" (dateSelect)="onStartDateSelection($event, startDp)" autoClose="outside" autocomplete="off">
+
+                              <form-validation-message [fromInstance]="start_date"></form-validation-message>
+                            </div>
+                          </div>
+                         </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <div class="groupForm">
+                          <label for="">End Date*:</label>
+                          <div class="groupFormSingle">
+                          <div class="inputWrap"  *ngVar="discountForm.get('end_date') as end_date">
+                           
+                            <input class="inpField inpClass" placeholder="yyyy-mm-dd" name="endDp" formControlName="end_date" ngbDatepicker #endDp="ngbDatepicker" (click)="endDp.toggle()" [minDate]="minEndDate" [maxDate]="maxEndDate" (dateSelect)="onEndDateSelection($event, endDp)" autoClose="outside" autocomplete="off">
+                            <form-validation-message [fromInstance]="end_date"></form-validation-message>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                      </div>
+
+                      
+                    </div>
+                    </div>
+                    
+                   
+                  
+                   
+                   <div class="col-md-12 button_area">
+                        <div class="groupForm ">
+                          <div class="groupFormSingle">
+                            <input type="submit" name="" [className]="discountForm.valid ? 'submitBtn' : 'submitBtn disableSubmit'" value="Save">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </form>
+                </div>
+          </div> -->
+        <!-- <br>
+        <br> -->
+        <!-- course Coupons -->
+            <h2 *ngIf="coupons.length>0" >Course Coupons</h2>
+
+            <div class="table-responsive table_area" *ngIf="coupons.length>0">
+              <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>
+                        Coupon Code
+                      </th>
+                      <th>
+                        Discount Mode
+                      </th>
+                      <th>
+                        Discount Value
+                      </th>
+                      <th>
+                        Use Per Code
+                      </th>
+                      <th>
+                        Max Use
+                      </th>
+                      <th>
+                        Start Date
+                      </th>
+                      <th>
+                        End Data
+                      </th>
+                      <th>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let coupon of coupons; let i = index">
+                      <td>{{coupon?.coupon_code}}</td>
+                      <td>{{coupon?.discount_mode}}</td> 
+                      <td>{{coupon?.discount_value}}</td>
+                      <td>{{coupon?.use_per_user}}</td>
+                      <td>{{coupon?.max_use}}</td>
+                      <td>{{coupon?.started_on | date: 'dd/MM/yyyy'}}</td>
+                      <td>{{coupon?.ended_on | date: 'dd/MM/yyyy' }} <a class="" (click)="changeEndDateModal(coupon?.id, coupon?.ended_on,coupon?.started_on )"><i class="fa fa-pencil-square-o"></i></a> </td>
+                      <td class="text-right">
+                        <button 
+                          (click)="removeCoupon(coupon?.id,i)"
+                          type="button"
+                          class="btn btn-sm btn-danger linkBg">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody> 
+              </table>
+            </div>
+              <div *ngIf="coursePrice && coursePrice!=0">
+
+                    <div class="groupForm alt" *ngIf="createCoupon">
+                      <a href="javascript:void(0);" class="addClass" (click)="couponCreate()">Create new coupon</a>
+                    </div>
+
+                    <div *ngIf="!createCoupon" class="secDefault" >
+                        <a class="addClass remove_icon" (click)="removeCouponCreate()"><i aria-hidden="true" class="fa fa-times"></i></a>
+
+                      <form class="form-horizontal add_section" [formGroup]="couponAddForm" (ngSubmit)="addCoupon()" >
+                          <div class="row">
+                          <div *ngIf="errorCouponMsg">
+                              <notification-message [messages]="couponMessages"></notification-message>
+                          </div>
+                          <div class="col-md-12">
+                              <div class="groupForm">
+                                <label for="">Coupon code*</label>
+                                <div class="groupFormSingle"  *ngVar="couponAddForm.get('coupon_code') as coupon_code" >
+                                  <input type="text" class="inpClass" formControlName="coupon_code"  style="text-transform:uppercase" minlength="6">
+                                  <form-validation-message [fromInstance]="coupon_code" ></form-validation-message>
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="col-md-12">
+                              <div class="groupForm">
+                                <label for="">Discount Mode*</label>
+                                <div class="groupFormSingle" *ngVar="couponAddForm.get('discount_mode') as discount_mode" (change)="resetDiscountValue()">
+                                  <!-- <select class="inpClass" name="discount_mode" formControlName="discount_mode"  [value]='fixed'>
+                                    <option value="fixed" >Fixed</option>
+                                    <option value="percentage" >Percentage</option>
+                                  </select> -->
+                                  <input type="text" class="inpClass" formControlName="discount_mode" value="fixed" readonly>
+
+                                  <form-validation-message [fromInstance]="discount_mode"></form-validation-message>
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="col-md-12">
+                              <div class="groupForm">
+                                <label for="">Discount Value*</label>
+                                <div class="groupFormSingle"  *ngVar="couponAddForm.get('discount_value') as discount_value" >
+                                  <input type="text" class="inpClass"  formControlName="discount_value"  (keypress)="checkDiscountValue($event)" > 
+                                  <form-validation-message [fromInstance]="discount_value"></form-validation-message>
+                                </div>
+                              </div>
+                          </div>
+
+                          
+
+                          <div class="col-md-12">
+                              <div class="groupForm">
+                                <label for="">Use Per Code*</label>
+                                <div class="groupFormSingle"  *ngVar="couponAddForm.get('use_per_user') as use_per_user" >
+                                  <input type="text" class="inpClass" formControlName="use_per_user"  (keypress)="usePerCode($event)" >
+                                  <form-validation-message [fromInstance]="use_per_user"></form-validation-message>
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="col-md-12">
+                              <div class="groupForm">
+                                <label for="">Max Use*</label>
+                                <div class="groupFormSingle"  *ngVar="couponAddForm.get('max_use') as max_use" >
+                                  <input type="text" class="inpClass" formControlName="max_use"  (keypress)="maxUseCheck($event)">
+                                  <form-validation-message [fromInstance]="max_use"></form-validation-message>
+                                </div>
+                              </div>
+                          </div>
+
+                        <div class="col-md-12">
+                        <label for="">Date Range*</label>
+                        <div>
+                        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+                        </ngb-datepicker>
+                        
+                        <ng-template #t let-date let-focused="focused">
+                          <span class="custom-day"
+                                [class.focused]="focused"
+                                [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)"
+                                (mouseenter)="hoveredDate = date"
+                                (mouseleave)="hoveredDate = null">
+                            {{ date.day }}
+                          </span>
+                        </ng-template>
+                        </div>
+                        </div>
+                        
+
+                        <div class="col-md-12 button_area">
+                            <div class="groupForm ">
+                              <div class="groupFormSingle">
+                                <input type="submit" name="" [className]="couponAddForm.valid ? 'submitBtn' : 'submitBtn disableSubmit'" value="Save">
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </form>
+                    </div>
+              </div>
+            
+              <div class="pre_nxt_btn_area">
+                  <a routerLink="/dashboard/course-edit/course-landing-page" class="pre_btn">  Back</a>
+                  <a routerLink="/dashboard/course-edit/communication" class="nxt_btn" > Next  </a>
+                  <div class="clearfix"></div>
+              </div>
+      </div>
+    </div>
+  
+  </div>
+  </div>
+
+ 
+  </section>
+

@@ -1,0 +1,70 @@
+<div class="rightPanel alt">
+	<breadcrumb>
+		<li><a routerLink="/admin/{{categoryType}}/category">{{categoryType=='courses'? 'Course' : 'Event'}} Category</a></li>
+		<li class="active"><span>{{formData.name}}</span></li>
+	</breadcrumb>
+
+
+		<notification-message [messages]="error_messages"></notification-message>
+		<div class="panel panel-default">
+			<form class="form-horizontal" #categoryForm="ngForm" (ngSubmit)="saveCategory(categoryForm)">
+				<div class="panel-body">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="name" class="control-label">Name*</label>
+							<div class="">
+								<input type="text" [(ngModel)]="formData.name" #name="ngModel" name="name" class="form-control" id="name" required>
+								<input type="hidden" [(ngModel)]="formData.slug" #name="ngModel" name="old_slug">
+								<form-validation-message [fromInstance]="name"></form-validation-message>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="title" class="control-label">Description*</label>
+							<div class="">
+								<textarea [(ngModel)]="formData.description" #description="ngModel" name="description" class="form-control" id="title" required></textarea>
+								<form-validation-message [fromInstance]="description"></form-validation-message>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="icon" class="control-label">Icon <span class="tooltip_circle" placement="right" [ngbTooltip]="tipContent" tooltipClass="tooltip_bg"> ?</span></label>
+							<div class="">
+								<input type="text" [(ngModel)]="formData.icon" #name="ngModel" name="icon" class="form-control" id="icon" >
+								<ng-template #tipContent >Get icon from 'https://fontawesome.com/v4.7.0/icons/'. For ex: 'fa-address-book'  </ng-template>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="title" class="control-label">Parent Category</label>
+							<div class="">
+ 
+								<ng-select  [items]="categories"
+									bindLabel="name"
+									bindValue="id"						
+									groupBy="parent_name"           	
+									[groupValue]="groupValueFn"				
+									placeholder="Select parent category"														
+									[(ngModel)]="formData.parent_id" 
+									#parent_id="ngModel" 
+									dropdownPosition="auto"
+									name="parent_id"								 
+								>
+								</ng-select>
+
+
+							<!--<select class="form-control" [(ngModel)]="formData.parent_id" #parent_id="ngModel" name="parent_id">
+									<option value="0">--Select parent category--</option>
+									<option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+								</select>-->	
+								<form-validation-message [fromInstance]="parent_id"></form-validation-message>
+							</div>
+						</div>
+					</div> 
+				</div>
+				<div class="panel-footer">
+					<a [routerLink]="['/admin/'+categoryType+'/category']" class="btn btn-danger">Cancel</a>
+					<button type="submit" class="btn btn-info pull-right" [disabled]="categoryForm.invalid">
+						Save
+					</button>
+				</div>
+			</form>
+		</div>
+</div>

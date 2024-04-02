@@ -1,0 +1,24 @@
+
+    <div class="loginModal">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">KYC</h4>
+          <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       
+        <div class="modal-body">
+          <p>Our team is validating the {{entityType}}. You also need to submit your KYC details by clicking the link below. Please ignore if you have already registered and uploaded your KYC details.</p>
+            <a title="KYC" class="btn btn-primary pull-right titleLink02 kycBtn" href="{{kycUrl}}" target="blank" >
+                KYC
+            </a>
+            <a title="reference video" class="btn btn-primary pull-right titleLink02 reffVideo" href="{{kycReferenceVideoUrl}}" target="blank" >
+              Demo
+            </a>
+         </div>
+    </div>
+    
+    
+    
+    
+    

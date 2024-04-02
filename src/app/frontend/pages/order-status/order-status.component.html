@@ -1,0 +1,37 @@
+<section class="pageHeading d-flex">
+	<div class="container align-self-center">
+		<h3><i class="fa fa-home" aria-hidden="true"></i> / {{(orderTemplate === 'success') ? 'Order Success' : 'Order Failed'}}</h3>
+		<h2>{{(orderTemplate === 'success') ? 'Order Success' : 'Order Failed'}}</h2>
+	</div>
+</section>
+
+<section class="checkoutMain">
+	<div class="container">
+
+		<div class="row" *ngIf="(orderTemplate === 'success')">
+			<div class="col-md-12">
+				<div class="alert alert-success">
+					<h1>Voila! Your order has successfully submitted!</h1>
+					<p>Check your email for further informations</p>
+
+				</div>
+				<div class="courseDiv">
+					<a [routerLink]="['/dashboard', 'transactions']" class="btn btn-primary myCourse">My order</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" *ngIf="(orderTemplate === 'error')">
+			<div class="col-md-12">
+				<div class="alert alert-warning">
+					<h1>Sorry! We are failed to submit your order!</h1>
+					<!-- <p *ngIf="messageObj">{{messageObj?.errors?.payment_message}}</p> -->
+					<p>Check your email for further informations</p>
+				</div>
+				<div class="courseDiv">
+						<a [routerLink]="['/dashboard', 'transactions']" class="btn btn-primary myCourse">My order</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

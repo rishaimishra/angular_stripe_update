@@ -1,0 +1,37 @@
+.search_sec{
+    margin: 0 0 0 15px;
+    padding:0;
+    position: relative;
+}
+.search_sec .topSearchCont.acTive{ width: calc(100% - 33px); margin-right: 0;}
+
+.search_sec .topSearch{
+    margin: 24px 0 0 0;
+}
+.search_sec .topSearch button{
+    background: #38a5b9;
+    border:none;
+    padding: 6px 10px;
+    color:#fff;
+}
+.search_sec .listing_area{
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+}
+.search_sec .listing_area ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border:1px solid #e6e6e6;
+    background: #f9f8f8;
+}
+
+.search_sec .listing_area ul li{
+    margin: 0;
+    padding:5px;
+    list-style: none;
+    border-bottom: 1px solid #e6e6e6;
+}

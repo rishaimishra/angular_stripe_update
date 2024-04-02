@@ -1,0 +1,247 @@
+<!-- <button type="button" class="btn btn-default remove" (click)="removeObject()" *ngIf="!data" > Remove</button> -->
+<!-- <button type="button" class="btn btn-default remove" (click)="removeObject()" *ngIf="!data" > <i class="fa fa-times" aria-hidden="true"></i></button> -->
+
+<!-- Update Section Start -->
+<div *ngIf="data" id="section_{{chapterSectionCount}}">
+  <div class="sectionExpanded-1">
+    <div *ngIf="!editClick" class="lecture">
+      <strong>Lecture :</strong>{{data.title}}
+      <span style="float: right;" class="action">
+        <a (click)="editSection()" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+        <a (click)="deleteSection()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+      </span>
+    </div>
+    <div *ngIf="editClick">
+        <!-- <a (click)="editSectionRemove()">X</a> -->
+        <form [formGroup]="sectionUpdateFrom" (ngSubmit)="update()">
+          <!-- <notification-message [messages]="messages" *ngIf="errorMsg"></notification-message> -->
+          <div class="groupForm first">
+            <div class="groupFormSingle">
+              <label for="">Section </label>
+              <div class="inpWrap" *ngVar="sectionUpdateFrom.get('title') as title">
+                <input _ngcontent-c8="" class="inpClass" placeholder="Title" type="text" formControlName="title">
+                <!-- <div _ngcontent-c8="" class="inpWrapCount">57</div> -->
+                <form-validation-message [fromInstance]="title"></form-validation-message>
+                </div>
+            </div>
+          </div>
+          <div class="groupForm alt">
+            <div class="groupFormSingle">
+              <label for="">What will students be able to do at the end of this section?</label>
+              <div class="inpWrap" *ngVar="sectionUpdateFrom.get('description') as description" >
+               
+                <!-- <textarea class="inpClass" placeholder="Description" type="text" formControlName="description"></textarea> -->
+                <ckeditor [editor]="Editor" tagName="textarea" formControlName="description" [config]="{ label: 'Foo', toolbar: [ 'heading', '|', 'bold', 'italic', 'undo', 'redo' ] }" (ready)="onReady($event)"></ckeditor>
+                <!-- <div _ngcontent-c8="" class="inpWrapCount">57</div> -->
+                <!-- <form-validation-message [fromInstance]="description"></form-validation-message> -->
+                </div>
+            </div>
+          </div>
+          <div class="groupForm alt">
+                <div class="groupFormSingle">
+                    <label for="">Lecture Mode</label>
+                  <div class="section_block">
+                    
+                    <div class="inpWrap mode"  >
+                        <span><input class="" type="radio" name="lecture_mode" formControlName="lecture_mode"  value="video" (click)="setLectureType('video')" >
+                        
+                            Video</span>
+                          <span><input class="" type="radio" name="lecture_mode" formControlName="lecture_mode"  value="pdf" (click)="setLectureType('pdf')" >
+                            Pdf</span>
+                    </div>
+
+                  <!-- Duration Start -->
+                    <div *ngIf="lectureType == 'video'">Duration</div>
+                    <div class="inpWrap" *ngIf="lectureType == 'video'">
+                        <ngb-timepicker [formControl]="ctrl" [seconds]="true" [readonlyInputs]="false" required name="time" (keypress)="keyPress($event)"></ngb-timepicker>
+                        <div style="float:left; width:65px; text-align: center;">hour</div>
+                        <div style="float:left; width:20px; text-align: center;">&nbsp;</div>
+                        <div style="float:left; width:65px; text-align: center;">minute</div>
+                        <div style="float:left; width:20px; text-align: center;">&nbsp;</div>
+                        <div style="float:left; width:65px; text-align: center;">second</div>
+                    </div>
+                    <br>
+                    <ng-container  *ngIf="lectureType == 'video'">
+                      <div class="small form-text text-danger" *ngIf="!ctrl?.valid">
+                        <div *ngIf="ctrl?.errors['required'] && lectureType == 'video' && submited" style="font-size:11px;color: #ff0000 !important;">Time required</div>
+                      </div>
+                    </ng-container>
+                  <!-- Duration End -->
+
+
+                    <div for="" class="sub_heading">Lecture Link</div>
+                    <div class="inpWrap">
+                        <!-- <input type="file" (change)="uploadFile($event)" style="width: 90px;overflow: hidden;
+                      "> -->
+                        <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="" class="form-control " (change)="uploadFile($event)" id=""  required ></span>
+
+                        <!-- <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3 " *ngIf="!!fileInstance"  (click)="uploadToS3()">Upload Lecture</a>  -->
+                        <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3 " *ngIf="newLectureSelectFile"  (click)="uploadToS3()">Upload Lecture</a> 
+                        <br>
+                        <span hidden="true" [innerHtml]="path" class="path"></span>
+                        <span *ngIf="newUplodedLecture" class="upload_txt">
+                            <a href="{{path}}">Uploded Lecture: 
+                              <span *ngIf="uplodedFileType=='pdf' && path"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span> 
+                              <span *ngIf="uplodedFileType=='video' && path"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+                            </a>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+          </div>
+          <h6 class="fileFormatInfo">*Lecture link video needs to be in mp4,mkv,3gp,mov format.</h6>
+          <h6 class="fileFormatInfo">*Lecture link pdf needs to be in pdf format.</h6>
+          <!-- <div class="groupForm alt">
+              
+          </div> -->
+          <div class="groupForm alt">
+              <div class="groupFormSingle">
+                <label for="">Resource</label>
+                <div class="section_block">
+                  <div class="inpWrap">
+                      <!-- <input type="file" (change)="uploadResourceFile($event)" style="width: 90px;overflow: hidden;
+                      " > -->
+
+                      <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="" class="form-control" (change)="uploadResourceFile($event)" id="" style="width: 124px;" required ></span>
+
+                      <!-- <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="!!resourceInstance"  (click)="uploadResourceToS3()">Upload Resource</a>  -->
+                      <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="newResourceSelectFile"  (click)="uploadResourceToS3()">Upload Resource</a> 
+                      <br>
+                      <span hidden="true" [innerHtml]="resource" class="path"></span>
+                      <span *ngIf="newUplodedResource" class="upload_txt">
+                          <a href="{{resource}}">Uploded Resource: 
+                            <span><i class="fa fa-file-archive-o" aria-hidden="true"></i></span>
+                          </a>
+                      </span>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <h6 class="fileFormatInfo">*Resource needs to be in zip,rar format.</h6>
+          <div class="text-right btnGr">
+            <a href="javascript:void(0);" class="btn cancelBtn" (click)="editSectionRemove()">Cancel</a>
+            <button type="submit" class="btn btn-primary"  [className]="sectionUpdateFrom.valid  ? 'submitBtn  ' : 'submitBtn disableSubmit'" >Save</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+<!-- Update Section end -->
+
+
+<!-- Add Section start -->
+<div *ngIf="!data" id="section_{{chapterSectionCount}}">
+  <form [formGroup]="sectionCreateFrom" (ngSubmit)="save()" class="add_section">
+    <!-- <notification-message [messages]="messages" *ngIf="errorMsg"></notification-message> -->
+    <div class="groupForm first">
+      <div class="groupFormSingle">
+        <label for="">Section </label>
+        <div class="inpWrap" *ngVar="sectionCreateFrom.get('title') as title">
+          <input _ngcontent-c8="" class="inpClass" placeholder="Title" type="text" formControlName="title">
+          <!-- <div _ngcontent-c8="" class="inpWrapCount">57</div> -->
+          <form-validation-message [fromInstance]="title"></form-validation-message>
+          </div>
+      </div>
+    </div>
+    <div class="groupForm alt">
+      <div class="groupFormSingle">
+        <label for="">What will students be able to do at the end of this section?</label>
+        <div class="inpWrap" *ngVar="sectionCreateFrom.get('description') as description" >
+         
+          <!-- <textarea class="inpClass" placeholder="Description" type="text" formControlName="description"></textarea> -->
+          <ckeditor [editor]="Editor" tagName="textarea" formControlName="description" [config]="{ label: 'Foo', toolbar: [ 'heading', '|', 'bold', 'italic', 'undo', 'redo' ] }" (ready)="onReady($event)"></ckeditor>
+          <!-- <div _ngcontent-c8="" class="inpWrapCount">57</div> -->
+          <form-validation-message [fromInstance]="description"></form-validation-message>
+          </div>
+      </div>
+    </div>
+    <div class="groupForm alt">
+        <div class="groupFormSingle">
+          <label for="">Lecture Mode</label>
+          <div class="section_block">
+            <div class="inpWrap mode"  >
+                <span><input class="" type="radio" name="lecture_mode" (click)="setLectureType('video')" formControlName="lecture_mode"  value="video">
+                    Video</span>
+                  <span><input class="" type="radio" name="lecture_mode" formControlName="lecture_mode"   (click)="setLectureType('pdf')"  value="pdf">
+                    Pdf</span>
+            </div>
+
+            <!-- Duration Start -->
+            <div *ngIf="lectureType == 'video'">Duration</div>
+            <div class="inpWrap" *ngIf="lectureType == 'video'">
+                <ngb-timepicker [formControl]="ctrl" [seconds]="true" [readonlyInputs]="false" required name="time" (keypress)="keyPress($event)"></ngb-timepicker>
+                <div style="float:left; width:65px; text-align: center;">hour</div>
+                <div style="float:left; width:20px; text-align: center;">&nbsp;</div>
+                <div style="float:left; width:65px; text-align: center;">minute</div>
+                <div style="float:left; width:20px; text-align: center;">&nbsp;</div>
+                <div style="float:left; width:65px; text-align: center;">second</div>
+            </div>
+            <br>
+            <ng-container *ngIf="lectureType == 'video'" >
+              <div class="small form-text text-danger" *ngIf="!ctrl?.valid">
+                <div *ngIf="ctrl?.errors['required'] && lectureType == 'video' && submited" style="font-size:11px;color: #ff0000 !important;">Time required</div>
+              </div>
+            </ng-container>
+            <!-- Duration End -->
+
+            <div for="" class="sub_heading">Lecture Link</div>
+            <div class="inpWrap">
+                <!-- <input type="file" (change)="uploadFile($event)" style="width: 90px;overflow: hidden;
+                "> -->
+                <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="file" class="form-control" (change)="uploadFile($event)" id="file" style="width: 124px;" required ></span>
+  
+                <!-- <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="!!fileInstance"  (click)="uploadToS3()">Upload Lecture</a>  -->
+                <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="newLectureSelectFile"  (click)="uploadToS3()">Upload Lecture</a>
+                <br>
+                <span hidden="true" [innerHtml]="path" class="path"></span>
+                
+                <span *ngIf="newUplodedLecture">
+                  <a href="path">Uploded Lecture:
+                     <!-- <i class="fa fa-cloud-download" aria-hidden="true"></i> -->
+                    <span *ngIf="uplodedFileType=='pdf' && path"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                    <span *ngIf="uplodedFileType=='video' && path "><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+                  </a>
+                </span>
+  
+            </div>
+          </div>
+        </div>
+    </div>
+    <h6 class="fileFormatInfo">*Lecture link video needs to be in mp4,mkv,3gp,mov format.</h6>
+    <h6 class="fileFormatInfo">*Lecture link pdf needs to be in pdf format.</h6>
+    <div class="groupForm alt">
+        <div class="groupFormSingle">
+          <label for="">Resource</label>
+          <div class="section_block">
+            <div class="inpWrap">
+                <!-- <input type="file" (change)="uploadResourceFile($event)" style="width: 90px;overflow: hidden;
+                "> -->
+
+                <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="" class="form-control" (change)="uploadResourceFile($event)" id="file1" style="width: 124px;" required ></span>
+
+                <!-- <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="!!resourceInstance"  (click)="uploadResourceToS3()">Upload Resource</a> -->
+                <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="newResourceSelectFile"  (click)="uploadResourceToS3()">Upload Resource</a>
+
+                <br>
+                <span hidden="true" [innerHtml]="resource" class="path"></span>
+                <span *ngIf="newUplodedResource">
+                    <a href="{{resource}}">Uploded Resource: 
+                        <span><i class="fa fa-file-archive-o" aria-hidden="true"></i></span>
+                    </a>
+                </span>
+            </div>
+          </div>
+        </div>
+    </div>
+    <h6 class="fileFormatInfo">*Resource needs to be in zip,rar format.</h6>
+   
+    
+    <div class="text-right btnGr">
+      <a href="javascript:void(0);"class="btn cancelBtn"(click)="removeObject()">Cancel</a>
+      <button type="submit" class="btn btn-primary"  [className]="sectionCreateFrom.valid  ? 'submitBtn  ' : 'submitBtn disableSubmit'" >Save</button>
+    </div>
+  </form>
+</div> 
+<!-- Add Section end -->
+  
+

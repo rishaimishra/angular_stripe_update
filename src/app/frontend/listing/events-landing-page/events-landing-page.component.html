@@ -1,0 +1,90 @@
+<!-- <app-banner></app-banner> -->
+<app-banner-slider></app-banner-slider>
+
+<div class="shopMain" id="record-set">
+		<div class="row" *ngIf="featuredEventListing.length > 0 || upcommingEvents.length > 0 || pastEvents.length > 0">
+
+			<div Class="col-xl-12 col-lg-12">
+
+          <!-- You tube videos -->
+          <section class="youtube_area" *ngIf="videos.length > 0">
+            <div class="container" *ngIf="videos.length > 0">
+              <div class="video_area">
+                <owl-carousel [options]="videoCarousel" [items]="videos" [carouselClasses]="['owl-theme', 'sliding']">
+                  <!-- Related Courses -->
+                  <ng-container *ngFor="let video of videos">
+                    <iframe width="100%" height="280" [src]="video.youtube_url | sanitizeHtml" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
+                  </ng-container>
+                </owl-carousel>
+              </div>
+            </div>
+          </section>
+
+          <!-- Featured event start -->
+          <section class="featuredEvent" *ngIf="featuredEventListing.length > 0">
+            <div class="container">
+              <div class="browseBy alt">
+                <h2>FEATURED EVENTS</h2>
+                <div class="featuredSide">
+                  <owl-carousel [options]="featuredEvents" [carouselClasses]="['owl-theme', 'sliding']">
+                    <div class="item" *ngFor="let item of featuredEventListing"> 				
+                      <app-carousal-event-card [item]="item" [cardType]="'feature'"></app-carousal-event-card>
+                    </div>
+                    
+                  </owl-carousel>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Featured event end -->
+
+          <!-- Upcomming event start -->
+          <section class="featuredEvent" *ngIf="upcommingEvents.length > 0">
+            <div class="container">
+              <div class="browseBy alt">
+                <h2>UPCOMMING EVENTS</h2>
+                <div class="featuredSide">
+                  <owl-carousel [options]="featuredEvents" [carouselClasses]="['owl-theme', 'sliding']">
+                    <div class="item" *ngFor="let item of upcommingEvents"> 				
+                      <app-carousal-event-card [item]="item" [cardType]="'upcomming'"></app-carousal-event-card>
+                    </div>
+                    
+                  </owl-carousel>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Upcomming event end -->
+
+          <!-- Past event start -->
+          <section class="featuredEvent" *ngIf="pastEvents.length > 0">
+            <div class="container">
+              <div class="browseBy alt">
+                <h2>PAST EVENTS</h2>
+                <div class="featuredSide">
+                  <owl-carousel [options]="featuredEvents" [carouselClasses]="['owl-theme', 'sliding']">
+                    <div class="item" *ngFor="let item of pastEvents"> 				
+                      <app-carousal-event-card [item]="item" [cardType]="'past'"></app-carousal-event-card>
+                    </div>
+                    
+                  </owl-carousel>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Past event end -->
+			</div>
+			<!-- right panel closed -->
+
+    </div>
+    <div class="row" *ngIf="featuredEventListing.length == 0 && upcommingEvents.length == 0 && pastEvents.length == 0">
+      <div class="col-lg-6"  >
+        <!-- <app-message></app-message> -->
+        <p class="blankPage">
+          Events Coming Soon...
+        </p>
+      </div>
+    </div>
+
+</div>

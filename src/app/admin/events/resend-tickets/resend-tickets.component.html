@@ -1,0 +1,51 @@
+<div class="rightPanel alt">
+   
+    
+    <div class="row">
+     <div class="col-md-4"><h2 class="headTitle">Resend Event Ticket</h2></div>   
+    </div>
+
+    <div>
+      <form   [formGroup]="resendTicketForm" (submit)="resendTicket()">
+        <div class="row">
+        <div class="form-group col-md-6">
+          <label for="email">Event:</label>
+          <ng-select class=" " [items]="events"
+          bindLabel="eventName" bindValue="event_id" placeholder="Select Event" (change)="getUser($event)" formControlName="event_id" placeholder="Select a event">
+            <!-- <ng-template ng-label-tmp let-item="item">
+              {{item.title +' ('+ eventIdPrefix + item.event_id+ ')'}}
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-index="index">
+              {{item.title +' ('+ eventIdPrefix + item.event_id+ ')'}}
+            </ng-template> -->
+          </ng-select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="pwd">User:</label>
+          <!-- <ng-select class=" " [items]="users"
+          bindLabel="first_name" bindValue="user_id" placeholder="Select User" formControlName="user_id" (change)="getOtherInfo($event)" >
+            <ng-template ng-label-tmp let-item="item">
+              <b>{{item.first_name}}  </b> 
+            </ng-template>
+          </ng-select> -->
+
+          <ng-select [items]="users"
+          bindLabel="userSearchText"
+          bindValue="user_id" formControlName="user_id" (change)="getOtherInfo($event)" placeholder="Select a user">
+            
+            <!-- <ng-template ng-label-tmp let-item="item">
+                {{item.first_name +' '+ item.last_name +' ('+item.user_name+')'}}
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-index="index">
+                {{item.first_name +' '+ item.last_name +' ('+item.user_name+')'}}
+            </ng-template> -->
+            
+          </ng-select>
+        </div>
+      </div>
+        <button type="submit" class="submitBtn"  [ngClass]="{'disableSubmit': !resendTicketForm.valid}" [disabled]="!resendTicketForm.valid">Send email</button>
+      </form>
+    </div>  
+   
+</div>
+    

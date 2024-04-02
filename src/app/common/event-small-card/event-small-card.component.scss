@@ -1,0 +1,7 @@
+.featuredSideSingle{ overflow: hidden; position: relative; padding: 14px 10px 10px 95px; min-height: 95px; border-top: 1px solid #e3e5e6;
+   &:first-child{ border: none;}
+   h3{ font-size: 13px; color: #323232; padding: 3px 0 5px 0; line-height: 16px; margin-left: 25px; padding-top: 0; overflow: hidden; /*text-overflow: ellipsis; white-space: nowrap;*/ height: 71px; overflow: hidden;}
+   h4{ font-size: 16px; color: #38a8b6; padding: 8px 0 0 0; margin-left: 25px; padding-top: 0;}
+   img{ width: auto !important; max-width: 100% !important;}
+ }
+ .featuredSideSingleImg{ position: absolute; left: 10px; top: 14px; width: 100px;}

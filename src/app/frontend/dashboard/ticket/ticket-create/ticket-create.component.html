@@ -1,0 +1,86 @@
+
+<div class="rightPanel">
+  <div class="centerHeading">
+    <h2>Create Service Request</h2>
+    
+  </div>
+  <div class="formWrap">
+      
+    <form  class="" [formGroup]="createTicketForm" (ngSubmit)="ticketSubmit()">
+        <div class="col-sm-12">
+          <label for="">Subject: <span class="required">*</span></label>
+          <div class="inputWrap" *ngVar="createTicketForm.get('subject') as subject">
+            <select   class="inpField" placeholder="Subject"  name="subject" formControlName="subject" (change)="onChangeSubject($event.target.value)" >
+                <option [value]="subject.value" *ngFor="let subject of subjects">{{subject.label}}</option>
+            </select>
+            <form-validation-message [fromInstance]="subject"></form-validation-message>
+          
+          </div>
+        </div>
+        <ng-container *ngIf="showStatus">
+          <div class="col-sm-12" >
+            <label for="">Other Subject: <span class="required">*</span></label>
+            <div class="inputWrap" *ngVar="createTicketForm.get('other') as other">
+              <textarea class="inpField" formControlName="other" minlength="1"></textarea>
+              <form-validation-message [fromInstance]="other"></form-validation-message>
+            </div>
+          </div>
+        </ng-container>
+        <div class="col-sm-12">
+            <label for="">Status: <span class="required">*</span></label>
+            <!-- <div class="inputWrap" *ngVar="createTicketForm.get('status') as status">
+                <select  class="inpField" placeholder="status"  name="status" formControlName="status" >
+                    <option [value]="item.value" *ngFor="let item of statusList">{{item.label}}</option>
+                </select>
+              <form-validation-message [fromInstance]="status"></form-validation-message>
+            
+            </div> -->
+            <div class="inputWrap" >
+              <input class="inpField" type="text" value="Open"  readonly>
+            </div>
+
+        </div>
+        <div class="col-sm-12">
+            <label for="">Priority: <span class="required">*</span></label>
+            <div class="inputWrap" *ngVar="createTicketForm.get('priority') as priority">
+                <select  class="inpField" placeholder="priority"  name="priority" formControlName="priority" >
+                    <option [value]="item.value" *ngFor="let item of priorities">{{item.label}}</option>
+                </select>
+              <form-validation-message [fromInstance]="priority"></form-validation-message>
+            
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <label for="">Description: <span class="required">*</span></label>
+            <div class="inputWrap" *ngVar="createTicketForm.get('description') as description">
+              <ckeditor [config]="ckConfig"   name="reply"  [editor]="Editor" required  formControlName="description" ></ckeditor>
+              <form-validation-message [fromInstance]="description"></form-validation-message>
+            
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <label for="">Attachments:</label>
+            <div class="inputWrap secDefault">
+                <span class="btn btn-primary btn-file btnSpace choose_file"> Choose File <input  type="file" name="" class="form-control" (change)="uploadAttachmentFile($event)" id="file1" style="width: 124px;" required ></span>
+                <a href="javascript:void(0);" class="btn btn-primary btn-file btnSpace uploads3" *ngIf="fileInstance"  (click)="uploadToS3()">Upload Resource</a>
+                <br>
+                <span hidden="true" [innerHtml]="resource" class="path"></span>
+                <span *ngIf="resource">
+                    <a href="{{resource}}" download>Uploded Resource: 
+                        <span><i class="fa fa-file" aria-hidden="true"></i></span>
+                    </a>
+                </span>
+                <h6 class="fileFormatInfo">*Only docx, pdf,csv,xlsx,zip, rar,mp4, mkv, 3gp,ppt format are supported.</h6>
+            </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="inputWrap"> 
+            <input class="submitBtn" type="submit"  value="Save">
+          </div>
+        </div>
+        
+      </form>
+  </div>
+</div>
+

@@ -1,0 +1,130 @@
+<div class="rightPanel alt">
+	<breadcrumb>
+		<li class="active">
+			<span>My Profile</span>
+		</li>
+	</breadcrumb>
+
+	<div class="row">
+		<div class="col-md-6">
+			<h2 class="headTitle">My Profile</h2>
+		</div>
+		<div class="col-md-6"></div>
+	</div>
+
+	<div class="alert alert-success" *ngIf="success_messages !=''">
+		{{success_messages}}
+	</div>
+	<notification-message [messages]="error_messages"></notification-message>
+	<div class="panel panel-default">
+		<form class="form-horizontal" #userForm="ngForm" (ngSubmit)="updateUser(userForm)">
+			<div class="panel-body">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="first_name" class="control-label">First name:*</label>
+						<div class="">
+							<input type="text" [(ngModel)]="profileData.first_name" #first_name="ngModel" name="first_name" class="form-control" id="first_name"
+							 required>
+							<form-validation-message [fromInstance]="first_name"></form-validation-message>
+						</div>
+					</div>
+					<!-- <div class="form-group">
+						<label for="middle_name" class="control-label">Middle name</label>
+						<div class="">
+							<input type="text" [(ngModel)]="profileData.middle_name" #middle_name="ngModel" name="middle_name" class="form-control" id="middle_name">
+							<form-validation-message [fromInstance]="middle_name"></form-validation-message>
+						</div>
+					</div> -->
+					<div class="form-group">
+						<label for="last_name" class="control-label">Last name:*</label>
+						<div class="">
+							<input type="text" [(ngModel)]="profileData.last_name" #last_name="ngModel" name="last_name" class="form-control" id="last_name"
+							 required>
+							<form-validation-message [fromInstance]="last_name"></form-validation-message>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="avatar" class="control-label">Avatar:</label>
+						<div class="inputWrap ">
+
+							<image-cropper
+								[imageChangedEvent]="imageChangedEvent" 
+								[maintainAspectRatio]="true" 
+								[aspectRatio]="1/1" 
+								[resizeToWidth]="173"
+								format="png, jpeg,jpg" 
+								(imageCropped)="imageCropped($event)" 
+								(imageLoaded)="imageLoaded()" 
+								(loadImageFailed)="loadImageFailed()">
+							</image-cropper>
+							
+							<div class="clearfix"></div>
+							<div class="imageField image-hldr">
+								<img id="blah" [src]="userData.avatar || 'assets/images/demo.png'" alt="your image" style="width:150px;" />
+							</div>
+							<div class="clearfix"></div>
+
+							<div class="">
+								<span class="btn btn-primary btn-file"> Upload File
+									<input type="file" name="file" class="form-control" (change)="uploadFile($event)" id="file" style="width: 124px;"
+									 required>
+								</span>
+								<br>
+								<span [innerHtml]="thumbnail"></span>
+								<br>
+								<a class="btn btn-sm btn-primary" *ngIf="!!fileInstance" (click)="uploadToS3()">Upload To S3
+								</a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="head_line" class="control-label">Headline:*</label>
+						<div class="">
+							<input type="text" [(ngModel)]="profileData.head_line" #head_line="ngModel" name="head_line" class="form-control" id="head_line"
+							 required>
+							<form-validation-message [fromInstance]="head_line"></form-validation-message>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="biography" class="control-label">Biography:*</label>
+						<div class="">
+							<input type="text" [(ngModel)]="profileData.biography" #biography="ngModel" name="biography" class="form-control" id="biography"
+							 required>
+							<form-validation-message [fromInstance]="biography"></form-validation-message>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="biography" class="control-label">Address:*</label>
+						<div class="">
+							<textarea type="text" [(ngModel)]="profileData.address" #address="ngModel" name="address" class="form-control" id="address"
+							 required></textarea>
+							<form-validation-message [fromInstance]="address"></form-validation-message>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="timezone" class="control-label">Timezone:</label>
+						<div class="">
+							<input type="text" [(ngModel)]="profileData.timezone" #timezone="ngModel" name="timezone" class="form-control" id="timezone"
+							 required>
+							<form-validation-message [fromInstance]="timezone"></form-validation-message>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="mobile_no" class="control-label">Mobile no:</label>
+						<div class="">
+							<input type="text" [(ngModel)]="userData.mobile_no" #mobile_no="ngModel" name="mobile_no" class="form-control" id="mobile_no"
+							 required>
+							<form-validation-message [fromInstance]="mobile_no"></form-validation-message>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<button type="submit" class="btn btn-info pull-right" [disabled]="userForm.invalid">
+					Update Profile
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

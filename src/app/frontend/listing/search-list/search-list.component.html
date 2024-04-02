@@ -1,0 +1,637 @@
+<!-- <app-banner></app-banner> -->
+<app-banner-slider></app-banner-slider>
+
+
+<div class="shopMain" id="record-set">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-3 col-lg-4" *ngIf="!fullColumnMode">
+				<app-left-panel></app-left-panel>
+			</div>
+			<!-- left panel closed -->
+
+			<div [ngClass]="getRecordPanelClass()">
+
+				<div class="eventSort clearfix" *ngIf="listingItems.length > 0">
+					<span class="selectedCat"><h4>{{selectedFilterElement | titlecase}}</h4></span>
+					<!-- <ul class="pull-left">
+						<li>
+							<select class="select-1" name="">
+								<option value="">Ratings</option>
+								<option value="">High to low</option>
+								<option value="">Low to high</option>
+							</select>
+						</li>
+					</ul> -->
+					<ul>
+						<li class="sortIcon pointer" (click)="onChangeView('thumbnail')">
+							<img [src]="getGridImageSrc()" alt="">
+						</li>
+						<li class="sortIcon pointer" (click)="onChangeView('listing')">
+							<img [src]="getListImageSrc()" alt="">
+						</li>
+						<li>
+							<select (change)="onChangeSort($event);" [(ngModel)]="sortModel" class="select-1" name="sortelm" >
+								<option value="">Sort</option>
+								<option value="-create_at" *ngIf="listingModule=='courses'">Newest</option>
+								<option value="create_at" *ngIf="listingModule=='courses'">Oldest</option>
+								<!-- Old price code -->
+								<!-- <option value="price">Price low to high</option>
+								<option value="-price">Price high to low</option> -->
+								<!-- New price code -->
+								<option value="sxl_price" *ngIf="listingModule=='courses'">Sxl price low to high</option>
+								<option value="-sxl_price" *ngIf="listingModule=='courses'">Sxl price high to low</option>
+								<option value="usd_price" *ngIf="listingModule=='courses'">Usd price low to high</option>
+								<option value="-usd_price" *ngIf="listingModule=='courses'">Usd price high to low</option>
+
+								<option value="rating" *ngIf="listingModule=='courses'">Rating Low to high</option>
+								<option value="-rating" *ngIf="listingModule=='courses'">Rating High to low</option>
+
+								<option value="title" *ngIf="listingModule=='events'">Event Name </option>
+								<option value="date_filter" *ngIf="listingModule=='events'"  >Event Date </option>
+								<option value="only_sxl" *ngIf="listingModule=='events'">only SXL </option>
+								<option value="only_usd" *ngIf="listingModule=='events'">only USD </option>
+								<option value="usd_sxl" *ngIf="listingModule=='events'">only USD and SXL </option>
+
+							</select>
+						</li>
+					</ul>
+				</div>
+
+				<div class="infoboxesWrap">
+					<div [ngClass]="viewClass">
+						<div class="row" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50" (scrolled)="onScrollPagination()"
+						 *ngIf="listingItems.length > 0">
+
+							<div [ngClass]="gridClass" *ngFor="let rs of listingItems">
+								<app-product-card [itemDetails]="rs" [viewClass]="viewClass" *ngIf="listingModule === 'products'"></app-product-card>
+								<app-event-card [itemDetails]="rs" [viewClass]="viewClass" *ngIf="listingModule === 'events'"></app-event-card>
+								<app-course-card [itemDetails]="rs" [viewClass]="viewClass" *ngIf="listingModule === 'courses'"></app-course-card>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row" *ngIf="loader">
+						<div class="col-xl-12 col-lg-12 col-md-12 text-center">
+							<i class="fa fa-spinner fa-3 fa-spin"></i>
+						</div>
+					</div>
+
+					<!--<div class="row" *ngIf="(listingItems.length === 0) && (!loader)">
+						 <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+							<div class="alert alert-warning"> No Item found </div>
+						</div>
+
+
+					</div>-->
+					<div *ngIf="(listingItems.length === 0) && (!loader)">
+
+						<div class="row ng-star-inserted">
+
+							<div class="col-xl-4 col-lg-6 col-md-4 spaceBott ng-star-inserted">
+
+
+
+								<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+							<div class="col-xl-4 col-lg-6 col-md-4 ng-star-inserted">
+
+
+
+									<a href="javascript:void(0)" class="coming-soon-wrapper ng-star-inserted">
+									<div class="overflow_div">Coming soon</div>
+									<div class="thumbInfoBox">
+
+										<div class="carouselCont">
+											<div class="carouselImg">
+
+
+												<img alt="" src="https://s3-ap-southeast-1.amazonaws.com/marketplace.successlife.com/2019/3/6065bb44-3b18-4241-b62c-68f80f6ab030-400x387.jpg"
+												 class="ng-star-inserted">
+											</div>
+											<div class="list_cont">
+												<h3 title="Angular Unit Testing">Angular Unit Testing</h3>
+												<h4 class="show-hide"> 2 lectures | 1
+
+
+													<span class="ng-star-inserted">hour</span> | Moderate </h4>
+												<h5 _ngcontent-c12="">
+													<span class="show-hide" style="float: left;">Angular Unit Testing For JS Developer &nbsp;|&nbsp;By&nbsp;</span>
+													<span _ngcontent-c12="">Vendor Test</span>
+												</h5>
+												<h5 _ngcontent-c12=""></h5>
+
+
+												<div class="ratingsDiv ng-star-inserted">
+													<div class="ratings Right">No review yet</div>
+												</div>
+
+												<h6 class="ng-star-inserted">$15.00</h6>
+
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</a>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- <app-frontend-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-frontend-pagination> -->
+
+			</div>
+			<!-- right panel closed -->
+
+		</div>
+	</div>
+</div>

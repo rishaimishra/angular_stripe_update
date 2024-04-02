@@ -1,0 +1,93 @@
+<div class="rightPanel alt">
+  <breadcrumb>
+    <li class="active"><span>Banners</span></li>
+  </breadcrumb>
+  
+  <div class="row">
+    <div class="col-md-4"><h2 class="headTitle">All Banners</h2></div>
+    <div class="col-md-5">	 
+        <div class="search_sec" >
+          <form  [formGroup]="searchForm" (ngSubmit)="search()"   >
+            <div class="topSearchCont acTive">
+              <input autocomplete="off" formControlName="string" name="string"
+                  placeholder="Search" type="search" >
+            </div>
+            <div class="topSearch">
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+    </div>
+    <div class="col-md-3">
+     <a  class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['create']">
+       <i class="fa fa-plus"></i> Create Banners
+     </a>
+    </div>
+  </div>
+  
+  
+    <div class="">
+      <notification-message [messages]="error_messages"></notification-message>
+  
+      <select class="browser-default custom-select" (change)="getSlides(selectField.value)" #selectField  *ngIf="data.length > 0">
+          <option [value]="page" *ngFor="let page of pages">{{page|titlecase}}</option>
+      </select>
+      
+      <div class="table-responsive">
+      <table class="table table-striped" *ngIf="data.length > 0" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+        <tr>
+        
+          <th width="25%">
+            <mfDefaultSorter by="title">Title</mfDefaultSorter>
+          </th>
+          <th width="30%">
+            <mfDefaultSorter by="slug">Content</mfDefaultSorter>
+          </th>
+          <th>Status</th>
+          <th>Created</th>
+          <th class="text-center">Action</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data; let i = index">
+          
+            <td>{{item.title |titlecase }}</td>
+            <td>{{item.content | slice:0:50 }}</td>
+            <td *ngIf="item.is_active == 1">Active </td>
+            <td *ngIf="item.is_active == 0">Inactive </td>
+            <td>{{item.created_at | date: 'dd-MM-yyyy'}}</td>
+            <td class="text-center">
+              <a (click)="editSlide(item)" class="btn btn-sm btn-success linkBg">
+                <i class="fa fa-pencil-square-o"></i>
+              </a>
+             <button
+            [swal]="{text:'Do you really want to remove this page',type:'question'}"
+            (confirm)="removeSlides(item.id,i)"
+            type="button"
+            class="btn btn-sm btn-danger linkBg">
+              <i class="fa fa-trash-o"></i>
+            </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="tabPagination">
+          <tr>
+            <td colspan="6">
+              <mfBootstrapPaginator [rowsOnPageSet]="" (click)="goToTop()"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+      <div class="row mt30" *ngIf="data.length === 0">
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                <strong>Oops!</strong>
+                No record found.
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+  

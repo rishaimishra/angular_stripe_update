@@ -1,0 +1,104 @@
+.search_area{
+    input[type=text] {
+        position: relative;
+        flex: 1 1 auto;
+        width: 1%;
+        margin-bottom: 0;
+        padding: 10px;
+    }
+
+    .form-control:focus{
+        box-shadow: none;
+    }
+    .input-group-text{
+        background: #3eb7aa;
+        color:#fff;
+    }
+}
+
+.current_link{
+    .buttonLink{
+        margin:0;
+        padding: 0 10px;
+        color:#3eb7aa;
+        font-size: 16px;
+    }
+    .active{
+        font-weight: bold;
+    }
+}
+
+.accordian_cont{
+    margin-top: 20px;
+    .acc_cont{
+        margin: 0;
+        padding: 0;
+
+        .card-body{
+            padding: 15px;
+        }
+
+        ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-align: left;
+      
+            li{
+                margin: 0;
+                padding: 15px;
+                list-style: none;
+                display: block;
+
+                a{
+                    display: block;
+                    padding: 0;
+
+                    span{
+                        display: inline-block;
+                        margin-right: 10px;
+                        vertical-align: middle;
+
+                        button{
+                            border:0;
+                            background: none;
+                            font-size: 24px;
+                            color: #434343;
+                        }
+                    }
+
+                    .description{
+                        width:calc(100% - 272px);
+                    }
+
+                    .play_btn{
+                        font-size: 25px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.accordian_cont{
+    h3{
+        font-size: 18px !important;
+        font-weight: 700;
+    }
+    .acc_cont{
+        li.active{
+           background: #3eb7aa;
+            a{
+                color:#fff;
+
+                span{
+                    button{
+                        color:#fff !important;
+                    }
+                }
+            }
+        }
+    }
+}
+.lectures_right{ float: right; margin-right: 0 !important;}
+.accordian_area .accordian_cont .acc_cont ul li{ overflow: hidden;}

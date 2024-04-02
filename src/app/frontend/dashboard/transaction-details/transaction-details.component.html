@@ -1,0 +1,224 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>Transaction Details</h2>
+		<div style="text-align: right;">			
+			<button type="button" class="btn btn-info" (click)="backClicked();">Back</button>
+		</div>
+	</div>
+
+	<div class="transcTop">
+		<div class="billingInfo">
+			<div class="row">
+				<div class="col-md-12">
+					<label for="" class="control-label">Billing Info</label> :
+					<p *ngIf="!orderDetails">--</p>
+					<p *ngIf="orderDetails">{{orderDetails?.user?.profile?.full_name}}</p>
+					<p *ngIf="orderDetails">
+						{{orderDetails?.order_address?.address}}
+						{{(orderDetails?.order_address?.city?.name) ? (', ' + orderDetails?.order_address?.city?.name) : ''}}
+						{{(orderDetails?.order_address?.state?.name) ? (', ' + orderDetails?.order_address?.state?.name) : ''}}
+						{{(orderDetails?.order_address?.country?.name) ? (', ' + orderDetails?.order_address?.country?.name + ' - ') : ''}}
+						{{ orderDetails?.order_address?.postcode }}
+					</p>
+					<p>PH No. : {{ (orderDetails?.user?.mobile_no) ? orderDetails?.user?.mobile_no : '--'}}</p>
+				</div>
+			</div>
+		</div>		
+		<div class="orderSchedule" *ngIf="orderDetails">
+			<div class="row">
+				<div class="col-md-12">
+					<label for="" class="control-label">Order ID</label> 
+					<p>{{getOrderID(orderDetails.id)}}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="" class="control-label">Order Date and Time</label> 
+					<p>{{ orderDetails?.ordered_on | date : 'dd MMMM, yyyy hh:mm aa' }}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="" class="control-label">SXL Address</label> 
+					<p *ngIf="orderDetails?.sxl_address">{{orderDetails?.sxl_address}}</p>
+					<p *ngIf="orderDetails?.sxl_address == '' || orderDetails?.sxl_address == null">N / A</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="" class="control-label">Order Status</label> :  
+					<span [ngClass]="getOrderStatusClass(orderDetails)">
+						{{getOrderStatusTest(orderDetails)}}
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="" class="control-label">Payment Status</label> : 
+					<span [ngClass]="getPaymentStatusClass(orderDetails)">
+						{{getPaymentStatusText(orderDetails)}}
+					</span>
+				</div>
+			</div>
+			<!-- <div class="row">
+				<div class="col-md-12">
+					<label for="" class="control-label">Cybersource Payment Status</label> :
+					<span [ngClass]="getCybersourcePaymentStatusClass(orderDetails)">
+							{{getCybersourcePaymentStatus(orderDetails)}}
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="" class="control-label">SXL Payment Status</label> 
+					
+				</div>
+			</div> -->
+		</div>
+	</div>
+
+	<div class="transcBottom">
+		<div class="table-responsive table_cont">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th width="30%">Title</th>
+						<th class="text-center">Quantity</th>
+						<th class="text-center">Gross Price</th>
+						<th class="text-center">Discount Price</th>
+						<th style="width:10%" class="text-center">Net Price</th>
+					</tr>
+				</thead>
+				<tbody *ngIf="orderDetails?.order_details?.length > 0">
+					<tr *ngFor="let rs of orderDetails?.order_details">
+						<!-- <td>{{rs?.product_details?.title}}</td> -->
+						<td>
+							<ng-container *ngIf="rs?.product_details?.product_type == 'event_ticket'">
+
+								
+								<a *ngIf="rs?.product_details?.slug" target="_blank"
+									[routerLink]="['/event-details/', rs?.product_details?.slug]">
+									<div class="d-flex">
+										<div class="imageCourse">
+											<img class="img-fluid" style="width: 50px" [src]="getImage(rs)" alt="">
+										</div>
+										<div class="titleCourse">
+											<p title="{{rs?.product_details?.title}}">{{rs?.product_details?.title | slice : 0:35}}
+											</p>
+											<em>{{rs?.product_details?.sub_title | slice : 0:50}}</em>
+										</div>
+									</div>
+								</a>
+							</ng-container>
+							<ng-container *ngIf="rs?.productable_type == 'courses'">
+									
+									<a *ngIf="rs?.product_details?.slug" target="_blank"
+										[routerLink]="['/tutorial/', rs?.product_details?.slug]">
+										<div class="d-flex">
+											<div class="imageCourse">
+												<img class="img-fluid" style="width: 50px" [src]="getImage(rs)" alt="">
+											</div>
+											<div class="titleCourse">
+												<p title="{{rs?.product_details?.title}}">{{rs?.product_details?.title | slice : 0:35}}
+												</p>
+												<em>{{rs?.product_details?.sub_title | slice : 0:50}}</em>
+											</div>
+										</div>
+									</a>
+							</ng-container>
+						</td>						
+						<td class="text-center">{{rs?.quantity}}</td>
+						<td class="text-center">
+							<ng-container *ngIf="rs?.sub_total_usd>0">
+							{{rs?.sub_total_usd | number:'1.2-2'}} USD
+							</ng-container>
+							<ng-container *ngIf="rs?.sub_total_sxl>0">
+							SXL {{rs?.sub_total_sxl | number:'1.2-2'}}
+							</ng-container>
+						</td>
+						<td class="text-center">
+							{{rs?.discount_usd | number:'1.2-2'}} USD
+						</td>
+						<td class="text-center">
+							<ng-container *ngIf="rs?.total_usd>0">
+							{{rs?.total_usd | number:'1.2-2'}} USD
+							</ng-container>
+							<ng-container *ngIf="rs?.total_sxl>0">
+							SXL {{rs?.total_sxl |  number:'1.2-2'}}
+							</ng-container>
+						</td>
+						<!-- <td class="text-center">
+							<span [ngClass]="getOrderStatusClass(rs)">{{getOrderStatusTest(rs)}}</span>
+						</td>
+						<td class="text-center">
+							<span [ngClass]="getPaymentStatusClass(rs)">{{getPaymentStatusTest(rs)}}</span>
+						</td> -->
+						<!-- <td class="text-center">
+							
+						</td> -->
+					</tr>
+
+				</tbody>
+				<tbody *ngIf="orderDetails?.order_details?.length === 0">
+					<tr>
+						<td colspan="4" class="text-center">
+							No item is recorded yet.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="orderSummary" *ngIf="orderDetails">
+			<div class="row">
+				<div class="col-6">
+					<label for="" class="control-label">Order Subtotal</label> :
+				</div>
+				<div class="col-6">
+					<p>	
+								
+						{{orderDetails?.total_order_price_usd + orderDetails.total_discount_price | number:'1.2-2'}} USD
+					
+						 +
+						SXL {{orderDetails?.total_order_price_sxl | number:'1.2-2'}}
+					</p>
+				</div>
+			</div>
+
+ 			<div class="row">
+				<div class="col-6">
+					<label for="" class="control-label">Discount</label> :
+				</div>
+				<div class="col-6">
+					<p>{{orderDetails?.total_discount_price | number:'1.2-2'}} USD</p>
+				</div>
+			</div>
+			<!-- <div class="row">
+				<div class="col-6">
+					<label for="" class="control-label">Tax</label> :
+				</div>
+				<div class="col-6">
+					<p>$0.00</p>
+				</div>
+			</div> -->
+			<div class="row">
+				<div class="col-6">
+					<label for="" class="control-label">Net Amount</label> :
+				</div>
+				<div class="col-6">
+					<p>
+						{{orderDetails?.total_order_price_usd | number:'1.2-2'}} USD
+						 +
+						SXL {{orderDetails?.total_order_price_sxl | number:'1.2-2'}}
+					</p>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+	<div style="text-align: right; clear: both; padding: 10px 0px 0px 5px;">			
+		<button type="button" class="btn btn-info" (click)="backClicked();">Back</button>
+	</div>
+
+</div>

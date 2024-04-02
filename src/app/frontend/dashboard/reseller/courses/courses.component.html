@@ -1,0 +1,82 @@
+<div class="rightPanel">
+
+	<div class="centerHeading">
+		<h2>Promoted Course List</h2>
+
+		<div class="row">
+			<div class="col-12">
+				<a class="btn btn-primary btn-sm pull-right titleLink02" [routerLink]="['/dashboard', 'reseller', 'courses-manage']">
+					<i class="fa fa-plus"></i> Manage Courses
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="table-responsive table_cont" *ngIf="records.length > 0">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th width="30%">
+						Title
+					</th>
+					<th class="text-center">
+						Price
+					</th>
+					<!-- <th class="text-center">
+						Offered Price
+					</th> -->
+					<th class="text-center">Status</th>
+					<th style="width:10%" class="text-center">Action</th>
+				</tr>
+			</thead>
+			<tbody *ngIf="records.length > 0">
+				<tr *ngFor="let rs of records">
+					<td>
+						<div class="d-flex">
+							<div class="imageCourse">
+								<img class="img-fluid" style="width: 50px" [src]="getImage(rs?.courses)" alt="">
+							</div>
+							<div class="titleCourse">
+								<a *ngIf="rs?.courses?.slug" target="_blank" [routerLink]="['/affiliate', getResellerSlug(rs), 'course-details', rs?.courses?.slug]" title="{{rs?.courses?.title}}">{{ (rs?.courses?.title?.length > 25) ? (rs?.courses?.title | slice : 0:25) + '...' : (rs?.courses?.title)}}</a>	 
+								<em>{{rs?.courses?.sub_title | slice : 0:10}}</em>	 
+							</div>
+						</div>
+					</td>
+					<td class="text-center">{{rs?.courses?.price | currency:rs?.currency:'symbol':'2.2-2'}}</td>
+					<!-- <td class="text-center">{{getDiscountedPrice(rs) | currency:rs?.courses?.currency:'symbol':'2.2-2'}}</td> -->
+					<td class="text-center">
+						<span [ngClass]="getStatusClass(rs)">{{getStatusTest(rs)}}</span>
+					</td>
+					<td class="text-center">
+						<button class="btn btn-sm btn-danger linkBg" type="button" (click)="deleteRecord(rs?.id)"><i class="fa fa-trash-o"></i></button>
+					</td>
+				</tr>
+
+			</tbody>
+			<tbody *ngIf="records.length === 0">
+				<tr>
+					<td colspan="5" class="text-center">
+						No course is added yet.
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="tabPagination">
+				<tr>
+					<td colspan="5">
+						<app-pagination *ngIf="paginationObj" [pagination]="paginationObj" (nextPageEvent)="pagination($event)" (prevPageEvent)="pagination($event)" (listPageEvent)="pagination($event)"></app-pagination>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+
+	<div class="row mt30" *ngIf="records.length === 0">
+		<div class="col-12">
+			<div class="alert alert-warning text-center">
+				<strong>Oops!</strong>
+				No record found.
+			</div>
+		</div>
+	</div>
+
+</div>
